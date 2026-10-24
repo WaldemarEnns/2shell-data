@@ -90,15 +90,27 @@ test('exact ranges are unchanged by display ranges', async () => {
   const { data: plain } = await run(wl, null, T0);
   const strip = (d) => d.advisories.map((a) => a.affected.map(({ displayRange, displayNote, displayRangeSource, ...r }) => r));
   assert.deepEqual(strip(data), strip(plain));
-  assert.equal(data.meta.displayRangeNote, 'Vereinfachte Anzeige-Bereiche (displayRange) runden eher weiter als enger. Maßgeblich sind die exakten Bereiche (affectedRange).');
+  assert.equal(data.meta.displayRangeNote, 'Vereinfachte Anzeige-Bereiche runden eher weiter als enger. Maßgeblich sind die exakten Bereiche.');
 });
 
 test('distro rows get a safe automatic display range', () => {
+  const distro = node.affected.filter((a) => ['Debian', 'Ubuntu', 'Alpine', 'RHEL'].includes(a.ecosystem));
+  assert.ok(distro.length > 0);
   assert.equal(row(node, 'Debian', 'brotli', '12').displayRange, 'vor 1.0.9-2+deb12u1');
   assert.equal(row(node, 'Alpine', 'brotli', 'v3.21').displayRange, 'vor 1.1.1-r0');
   assert.equal(row(node, 'Debian', 'nodejs', '14').displayRange, 'alle Versionen');
   assert.equal(row(node, 'Debian', 'nodejs', '14').displayRangeSource, 'auto');
-  for (const a of node.affected) assert.ok(a.displayRange, `${a.ecosystem}/${a.release}/${a.package} has a display range`);
+  for (const a of distro) {
+    if (a.displayRange === null) continue; // allowed: page falls back to affectedRange
+    assert.equal(a.displayRangeSource, 'auto', `${a.ecosystem}/${a.release}/${a.package}`);
+    assert.match(a.displayRange, /^(vor \S+|alle Versionen)$/, `${a.ecosystem}/${a.release}/${a.package}`);
+  }
+});
+
+test('rows without a safe simplification may have displayRange null (fallback)', () => {
+  const [out] = applyDisplayRanges([{ ecosystem: 'npm', release: null, package: 'x', affectedRange: '>= 1.0, < 1.2, >= 2.0, < 2.1', fixedVersions: [], fixStatus: 'fixed' }], []);
+  assert.equal(out.displayRange, null);
+  assert.equal(out.displayRangeSource, null);
 });
 
 test('deriveDisplayRange only simplifies patterns it cannot narrow', () => {

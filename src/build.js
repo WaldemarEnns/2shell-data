@@ -216,7 +216,7 @@ export function buildData({ watchlist, previous, results, now }) {
   };
 }
 
-const DISPLAY_RANGE_NOTE = 'Vereinfachte Anzeige-Bereiche (displayRange) runden eher weiter als enger. Maßgeblich sind die exakten Bereiche (affectedRange).';
+const DISPLAY_RANGE_NOTE = 'Vereinfachte Anzeige-Bereiche runden eher weiter als enger. Maßgeblich sind die exakten Bereiche.';
 
 /**
  * Derives a simplified German display range from an exact range, only for patterns
