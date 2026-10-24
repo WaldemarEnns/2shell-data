@@ -17,6 +17,7 @@
       "properties": {
         "bannerStaleAfterHours": { "type": "integer", "minimum": 1 },
         "staleAfterHours": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 1 } },
+        "displayRangeNote": { "type": "string", "description": "Hinweis für die Seite: Anzeige-Bereiche sind vereinfacht, maßgeblich sind die exakten Bereiche." },
         "generator": { "type": "string" }
       },
       "x-visible": false
@@ -69,6 +70,9 @@
         "package": { "type": "string", "x-visible": true },
         "displayName": { "type": "string", "x-visible": true },
         "affectedRange": { "type": "string", "x-visible": true },
+        "displayRange": { "type": ["string", "null"], "description": "Vereinfachter Anzeige-Bereich auf Deutsch (z. B. '1.0.3 bis 1.2.0', 'bis 1.4.3', 'vor 1.1.1-r0', 'alle Versionen'). Rundet eher weiter als enger und blendet keine betroffene Version aus. Maßgeblich bleibt affectedRange. null: keine sichere Vereinfachung, Seite zeigt affectedRange.", "x-visible": true },
+        "displayNote": { "type": ["string", "null"], "description": "Zusatz zum displayRange (Design v2), z. B. Ausnahmen wie '1.0.10 und 1.1.1 nicht betroffen'. Ausnahmen nennen immer NICHT betroffene Versionen.", "x-visible": true },
+        "displayRangeSource": { "enum": ["watchlist", "auto", "auto_curated_outdated", null], "description": "watchlist: kuratiert (displayRanges); auto: aus affectedRange abgeleitet; auto_curated_outdated: kuratierter Wert passt nicht mehr zum exakten Bereich und wurde verworfen (redaktionell prüfen).", "x-visible": false },
         "fixedVersions": { "type": "array", "items": { "type": "string" }, "x-visible": true },
         "fixStatus": { "enum": ["fixed", "pending", "none", "via_runtime", "unknown"], "description": "fixed: Fix-Release gelistet; pending/none: NUR aus der Watchlist; via_runtime: NUR aus der Watchlist, nur für role exposure_path – das Paket hat keinen eigenen Fix, behoben wird über das Runtime-Update in fixRef; unknown: Quelle nennt keinen Fix (automatisch, keine Aussage).", "x-visible": true },
         "fixRef": {

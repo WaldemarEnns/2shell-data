@@ -84,6 +84,15 @@ Ein Datenlauf veröffentlicht nie selbst und überschreibt nie Texte.
 
 **Wie der Pflicht-Check ohne persönliches Token entsteht:** Pushes mit `GITHUB_TOKEN` starten keine `pull_request`-Läufe. `refresh.yml` startet deshalb `ci.yml` per `workflow_dispatch` auf `data/refresh`. Job-Checks aus `workflow_dispatch`-Läufen zählen laut GitHub aber nicht für Pflicht-Checks. Darum meldet `ci.yml` (nur in diesem Fall) das echte Ergebnis seines Laufs zusätzlich als Check-Run `test` auf genau diesen Commit (Checks-API, `checks: write`). Erfahrungsberichte zeigen, dass solche Check-Runs als GitHub-Actions-App gelten und den Pflicht-Check erfüllen. Das wird beim ersten Daten-PR nach dem Einrichten geprüft; klappt es nicht, ist `CI_TRIGGER_TOKEN` die Notlösung.
 
+## Anzeige-Bereiche
+
+Design v2: Jede Zeile in `affected[]` hat neben dem exakten `affectedRange` ein vereinfachtes `displayRange` (deutsch, z. B. „1.0.3 bis 1.2.0“, „bis 1.4.3“, „vor 1.1.1-r0“, „alle Versionen“) und optional `displayNote` für Ausnahmen („1.0.10 und 1.1.1 nicht betroffen“). Ausnahmen nennen immer **nicht** betroffene Versionen. Der Anzeige-Bereich darf also weiter sein, nie enger. **Maßgeblich bleibt `affectedRange`**; `meta.displayRangeNote` liefert den Hinweistext für die Seite.
+
+- Kuratiert: `displayRanges` in der Watchlist (`ecosystem`, `release`, `package`, `forAffectedRange`, `displayRange`, `displayNote`, `sourceUrl`). Der Wert gilt nur, solange der exakte Bereich gleich `forAffectedRange` ist. Ändert sich der exakte Bereich, verwirft der Datenlauf den kuratierten Wert, leitet sicher neu ab (`displayRangeSource: auto_curated_outdated`) und meldet das als **redaktionell**.
+- Automatisch nur für Muster, die nicht enger werden können: `< X` → „vor X“, `>= A, < B` → „A bis vor B“, „alle Versionen …“ → „alle Versionen“. Sonst `displayRange: null`, und die Seite zeigt `affectedRange`.
+- Der Datenlauf setzt die Felder bei jedem Lauf neu (auch bei Quellen-Ausfall aus den Vorwerten), überschreibt `affectedRange` nie.
+- Ein kuratierter Eintrag ohne passende Zeile bleibt wirkungslos (z. B. ein Eintrag für eine Zeile, die erst ein anderer PR anlegt).
+
 ## Lokal
 
 ```sh

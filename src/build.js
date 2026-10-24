@@ -180,6 +180,7 @@ export function buildData({ watchlist, previous, results, now }) {
     affected = applyOverrides(affected, cve.fixStatusOverrides);
     affected = applyAnnotations(affected, cve.annotations);
     affected = attachFixRefState(affected, results.vendor, prev?.affected, now);
+    affected = applyDisplayRanges(affected, cve.displayRanges);
 
     const cvssBase = nvd.cvss ?? ghsa.cvss ?? null;
     const cvss = cvssBase ? { ...cvssBase, vendorRatings: cve.vendorRatings ?? [] } : null;
@@ -241,9 +242,43 @@ export function buildData({ watchlist, previous, results, now }) {
     schemaVersion: '1',
     stand: now,
     refreshIntervalHours: REFRESH_INTERVAL_HOURS,
-    meta: { bannerStaleAfterHours: BANNER_STALE_AFTER_HOURS, staleAfterHours: { ...STALE_AFTER_HOURS }, generator: '2shell-data' },
+    meta: { bannerStaleAfterHours: BANNER_STALE_AFTER_HOURS, staleAfterHours: { ...STALE_AFTER_HOURS }, displayRangeNote: DISPLAY_RANGE_NOTE, generator: '2shell-data' },
     sources: globalSources,
     eolCycles,
     advisories,
   };
+}
+
+const DISPLAY_RANGE_NOTE = 'Die Tabelle fasst Versionsbereiche zusammen und nennt im Zweifel eine Version zu viel. Maßgeblich sind die exakten Bereiche.';
+
+/**
+ * Derives a simplified German display range from an exact range, only for patterns
+ * where the simplification cannot be narrower than the exact range. Otherwise null.
+ */
+export function deriveDisplayRange(range) {
+  if (typeof range !== 'string') return null;
+  const r = range.trim();
+  if (/^alle Versionen\b/.test(r)) return 'alle Versionen';
+  let m = r.match(/^<\s*(\S+)$/);
+  if (m) return `vor ${m[1]}`;
+  m = r.match(/^>=\s*(\S+),\s*<\s*(\S+)$/);
+  if (m) return `${m[1]} bis vor ${m[2]}`;
+  return null;
+}
+
+/**
+ * Sets displayRange/displayNote on every row. A curated watchlist value wins, but only while
+ * the exact range it was written for (forAffectedRange) is unchanged; otherwise auto-derive.
+ * Never touches affectedRange.
+ */
+export function applyDisplayRanges(affected, curated = []) {
+  return affected.map((a) => {
+    const { displayRange: _r, displayNote: _n, displayRangeSource: _s, ...row } = a;
+    const c = curated.find((x) => x.ecosystem === a.ecosystem && x.package.toLowerCase() === a.package.toLowerCase() && (x.release ?? null) === (a.release ?? null));
+    if (c && c.forAffectedRange === a.affectedRange) {
+      return { ...row, displayRange: c.displayRange, ...(c.displayNote ? { displayNote: c.displayNote } : {}), displayRangeSource: 'watchlist' };
+    }
+    const auto = deriveDisplayRange(a.affectedRange);
+    return auto ? { ...row, displayRange: auto, displayRangeSource: c ? 'auto_curated_outdated' : 'auto' } : { ...row, displayRange: null, displayRangeSource: c ? 'auto_curated_outdated' : null };
+  });
 }

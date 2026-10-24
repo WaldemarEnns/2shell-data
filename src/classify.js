@@ -53,6 +53,8 @@ export function classify(prev, next) {
         const editorial = manual.includes(old.fixStatus) || manual.includes(a.fixStatus) || old.fixStatus === 'fixed';
         add(editorial ? 'editorial' : 'data-only', n.id, `fixStatus ${label(a)}: ${old.fixStatus} → ${a.fixStatus}`);
       }
+      if (a.displayRangeSource === 'auto_curated_outdated' && old.displayRangeSource !== 'auto_curated_outdated') add('editorial', n.id, `Anzeige-Bereich ${label(a)}: exakter Bereich hat sich geändert (${old.affectedRange} → ${a.affectedRange}); displayRanges in der Watchlist prüfen`);
+      else if ((old.displayRange ?? null) !== (a.displayRange ?? null) && old.displayRange !== undefined) add('data-only', n.id, `Anzeige-Bereich ${label(a)}: ${old.displayRange ?? '–'} → ${a.displayRange ?? '–'}`);
       const added = a.fixedVersions.filter((v) => !old.fixedVersions.includes(v));
       if (added.length) add('data-only', n.id, `Neue Fix-Version ${label(a)}: ${added.join(', ')}`);
       if ((old.fixRef?.state ?? null) !== (a.fixRef?.state ?? null) && a.fixRef?.state) add('editorial', n.id, `Fix-Beleg ${label(a)}: ${old.fixRef?.state ?? 'unbekannt'} → ${a.fixRef.state} (${a.fixRef.url}); fixStatus in der Watchlist prüfen`);

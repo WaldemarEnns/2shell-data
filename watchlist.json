@@ -11,6 +11,14 @@
       "nicknames": ["Node2Shell", "Python2Shell", "HTTP2Shell", "Broccoli2Shell"],
       "_noteNicknames": "Reihenfolge der Entstehung; Python2Shell seit 23.10.2026. Von Desi am 24.10.2026 bestätigt.",
       "ghsaIds": ["GHSA-9v8h-qqgm-4m35"],
+      "displayRanges": [
+        { "ecosystem": "runtime", "package": "bun", "forAffectedRange": ">= 1.0.21, < 1.4.4", "displayRange": "1.0.21 bis 1.4.3", "sourceUrl": "https://github.com/oven-sh/bun/security/advisories/GHSA-663w-cv8g-jj2p" },
+        { "ecosystem": "library", "package": "google/brotli", "forAffectedRange": "1.0.3 – 1.2.0 (außer 1.0.10 und 1.1.1)", "displayRange": "1.0.3 bis 1.2.0", "displayNote": "1.0.10 und 1.1.1 nicht betroffen", "sourceUrl": "https://github.com/google/brotli/tags" },
+        { "ecosystem": "PyPI", "package": "brotli", "forAffectedRange": ">= 1.0.3, < 1.2.1", "displayRange": "1.0.3 bis 1.2.0", "sourceUrl": "https://pypi.org/project/Brotli/#history" },
+        { "ecosystem": "PyPI", "package": "brotlicffi", "forAffectedRange": ">= 1.0.3, < 1.2.1.0", "displayRange": "1.0.3 bis 1.2.0.x", "sourceUrl": "https://pypi.org/project/brotlicffi/#history" },
+        { "ecosystem": "PECL", "package": "brotli", "forAffectedRange": "Release 0.21.0 und master (gebündeltes Brotli 1.2.0)", "displayRange": "0.21.0 und master", "sourceUrl": "https://github.com/kjdev/php-ext-brotli/pull/105" },
+        { "ecosystem": "npm", "package": "body-parser", "forAffectedRange": "Express 5.0.0 – 5.3.0, body-parser 2.0.0 – 2.3.0", "displayRange": "Express 5.0.0 bis 5.3.0, body-parser 2.0.0 bis 2.3.0", "displayNote": "Den Fehler enthält der Brotli-Decoder in Node.js, nicht Express. Das Node-Update schließt ihn.", "sourceUrl": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/" }
+      ],
       "vendorRatings": [
         { "vendor": "Node.js", "rating": "High", "url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" }
       ],
