@@ -42,6 +42,50 @@
             "type": "string",
             "pattern": "^CVE-\\d{4}-\\d{4,}$"
           },
+          "displayRanges": {
+            "type": "array",
+            "description": "Kuratierte Anzeige-Bereiche (Design v2). Gilt nur, solange der exakte Bereich der Zeile gleich forAffectedRange ist; sonst leitet der Datenlauf neu ab und meldet das als redaktionell.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "ecosystem",
+                "package",
+                "forAffectedRange",
+                "displayRange"
+              ],
+              "properties": {
+                "ecosystem": {
+                  "type": "string"
+                },
+                "release": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "package": {
+                  "type": "string"
+                },
+                "forAffectedRange": {
+                  "type": "string",
+                  "description": "Exakter affectedRange, für den der Wert geschrieben wurde."
+                },
+                "displayRange": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "displayNote": {
+                  "type": "string"
+                },
+                "sourceUrl": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "Beleg für die Versionsliste (z. B. Release-Liste)."
+                }
+              }
+            }
+          },
           "slug": {
             "type": "string"
           },
@@ -187,50 +231,6 @@
                 "sourceUrl": {
                   "type": "string",
                   "format": "uri"
-                }
-              }
-            }
-          },
-          "displayRanges": {
-            "type": "array",
-            "description": "Kuratierte Anzeige-Bereiche (Design v2). Gilt nur, solange der exakte Bereich der Zeile gleich forAffectedRange ist; sonst leitet der Datenlauf neu ab und meldet das als redaktionell.",
-            "items": {
-              "type": "object",
-              "additionalProperties": false,
-              "required": [
-                "ecosystem",
-                "package",
-                "forAffectedRange",
-                "displayRange"
-              ],
-              "properties": {
-                "ecosystem": {
-                  "type": "string"
-                },
-                "release": {
-                  "type": [
-                    "string",
-                    "null"
-                  ]
-                },
-                "package": {
-                  "type": "string"
-                },
-                "forAffectedRange": {
-                  "type": "string",
-                  "description": "Exakter affectedRange, für den der Wert geschrieben wurde."
-                },
-                "displayRange": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "displayNote": {
-                  "type": "string"
-                },
-                "sourceUrl": {
-                  "type": "string",
-                  "format": "uri",
-                  "description": "Beleg für die Versionsliste (z. B. Release-Liste)."
                 }
               }
             }

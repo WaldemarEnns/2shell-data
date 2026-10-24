@@ -33,7 +33,7 @@ function shownAffected(display, v) {
 
 // Release lists checked on 2026-10-24 (GitHub tags/releases, PyPI release history). Pre-releases left out.
 const CASES = [
-  { eco: 'runtime', pkg: 'bun', display: 'bis 1.4.3', note: undefined,
+  { eco: 'runtime', pkg: 'bun', display: '1.0.21 bis 1.4.3', note: undefined,
     versions: ['1.0.0', '1.0.20', '1.0.21', '1.1.0', '1.2.4', '1.2.23', '1.3.0', '1.3.14', '1.4.0', '1.4.1', '1.4.2', '1.4.3', '1.4.4'],
     affected: (v) => cmp(v, '1.0.21') >= 0 && cmp(v, '1.4.4') < 0 },
   { eco: 'library', pkg: 'google/brotli', display: '1.0.3 bis 1.2.0', note: '1.0.10 und 1.1.1 nicht betroffen',
@@ -66,10 +66,22 @@ test('PECL keeps the exact scope as display text (no safe simplification beyond 
 });
 
 test('exceptions are only ever NOT-affected versions (displayNote convention)', () => {
-  for (const a of data.advisories.flatMap((x) => x.affected)) {
-    if (a.displayNote) assert.match(a.displayNote, /nicht betroffen$/);
+  const notes = [...data.advisories.flatMap((x) => x.affected), ...watchlist.advisories.flatMap((x) => x.displayRanges ?? [])];
+  for (const a of notes) {
+    if (/betroffen/.test(a.displayNote ?? '')) assert.match(a.displayNote, /nicht betroffen/);
     assert.doesNotMatch(a.displayRange ?? '', /außer|\(/, 'no exceptions inside displayRange');
   }
+});
+
+test('Express/body-parser entry (row comes from PR #6) applies to that row and is inert without it', () => {
+  // Row shape exactly as manualAffected on feat/curate-overlay (#6), ranges verbatim from Imperva.
+  const bp = { ecosystem: 'npm', release: null, package: 'body-parser', affectedRange: 'Express 5.0.0 – 5.3.0, body-parser 2.0.0 – 2.3.0', fixedVersions: [], fixStatus: 'none' };
+  const [out] = applyDisplayRanges([bp], watchlist.advisories[0].displayRanges);
+  assert.equal(out.displayRange, 'Express 5.0.0 bis 5.3.0, body-parser 2.0.0 bis 2.3.0');
+  assert.equal(out.displayNote, 'Der Fehler steckt in Node.js, nicht in Express. Behoben durch ein Node-Update.');
+  assert.equal(out.displayRangeSource, 'watchlist');
+  assert.equal(out.affectedRange, bp.affectedRange);
+  assert.equal(node.affected.some((a) => a.package === 'body-parser'), Boolean(watchlist.advisories[0].manualAffected.find((a) => a.package === 'body-parser')), 'no row is invented');
 });
 
 test('exact ranges are unchanged by display ranges', async () => {

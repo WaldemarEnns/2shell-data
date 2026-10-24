@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/WaldemarEnns/2shell-data/schema/2shell.schema.json",
   "title": "2shell-Advisories (Pipeline-Ausgabe, kompatibel zu Desis Entwurf v1)",
-  "description": "Ausgabe von 2shell-data. Struktur nach Desis data-schema.json v1 (24.10.2026). Annotationen: x-visible = auf der Seite sichtbar (true) oder intern (false); x-source = Datenquelle. Keine berechnete Ampel. Abweichungen zu Desis Entwurf: fixStatus kennt zusätzlich 'unknown'; affected[].displayRange/displayNote/displayRangeSource (Design v2); meta.displayRangeNote; kev.status (listed/not_listed/unknown); meta mit Schwellen; affected[].release/urgency/sourceId; cvss.additional; advisory.sources; eolCycles.",
+  "description": "Ausgabe von 2shell-data. Struktur nach Desis data-schema.json v1 (24.10.2026). Annotationen: x-visible = auf der Seite sichtbar (true) oder intern (false); x-source = Datenquelle. Keine berechnete Ampel. Abweichungen zu Desis Entwurf: fixStatus kennt zusätzlich 'unknown'; kev.status (listed/not_listed/unknown); meta mit Schwellen; affected[].release/urgency/sourceId; cvss.additional; advisory.sources; eolCycles.",
   "type": "object",
   "required": ["schemaVersion", "stand", "refreshIntervalHours", "sources", "advisories"],
   "properties": {
@@ -71,7 +71,7 @@
         "displayName": { "type": "string", "x-visible": true },
         "affectedRange": { "type": "string", "x-visible": true },
         "displayRange": { "type": ["string", "null"], "description": "Vereinfachter Anzeige-Bereich auf Deutsch (z. B. '1.0.3 bis 1.2.0', 'bis 1.4.3', 'vor 1.1.1-r0', 'alle Versionen'). Rundet eher weiter als enger und blendet keine betroffene Version aus. Maßgeblich bleibt affectedRange. null: keine sichere Vereinfachung, Seite zeigt affectedRange.", "x-visible": true },
-        "displayNote": { "type": ["string", "null"], "description": "Ausnahmen zum displayRange, z. B. '1.0.10 und 1.1.1 nicht betroffen'. Ausnahmen sind immer NICHT betroffene Versionen.", "x-visible": true },
+        "displayNote": { "type": ["string", "null"], "description": "Zusatz zum displayRange (Design v2), z. B. Ausnahmen wie '1.0.10 und 1.1.1 nicht betroffen'. Ausnahmen nennen immer NICHT betroffene Versionen.", "x-visible": true },
         "displayRangeSource": { "enum": ["watchlist", "auto", "auto_curated_outdated", null], "description": "watchlist: kuratiert (displayRanges); auto: aus affectedRange abgeleitet; auto_curated_outdated: kuratierter Wert passt nicht mehr zum exakten Bereich und wurde verworfen (redaktionell prüfen).", "x-visible": false },
         "fixedVersions": { "type": "array", "items": { "type": "string" }, "x-visible": true },
         "fixStatus": { "enum": ["fixed", "pending", "none", "unknown"], "description": "fixed: Fix-Release gelistet; pending/none: NUR aus der Watchlist; unknown: Quelle nennt keinen Fix (automatisch, keine Aussage).", "x-visible": true },
