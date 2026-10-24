@@ -55,6 +55,13 @@
         }
       ],
       "fixStatusOverrides": [],
+      "displayRanges": [
+        { "ecosystem": "runtime", "package": "bun", "forAffectedRange": ">= 1.0.21, < 1.4.4", "displayRange": "bis 1.4.3", "sourceUrl": "https://github.com/oven-sh/bun/releases" },
+        { "ecosystem": "library", "package": "google/brotli", "forAffectedRange": "1.0.3 – 1.2.0 (außer 1.0.10 und 1.1.1)", "displayRange": "1.0.3 bis 1.2.0", "displayNote": "1.0.10 und 1.1.1 nicht betroffen", "sourceUrl": "https://github.com/google/brotli/tags" },
+        { "ecosystem": "PyPI", "package": "brotli", "forAffectedRange": ">= 1.0.3, < 1.2.1", "displayRange": "1.0.3 bis 1.2.0", "sourceUrl": "https://pypi.org/project/Brotli/#history" },
+        { "ecosystem": "PyPI", "package": "brotlicffi", "forAffectedRange": ">= 1.0.3, < 1.2.1.0", "displayRange": "1.0.3 bis 1.2.0.x", "sourceUrl": "https://pypi.org/project/brotlicffi/#history" },
+        { "ecosystem": "PECL", "package": "brotli", "forAffectedRange": "Release 0.21.0 und master (gebündeltes Brotli 1.2.0)", "displayRange": "0.21.0 und master", "sourceUrl": "https://github.com/kjdev/php-ext-brotli/pull/105" }
+      ],
       "runtimes": [
         { "product": "Node.js", "eolProduct": "nodejs", "cycle": "26", "fixedIn": "26.12.1", "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" },
         { "product": "Node.js", "eolProduct": "nodejs", "cycle": "24", "fixedIn": "24.22.1", "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" },
