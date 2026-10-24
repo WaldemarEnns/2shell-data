@@ -23,6 +23,7 @@
           "fixedVersions": ["1.0.10", "1.1.1", "1.2.1"],
           "fixStatus": "fixed",
           "role": "contains_bug",
+          "note": "Distributionen liefern den Fix teils als Backport mit alter Versionsnummer.",
           "sourceUrl": "https://osv.dev/vulnerability/CVE-2026-111497"
         },
         {
@@ -52,9 +53,29 @@
           "verifiedBy": "Desi",
           "verifiedAt": "2026-10-24T10:05:00Z",
           "sourceUrl": "https://github.com/kjdev/php-ext-brotli/pull/105"
+        },
+        {
+          "ecosystem": "npm",
+          "package": "body-parser",
+          "displayName": "Express 5 / body-parser 2.x",
+          "affectedRange": "Express 5.0.0 – 5.3.0, body-parser 2.0.0 – 2.3.0 (von Imperva getestet)",
+          "fixedVersions": [],
+          "fixStatus": "none",
+          "fixRef": {
+            "url": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/",
+            "label": "Imperva · 22.10.2026 · getestete Versionen"
+          },
+          "role": "exposure_path",
+          "verifiedBy": "Clay",
+          "verifiedAt": "2026-10-24T11:30:00Z",
+          "sourceUrl": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/"
         }
       ],
       "fixStatusOverrides": [],
+      "annotations": [
+        { "ecosystem": "PyPI", "package": "brotli", "displayName": "Python Brotli", "role": "contains_bug", "sourceUrl": "https://github.com/advisories/GHSA-9v8h-qqgm-4m35" },
+        { "ecosystem": "PyPI", "package": "brotlicffi", "displayName": "Python brotlicffi", "role": "contains_bug", "sourceUrl": "https://github.com/advisories/GHSA-9v8h-qqgm-4m35" }
+      ],
       "runtimes": [
         { "product": "Node.js", "eolProduct": "nodejs", "cycle": "26", "fixedIn": "26.12.1", "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" },
         { "product": "Node.js", "eolProduct": "nodejs", "cycle": "24", "fixedIn": "24.22.1", "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" },
@@ -65,21 +86,55 @@
         { "product": "Node.js", "eolProduct": "nodejs", "cycle": "18", "fixedIn": null, "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases", "_note": "Steht stellvertretend für 18 und älter (alle EOL, kein Fix)." },
         { "product": "Bun", "eolProduct": "bun", "cycle": "1", "fixedIn": "1.4.4", "sourceUrl": "https://github.com/oven-sh/bun/security/advisories/GHSA-663w-cv8g-jj2p" }
       ],
-      "exploitation": [],
-      "_todoExploitation": "Belegte Einträge (PoC, Laborbeweis) erst nach redaktioneller Freigabe eintragen. Desis Beispielwerte nicht übernehmen.",
+      "exploitation": [
+        { "date": "2026-10-22", "kind": "poc_public", "sourceUrl": "https://www.aikido.dev/blog/node2shell-nodejs-brotli-rce-cve-2026-111497", "sourceLabel": "Aikido" },
+        { "date": "2026-10-22", "kind": "rce_lab", "sourceUrl": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/", "sourceLabel": "Imperva" },
+        { "date": "2026-10-24", "kind": "none_reported", "sourceUrl": "https://strobes.co/blog/http2shell-brotli-rce-cve-2026-111497/", "sourceLabel": "Strobes" }
+      ],
+      "_todoExploitation": "note-Texte fehlen absichtlich: Waldemar gibt die Formulierungen frei. Daten (Datum, Art, Quelle) sind an den Quellen geprüft.",
       "timeline": [
-        { "date": "2026-10-21", "event": "Node.js veröffentlicht 22.23.4, 24.22.1 und 26.12.1.", "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" },
-        { "date": "2026-10-22", "event": "Bun veröffentlicht 1.4.4 mit Brotli 1.2.1.", "sourceUrl": "https://bun.com/blog/bun-v1.4.4" }
+        { "date": "2026-02-27T13:10:54Z", "event": "Der Fix (Commit 0ed4268) landet im Brotli-Quellcode, noch ohne Hinweis auf eine Sicherheitslücke.", "sourceUrl": "https://github.com/google/brotli/commit/0ed4268a4401abcb4472096340477cf4af7d1a2b" },
+        { "date": "2026-10-21T10:38:20Z", "event": "Node.js veröffentlicht 22.23.4, 24.22.1 und 26.12.1.", "sourceUrl": "https://github.com/nodejs/node/releases/tag/v24.22.1" },
+        { "date": "2026-10-21", "event": "Vercel schaltet WAF-Regeln gegen eingehende Angriffe.", "sourceUrl": "https://vercel.com/kb/bulletin/node-js-security-advisory" },
+        { "date": "2026-10-21T19:26:58Z", "event": "Google veröffentlicht Brotli 1.0.10, 1.1.1 und 1.2.1.", "sourceUrl": "https://github.com/google/brotli/releases" },
+        { "date": "2026-10-22", "event": "Bun veröffentlicht 1.4.4 mit Brotli 1.2.1.", "sourceUrl": "https://bun.com/blog/bun-v1.4.4" },
+        { "date": "2026-10-22", "event": "Ein öffentlicher Proof of Concept erscheint.", "sourceUrl": "https://www.aikido.dev/blog/node2shell-nodejs-brotli-rce-cve-2026-111497" },
+        { "date": "2026-10-22T08:00:11Z", "event": "Für die PHP-Erweiterung brotli geht PR #105 auf, der Brotli auf 1.2.1 hebt.", "sourceUrl": "https://github.com/kjdev/php-ext-brotli/pull/105" },
+        { "date": "2026-10-22T12:22:01Z", "event": "Imperva meldet Codeausführung im Labor auf Node.js 24.22.0.", "sourceUrl": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/" },
+        { "date": "2026-10-22T13:57:11Z", "event": "Brotli 1.2.1 erscheint auf PyPI.", "sourceUrl": "https://pypi.org/project/Brotli/1.2.1/" },
+        { "date": "2026-10-22T16:19:00Z", "event": "brotlicffi 1.2.1.0 erscheint auf PyPI.", "sourceUrl": "https://pypi.org/project/brotlicffi/1.2.1.0/" },
+        { "date": "2026-10-23", "event": "Aikido nennt die Lücke HTTP2Shell, weil sie auch Python und andere HTTP-Software trifft.", "sourceUrl": "https://www.aikido.dev/blog/python-packages-vulnerable-node2shell-brotli-cve-2026-111497" }
       ],
       "credits": [
         { "name": "OpenAI Codex Security (Khai Tran, Sylvie Mayer)", "role": "reporter", "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" },
-        { "name": "mcollina, aduh95", "role": "fix", "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" }
+        { "name": "Matteo Collina, Antoine du Hamel", "role": "fix", "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" },
+        { "name": "Imperva Red Team", "role": "exploit_research", "sourceUrl": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/" },
+        { "name": "OpenSourceMalware", "role": "analysis", "sourceUrl": "https://opensourcemalware.com/blog/node2shell-affects-python" },
+        { "name": "Aikido", "role": "analysis", "sourceUrl": "https://www.aikido.dev/blog/python-packages-vulnerable-node2shell-brotli-cve-2026-111497" }
       ],
+      "_noteCredits": "Handles mcollina und aduh95 laut GitHub-Profil Matteo Collina und Antoine du Hamel (api.github.com/users/…, 24.10.2026).",
       "references": [
         { "url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases", "type": "vendor", "label": "Node.js · 21.10.2026 · Security Releases", "date": "2026-10-21" },
         { "url": "https://github.com/oven-sh/bun/security/advisories/GHSA-663w-cv8g-jj2p", "type": "vendor", "label": "Bun · GHSA-663w-cv8g-jj2p", "date": "2026-10-23" },
         { "url": "https://bun.com/blog/bun-v1.4.4", "type": "release", "label": "Bun · 22.10.2026 · Bun v1.4.4", "date": "2026-10-22" },
-        { "url": "https://github.com/kjdev/php-ext-brotli/pull/105", "type": "fix", "label": "kjdev/php-ext-brotli · PR #105", "date": "2026-10-22" }
+        { "url": "https://github.com/kjdev/php-ext-brotli/pull/105", "type": "fix", "label": "kjdev/php-ext-brotli · PR #105", "date": "2026-10-22" },
+        { "url": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/", "type": "analysis", "label": "Imperva · 22.10.2026 · Node2Shell: From Brotli Data to Remote Code Execution", "date": "2026-10-22" },
+        { "url": "https://www.aikido.dev/blog/node2shell-nodejs-brotli-rce-cve-2026-111497", "type": "analysis", "label": "Aikido · 22.10.2026 · Node2Shell: Node.js Brotli vulnerability allows remote code execution", "date": "2026-10-22" },
+        { "url": "https://www.aikido.dev/blog/python-packages-vulnerable-node2shell-brotli-cve-2026-111497", "type": "analysis", "label": "Aikido · 23.10.2026 · Node2Shell evolves to HTTP2Shell", "date": "2026-10-23" },
+        { "url": "https://opensourcemalware.com/blog/node2shell-affects-python", "type": "analysis", "label": "OpenSourceMalware · 23.10.2026 · Python Packages Vulnerable to Node2Shell", "date": "2026-10-23" },
+        { "url": "https://strobes.co/blog/http2shell-brotli-rce-cve-2026-111497/", "type": "analysis", "label": "Strobes · 24.10.2026 · HTTP2Shell (CVE-2026-111497): The Brotli RCE Hitting Node.js, Python and More", "date": "2026-10-24" },
+        { "url": "https://vercel.com/kb/bulletin/node-js-security-advisory", "type": "advisory", "label": "Vercel · 24.10.2026 · Node.js security advisory: Brotli decoder RCE (CVE-2026-111497)", "date": "2026-10-24" },
+        { "url": "https://broccoli2shell.com/", "type": "tracker", "label": "broccoli2shell.com · Stand 24.10.2026 · gebündelte Brotli-Kopien", "date": "2026-10-24" },
+        { "url": "https://github.com/google/brotli/releases/tag/v1.2.1", "type": "release", "label": "google/brotli · Release v1.2.1", "date": "2026-10-21" },
+        { "url": "https://github.com/google/brotli/releases/tag/v1.1.1", "type": "release", "label": "google/brotli · Release v1.1.1", "date": "2026-10-21" },
+        { "url": "https://github.com/google/brotli/releases/tag/v1.0.10", "type": "release", "label": "google/brotli · Release v1.0.10", "date": "2026-10-21" },
+        { "url": "https://github.com/google/brotli/commit/0ed4268a4401abcb4472096340477cf4af7d1a2b", "type": "fix", "label": "google/brotli · Commit 0ed4268 · Detect and report invalid stream earlier.", "date": "2026-02-27" },
+        { "url": "https://github.com/google/brotli/commit/b418fa81c48262a86a95332b0bc6d62c30aa78b6", "type": "fix", "label": "google/brotli · Commit b418fa8 · Detect and report invalid stream earlier.", "date": "2026-10-21" },
+        { "url": "https://github.com/google/brotli/commit/da9806362874b9bd4b552a3af360b5d6347beb12", "type": "fix", "label": "google/brotli · Commit da98063 · Detect and report invalid stream earlier.", "date": "2026-10-21" },
+        { "url": "https://github.com/google/brotli/commit/50a9b70a4d5e1443fc40927952276b68fffa83a0", "type": "fix", "label": "google/brotli · Commit 50a9b70 · Detect and report invalid stream earlier.", "date": "2026-10-21" },
+        { "url": "https://pypi.org/project/Brotli/1.2.1/", "type": "release", "label": "PyPI · Brotli 1.2.1", "date": "2026-10-22" },
+        { "url": "https://pypi.org/project/brotlicffi/1.2.1.0/", "type": "release", "label": "PyPI · brotlicffi 1.2.1.0", "date": "2026-10-22" },
+        { "url": "https://lists.debian.org/debian-lts-announce/2026/10/msg00049.html", "type": "tracker", "label": "Debian LTS · DLA 4855-1 · brotli security update", "date": "2026-10-23" }
       ],
       "editorial": { "markdownPath": "content/cve-2026-111497.de.md", "approvedBy": null, "approvedAt": null }
     },

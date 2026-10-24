@@ -190,6 +190,48 @@
                 }
               }
             }
+          },
+          "annotations": {
+            "type": "array",
+            "description": "Anzeige-Angaben für automatisch geholte Einträge (displayName, role, note). Ändert nie fixStatus.",
+            "items": {
+              "type": "object",
+              "required": [
+                "ecosystem",
+                "package",
+                "sourceUrl"
+              ],
+              "properties": {
+                "ecosystem": {
+                  "type": "string"
+                },
+                "release": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "package": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "role": {
+                  "enum": [
+                    "contains_bug",
+                    "exposure_path"
+                  ]
+                },
+                "note": {
+                  "type": "string"
+                },
+                "sourceUrl": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
           }
         }
       }

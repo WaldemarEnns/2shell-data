@@ -115,7 +115,8 @@
           }
         },
         "title": { "type": "string", "description": "Interner englischer Kurztitel der Quelle (OSV-Summary bzw. aus der NVD-Beschreibung). Nicht auf der Seite anzeigen: Die sichtbaren deutschen Überschriften sind redaktionell (Desi) und stehen in den Texten unter editorial.markdownPath.", "x-visible": false, "x-source": "watchlist > osv > nvd" },
-        "published": { "type": ["string", "null"], "format": "date-time", "x-visible": true, "x-source": "nvd > osv" },
+        "published": { "type": ["string", "null"], "format": "date-time", "description": "Frühester Veröffentlichungszeitpunkt über OSV und NVD.", "x-visible": true, "x-source": "min(osv, nvd)" },
+        "publishedSource": { "enum": ["osv", "nvd", null], "description": "Quelle, aus der published stammt.", "x-visible": false },
         "modified": { "type": ["string", "null"], "format": "date-time", "x-visible": false, "x-source": "nvd > osv" },
         "cvss": {
           "type": ["object", "null"],

@@ -38,6 +38,7 @@ vorheriger Stand┘        │                                  │
 - **Zeitplan:** GitHub Action [`refresh.yml`](.github/workflows/refresh.yml) alle 6 Stunden (`0 */6 * * *`, UTC) und manuell per `workflow_dispatch`.
 - **`stand`** ist der Zeitpunkt des letzten erfolgreichen Laufs. Schlagen alle Quellen fehl, wird nichts geschrieben.
 - **Ausfall einer Quelle:** Der letzte gute Wert bleibt stehen, nichts wird geleert. `sources.<name>.fetchedAt` bleibt auf dem letzten Erfolg, `lastError` nennt den Fehler. `status` ist `ok`, solange der letzte Erfolg jünger als die Schwelle oben ist, danach `veraltet`; `fehlt`, wenn es nie einen Erfolg gab. Die Schwellen und die Banner-Schwelle (24 h für das globale `stand`) stehen in `meta`, damit die Seite sie anwenden kann.
+- **`published`** ist der früheste Zeitpunkt aus OSV und NVD; `publishedSource` nennt die Quelle.
 - **KEV** ist dreiwertig: `kev.status` = `listed` / `not_listed` / `unknown` (`kev.exploited` true / false / null).
 - **Titel sind intern.** `title` ist ein englischer Kurztitel aus OSV bzw. der NVD-Beschreibung und wird nicht angezeigt. Die sichtbaren deutschen Überschriften schreibt die Redaktion (Desi) in den Texten unter `editorial.markdownPath`. Ebenso redaktionell und derzeit leer: `exploitation` (PoC, Laborbeweis) und Einträge mit `role: exposure_path` (z. B. Express 5 / body-parser).
 - **Keine Ampel in den Daten.** Die Seite leitet Farben aus `fixStatus` und `runtimes[].status` ab.
@@ -55,7 +56,7 @@ Ein Datenlauf veröffentlicht nie selbst und überschreibt nie Texte.
 
 | Pfad | Inhalt |
 |---|---|
-| `watchlist.json` | CVE-IDs und redaktionelle Angaben: Spitznamen, Runtime-Fix-Tabelle, manuelle Einträge, Overrides, Timeline, Credits, Quellen mit Label |
+| `watchlist.json` | CVE-IDs und redaktionelle Angaben: Spitznamen, Runtime-Fix-Tabelle, manuelle Einträge (auch `role: exposure_path`), fixStatus-Overrides, Anzeige-Annotationen (`displayName`/`role`/`note`, ändern nie `fixStatus`), Ausnutzungsstand, Timeline, Credits, Quellen mit Label |
 | `schema/2shell.schema.json` | JSON Schema der Ausgabe (kompatibel zu Desis Entwurf v1, mit `x-visible`/`x-source`) |
 | `schema/watchlist.schema.json` | JSON Schema der Watchlist |
 | `data/2shell.json` | Ausgabe |
