@@ -78,7 +78,7 @@ test('Express/body-parser entry (row comes from PR #6) applies to that row and i
   const bp = { ecosystem: 'npm', release: null, package: 'body-parser', affectedRange: 'Express 5.0.0 – 5.3.0, body-parser 2.0.0 – 2.3.0', fixedVersions: [], fixStatus: 'none' };
   const [out] = applyDisplayRanges([bp], watchlist.advisories[0].displayRanges);
   assert.equal(out.displayRange, 'Express 5.0.0 bis 5.3.0, body-parser 2.0.0 bis 2.3.0');
-  assert.equal(out.displayNote, 'Der Fehler steckt in Node.js, nicht in Express. Behoben durch ein Node-Update.');
+  assert.equal(out.displayNote, 'Den Fehler enthält der Brotli-Decoder in Node.js, nicht Express. Das Node-Update schließt ihn.');
   assert.equal(out.displayRangeSource, 'watchlist');
   assert.equal(out.affectedRange, bp.affectedRange);
   assert.equal(node.affected.some((a) => a.package === 'body-parser'), Boolean(watchlist.advisories[0].manualAffected.find((a) => a.package === 'body-parser')), 'no row is invented');
@@ -90,7 +90,7 @@ test('exact ranges are unchanged by display ranges', async () => {
   const { data: plain } = await run(wl, null, T0);
   const strip = (d) => d.advisories.map((a) => a.affected.map(({ displayRange, displayNote, displayRangeSource, ...r }) => r));
   assert.deepEqual(strip(data), strip(plain));
-  assert.equal(data.meta.displayRangeNote, 'Vereinfachte Anzeige-Bereiche runden eher weiter als enger. Maßgeblich sind die exakten Bereiche.');
+  assert.equal(data.meta.displayRangeNote, 'Die Tabelle fasst Versionsbereiche zusammen und nennt im Zweifel eine Version zu viel. Maßgeblich sind die exakten Bereiche.');
 });
 
 test('distro rows get a safe automatic display range', () => {

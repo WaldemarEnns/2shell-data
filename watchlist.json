@@ -17,7 +17,7 @@
         { "ecosystem": "PyPI", "package": "brotli", "forAffectedRange": ">= 1.0.3, < 1.2.1", "displayRange": "1.0.3 bis 1.2.0", "sourceUrl": "https://pypi.org/project/Brotli/#history" },
         { "ecosystem": "PyPI", "package": "brotlicffi", "forAffectedRange": ">= 1.0.3, < 1.2.1.0", "displayRange": "1.0.3 bis 1.2.0.x", "sourceUrl": "https://pypi.org/project/brotlicffi/#history" },
         { "ecosystem": "PECL", "package": "brotli", "forAffectedRange": "Release 0.21.0 und master (gebündeltes Brotli 1.2.0)", "displayRange": "0.21.0 und master", "sourceUrl": "https://github.com/kjdev/php-ext-brotli/pull/105" },
-        { "ecosystem": "npm", "package": "body-parser", "forAffectedRange": "Express 5.0.0 – 5.3.0, body-parser 2.0.0 – 2.3.0", "displayRange": "Express 5.0.0 bis 5.3.0, body-parser 2.0.0 bis 2.3.0", "displayNote": "Der Fehler steckt in Node.js, nicht in Express. Behoben durch ein Node-Update.", "sourceUrl": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/" }
+        { "ecosystem": "npm", "package": "body-parser", "forAffectedRange": "Express 5.0.0 – 5.3.0, body-parser 2.0.0 – 2.3.0", "displayRange": "Express 5.0.0 bis 5.3.0, body-parser 2.0.0 bis 2.3.0", "displayNote": "Den Fehler enthält der Brotli-Decoder in Node.js, nicht Express. Das Node-Update schließt ihn.", "sourceUrl": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/" }
       ],
       "vendorRatings": [
         { "vendor": "Node.js", "rating": "High", "url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" }
