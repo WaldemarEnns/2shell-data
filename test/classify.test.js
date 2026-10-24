@@ -49,7 +49,7 @@ test('new ecosystem or runtime line -> editorial', () => {
   a.advisories[1].affected.push({ ecosystem: 'Alpine', release: 'v3.24', package: 'php84', affectedRange: '< 8.4.27-r0', fixedVersions: ['8.4.27-r0'], fixStatus: 'fixed', source: 'osv' });
   assert.equal(levelOf(a), 'editorial');
   const b = later();
-  b.advisories[0].runtimes.push({ product: 'Node.js', cycle: '18', fixedIn: null, eol: '2025-04-30', latest: null, status: 'kein Fix (EOL)' });
+  b.advisories[0].runtimes.push({ product: 'Node.js', cycle: '16', fixedIn: null, eol: '2023-09-11', latest: null, status: 'kein Fix (EOL)' });
   assert.equal(levelOf(b), 'editorial');
 });
 

@@ -114,7 +114,7 @@
             "nicknames": { "type": "array", "items": { "type": "string" }, "x-visible": true, "x-source": "editorial" }
           }
         },
-        "title": { "type": "string", "x-visible": false, "x-source": "watchlist > osv > nvd" },
+        "title": { "type": "string", "description": "Interner englischer Kurztitel der Quelle (OSV-Summary bzw. aus der NVD-Beschreibung). Nicht auf der Seite anzeigen: Die sichtbaren deutschen Überschriften sind redaktionell (Desi) und stehen in den Texten unter editorial.markdownPath.", "x-visible": false, "x-source": "watchlist > osv > nvd" },
         "published": { "type": ["string", "null"], "format": "date-time", "x-visible": true, "x-source": "nvd > osv" },
         "modified": { "type": ["string", "null"], "format": "date-time", "x-visible": false, "x-source": "nvd > osv" },
         "cvss": {

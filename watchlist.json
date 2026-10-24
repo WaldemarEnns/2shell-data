@@ -8,8 +8,8 @@
       "id": "CVE-2026-111497",
       "slug": "cve-2026-111497",
       "landingUrl": null,
-      "nicknames": ["Node2Shell", "HTTP2Shell"],
-      "_todoNicknames": "Desi nennt zusätzlich Python2Shell und Broccoli2Shell (phase1.md); aufnehmen, sobald sie redaktionell freigegeben sind.",
+      "nicknames": ["Node2Shell", "Python2Shell", "HTTP2Shell", "Broccoli2Shell"],
+      "_noteNicknames": "Reihenfolge der Entstehung; Python2Shell seit 23.10.2026. Von Desi am 24.10.2026 bestätigt.",
       "ghsaIds": ["GHSA-9v8h-qqgm-4m35"],
       "vendorRatings": [
         { "vendor": "Node.js", "rating": "High", "url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" }
@@ -62,6 +62,7 @@
         { "product": "Node.js", "eolProduct": "nodejs", "cycle": "25", "fixedIn": null, "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases", "_note": "Node.js: End-of-Life versions are always affected." },
         { "product": "Node.js", "eolProduct": "nodejs", "cycle": "23", "fixedIn": null, "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" },
         { "product": "Node.js", "eolProduct": "nodejs", "cycle": "20", "fixedIn": null, "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" },
+        { "product": "Node.js", "eolProduct": "nodejs", "cycle": "18", "fixedIn": null, "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases", "_note": "Steht stellvertretend für 18 und älter (alle EOL, kein Fix)." },
         { "product": "Bun", "eolProduct": "bun", "cycle": "1", "fixedIn": "1.4.4", "sourceUrl": "https://github.com/oven-sh/bun/security/advisories/GHSA-663w-cv8g-jj2p" }
       ],
       "exploitation": [],
