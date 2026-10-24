@@ -5,6 +5,7 @@ import { dirname } from 'node:path';
 import { parseArgs } from 'node:util';
 import { refresh } from '../src/refresh.js';
 import { AllSourcesFailedError } from '../src/build.js';
+import { autoMergeAllowed } from '../src/classify.js';
 
 const { values } = parseArgs({
   options: {
@@ -27,6 +28,7 @@ try {
   if (err instanceof AllSourcesFailedError) {
     console.error(err.message);
     setOutput('level', 'none');
+    setOutput('automerge', 'false');
     process.exit(0);
   }
   console.error(err.message);
@@ -44,6 +46,8 @@ if (values.classification) writeFileSync(values.classification, JSON.stringify(c
 for (const [name, s] of Object.entries(data.sources)) console.log(`source ${name.padEnd(10)} ${s.status.padEnd(9)} fetchedAt=${s.fetchedAt ?? '-'}${s.lastError ? ` error=${s.lastError}` : ''}`);
 console.log(`classification: ${classification.level} (${classification.items.length} changes)`);
 setOutput('level', classification.level);
+setOutput('automerge', String(autoMergeAllowed(classification)));
+console.log(`auto-merge allowed: ${autoMergeAllowed(classification)}`);
 
 function setOutput(k, v) {
   if (process.env.GITHUB_OUTPUT) appendFileSync(process.env.GITHUB_OUTPUT, `${k}=${v}\n`);

@@ -4,6 +4,8 @@ on:
   pull_request:
   push:
     branches: [main]
+  # Started by refresh.yml for data/refresh (GITHUB_TOKEN pushes do not trigger pull_request runs).
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -21,3 +23,27 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm test
+
+  # Job checks from workflow_dispatch runs are not counted for required status checks.
+  # For data/refresh only, report this run's real result as a check run named "test" on the same commit.
+  report-test-check:
+    needs: test
+    if: always() && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/data/refresh'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      checks: write
+    steps:
+      - name: Create check run "test"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RESULT: ${{ needs.test.result }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          if [ "$RESULT" = "success" ]; then CONCLUSION=success; else CONCLUSION=failure; fi
+          gh api -X POST "repos/$GITHUB_REPOSITORY/check-runs" \
+            -f name=test -f head_sha="$GITHUB_SHA" -f status=completed -f conclusion="$CONCLUSION" \
+            -f details_url="$RUN_URL" \
+            -f 'output[title]'="ci.yml (workflow_dispatch): $RESULT" \
+            -f 'output[summary]'="Lint und Tests aus $RUN_URL"
