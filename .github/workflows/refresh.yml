@@ -3,14 +3,15 @@ name: refresh
 # Fetches the 2shell data every 6 hours. Never pushes to main, never merges.
 # data-only changes  -> branch data/refresh,   PR "data: refresh"
 # editorial changes  -> branch data/editorial, DRAFT PR labelled "editorial" with a "Text prüfen" checklist
+# Auto-merge (squash) only for data-only PRs, only if repo variable AUTO_MERGE_DATA == 'true',
+# and only once the required check "test" has passed. Editorial PRs always need a human.
 on:
   schedule:
     - cron: '0 */6 * * *'
   workflow_dispatch:
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 concurrency:
   group: refresh
@@ -20,6 +21,10 @@ jobs:
   refresh:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    permissions:
+      contents: write       # push data/refresh and data/editorial (never main)
+      pull-requests: write  # open/update PRs, enable auto-merge
+      actions: write        # workflow_dispatch of ci.yml
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -41,6 +46,7 @@ jobs:
         run: node bin/refresh.js --summary "$RUNNER_TEMP/summary.md" --classification "$RUNNER_TEMP/classification.json"
 
       - name: Open or update pull request
+        id: pr
         if: steps.refresh.outputs.level == 'data-only' || steps.refresh.outputs.level == 'editorial'
         env:
           GH_TOKEN: ${{ github.token }}
@@ -60,6 +66,9 @@ jobs:
           git add data/2shell.json
           if git diff --cached --quiet; then echo "no data change"; exit 0; fi
           git commit -m "$TITLE" -m "stand: $(jq -r .stand data/2shell.json)"
+          # Same checks as ci.yml, on exactly the commit that gets pushed.
+          npm run lint
+          npm test
           git push --force origin "HEAD:refs/heads/$BRANCH"
 
           PR="$(gh pr list --head "$BRANCH" --base main --state open --json number --jq '.[0].number // empty')"
@@ -71,6 +80,48 @@ jobs:
           else
             gh pr create --base main --head "$BRANCH" --title "$TITLE" --body-file "$RUNNER_TEMP/summary.md"
           fi
+          PR="$(gh pr list --head "$BRANCH" --base main --state open --json number --jq '.[0].number // empty')"
+          {
+            echo "branch=$BRANCH"
+            echo "number=$PR"
+            echo "sha=$(git rev-parse HEAD)"
+          } >> "$GITHUB_OUTPUT"
+
+      # Data-only PRs only. Editorial changes go to data/editorial as a draft and are never auto-merged.
+      - name: Run CI and enable auto-merge (data-only only)
+        if: >-
+          steps.pr.outputs.number != '' &&
+          steps.pr.outputs.branch == 'data/refresh' &&
+          steps.refresh.outputs.level == 'data-only' &&
+          steps.refresh.outputs.automerge == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ steps.pr.outputs.number }}
+          SHA: ${{ steps.pr.outputs.sha }}
+          # Repository variable, set to "true" only after branch protection on main requires "test".
+          AUTO_MERGE_DATA: ${{ vars.AUTO_MERGE_DATA }}
+        run: |
+          set -euo pipefail
+          # GITHUB_TOKEN pushes do not start pull_request runs; workflow_dispatch does.
+          gh workflow run ci.yml --ref data/refresh
+
+          if [ "${AUTO_MERGE_DATA:-}" != "true" ]; then
+            echo "AUTO_MERGE_DATA is not 'true': auto-merge not enabled."
+            exit 0
+          fi
+          INFO="$(gh pr view "$PR" --json isDraft,headRefName,baseRefName,labels,headRefOid)"
+          DRAFT="$(jq -r .isDraft <<<"$INFO")"
+          HEAD="$(jq -r .headRefName <<<"$INFO")"
+          BASE="$(jq -r .baseRefName <<<"$INFO")"
+          OID="$(jq -r .headRefOid <<<"$INFO")"
+          EDITORIAL="$(jq -r '[.labels[].name] | index("editorial") != null' <<<"$INFO")"
+          if [ "$DRAFT" != "false" ] || [ "$HEAD" != "data/refresh" ] || [ "$BASE" != "main" ] || [ "$EDITORIAL" != "false" ] || [ "$OID" != "$SHA" ]; then
+            echo "::warning::PR #$PR does not qualify for auto-merge (draft=$DRAFT head=$HEAD base=$BASE editorial=$EDITORIAL sha=$OID)."
+            exit 0
+          fi
+          # Merges only this exact commit, and only after the required check "test" has passed.
+          gh pr merge "$PR" --auto --squash --match-head-commit "$SHA" \
+            || echo "::warning::Could not enable auto-merge (is 'Allow auto-merge' enabled in the repository settings?)."
 
       - name: Job summary
         if: always()

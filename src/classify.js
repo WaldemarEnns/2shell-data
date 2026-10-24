@@ -152,3 +152,13 @@ export function summaryMarkdown(result, next) {
   lines.push('_Automatisch erzeugt von `npm run refresh`. Nie automatisch mergen._');
   return lines.join('\n') + '\n';
 }
+
+/**
+ * Guard for auto-merge: only a pure data-only result may be auto-merged.
+ * Anything editorial (or an empty/unknown result) must go through a human.
+ */
+export function autoMergeAllowed(result) {
+  if (!result || result.level !== 'data-only') return false;
+  if (!Array.isArray(result.items) || result.items.length === 0) return false;
+  return result.items.every((i) => i.level === 'data-only');
+}
