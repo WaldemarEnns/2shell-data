@@ -39,6 +39,7 @@ vorheriger Stand┘        │                                  │
 - **`stand`** ist der Zeitpunkt des letzten erfolgreichen Laufs. Schlagen alle Quellen fehl, wird nichts geschrieben.
 - **Ausfall einer Quelle:** Der letzte gute Wert bleibt stehen, nichts wird geleert. `sources.<name>.fetchedAt` bleibt auf dem letzten Erfolg, `lastError` nennt den Fehler. `status` ist `ok`, solange der letzte Erfolg jünger als die Schwelle oben ist, danach `veraltet`; `fehlt`, wenn es nie einen Erfolg gab. Die Schwellen und die Banner-Schwelle (24 h für das globale `stand`) stehen in `meta`, damit die Seite sie anwenden kann.
 - **KEV** ist dreiwertig: `kev.status` = `listed` / `not_listed` / `unknown` (`kev.exploited` true / false / null).
+- **Titel sind intern.** `title` ist ein englischer Kurztitel aus OSV bzw. der NVD-Beschreibung und wird nicht angezeigt. Die sichtbaren deutschen Überschriften schreibt die Redaktion (Desi) in den Texten unter `editorial.markdownPath`. Ebenso redaktionell und derzeit leer: `exploitation` (PoC, Laborbeweis) und Einträge mit `role: exposure_path` (z. B. Express 5 / body-parser).
 - **Keine Ampel in den Daten.** Die Seite leitet Farben aus `fixStatus` und `runtimes[].status` ab.
 
 ## Redaktionelle Regel
