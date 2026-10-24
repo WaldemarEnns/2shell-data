@@ -1,0 +1,78 @@
+name: refresh
+
+# Fetches the 2shell data every 6 hours. Never pushes to main, never merges.
+# data-only changes  -> branch data/refresh,   PR "data: refresh"
+# editorial changes  -> branch data/editorial, DRAFT PR labelled "editorial" with a "Text prüfen" checklist
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24.22.1
+          cache: npm
+
+      - run: npm ci
+
+      - name: Fetch, build, validate, classify
+        id: refresh
+        env:
+          # Optional. Only ever set as a repository secret, never in code.
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node bin/refresh.js --summary "$RUNNER_TEMP/summary.md" --classification "$RUNNER_TEMP/classification.json"
+
+      - name: Open or update pull request
+        if: steps.refresh.outputs.level == 'data-only' || steps.refresh.outputs.level == 'editorial'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LEVEL: ${{ steps.refresh.outputs.level }}
+        run: |
+          set -euo pipefail
+          if [ "$LEVEL" = "editorial" ]; then
+            BRANCH="data/editorial"; TITLE="data: editorial refresh (Text prüfen)"
+          else
+            BRANCH="data/refresh"; TITLE="data: refresh"
+          fi
+          case "$BRANCH" in main|master|"") echo "refusing to push to $BRANCH"; exit 1 ;; esac
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -C "$BRANCH"
+          git add data/2shell.json
+          if git diff --cached --quiet; then echo "no data change"; exit 0; fi
+          git commit -m "$TITLE" -m "stand: $(jq -r .stand data/2shell.json)"
+          git push --force origin "HEAD:refs/heads/$BRANCH"
+
+          PR="$(gh pr list --head "$BRANCH" --base main --state open --json number --jq '.[0].number // empty')"
+          if [ -n "$PR" ]; then
+            gh pr edit "$PR" --title "$TITLE" --body-file "$RUNNER_TEMP/summary.md"
+          elif [ "$LEVEL" = "editorial" ]; then
+            gh label create editorial --color D4A017 --description "Redaktionelle Prüfung nötig" 2>/dev/null || true
+            gh pr create --base main --head "$BRANCH" --title "$TITLE" --body-file "$RUNNER_TEMP/summary.md" --draft --label editorial
+          else
+            gh pr create --base main --head "$BRANCH" --title "$TITLE" --body-file "$RUNNER_TEMP/summary.md"
+          fi
+
+      - name: Job summary
+        if: always()
+        run: |
+          if [ -f "$RUNNER_TEMP/summary.md" ]; then cat "$RUNNER_TEMP/summary.md" >> "$GITHUB_STEP_SUMMARY"; fi

@@ -1,0 +1,117 @@
+{
+  "recordedAt": "2026-10-24T10:19:43.372Z",
+  "responses": {
+    "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json": {
+      "file": "001.json",
+      "status": 200
+    },
+    "https://api.first.org/data/v1/epss?cve=CVE-2026-111497,CVE-2026-109618,CVE-2026-109619": {
+      "file": "002.json",
+      "status": 200
+    },
+    "https://api.osv.dev/v1/vulns/CVE-2026-111497": {
+      "file": "003.json",
+      "status": 200
+    },
+    "https://api.osv.dev/v1/vulns/PYSEC-2026-4322": {
+      "file": "004.json",
+      "status": 200
+    },
+    "https://api.osv.dev/v1/vulns/PYSEC-2026-4323": {
+      "file": "005.json",
+      "status": 200
+    },
+    "https://api.osv.dev/v1/vulns/DEBIAN-CVE-2026-111497": {
+      "file": "006.json",
+      "status": 200
+    },
+    "https://api.osv.dev/v1/vulns/UBUNTU-CVE-2026-111497": {
+      "file": "007.json",
+      "status": 200
+    },
+    "https://api.osv.dev/v1/vulns/ALPINE-CVE-2026-111497": {
+      "file": "008.json",
+      "status": 200
+    },
+    "https://services.nvd.nist.gov/rest/json/cves/2.0?cveId=CVE-2026-111497": {
+      "file": "009.json",
+      "status": 200
+    },
+    "https://api.github.com/advisories?cve_id=CVE-2026-111497&per_page=100": {
+      "file": "010.json",
+      "status": 200
+    },
+    "https://api.github.com/advisories/GHSA-9v8h-qqgm-4m35": {
+      "file": "011.json",
+      "status": 200
+    },
+    "https://api.osv.dev/v1/vulns/CVE-2026-109618": {
+      "file": "012.json",
+      "status": 404
+    },
+    "https://api.osv.dev/v1/vulns/DEBIAN-CVE-2026-109618": {
+      "file": "013.json",
+      "status": 200
+    },
+    "https://api.osv.dev/v1/vulns/UBUNTU-CVE-2026-109618": {
+      "file": "014.json",
+      "status": 200
+    },
+    "https://api.osv.dev/v1/vulns/ALPINE-CVE-2026-109618": {
+      "file": "015.json",
+      "status": 404
+    },
+    "https://services.nvd.nist.gov/rest/json/cves/2.0?cveId=CVE-2026-109618": {
+      "file": "016.json",
+      "status": 200
+    },
+    "https://api.github.com/advisories?cve_id=CVE-2026-109618&per_page=100": {
+      "file": "017.json",
+      "status": 200
+    },
+    "https://api.osv.dev/v1/vulns/CVE-2026-109619": {
+      "file": "018.json",
+      "status": 404
+    },
+    "https://api.osv.dev/v1/vulns/DEBIAN-CVE-2026-109619": {
+      "file": "019.json",
+      "status": 200
+    },
+    "https://api.osv.dev/v1/vulns/UBUNTU-CVE-2026-109619": {
+      "file": "020.json",
+      "status": 200
+    },
+    "https://api.osv.dev/v1/vulns/ALPINE-CVE-2026-109619": {
+      "file": "021.json",
+      "status": 404
+    },
+    "https://services.nvd.nist.gov/rest/json/cves/2.0?cveId=CVE-2026-109619": {
+      "file": "022.json",
+      "status": 200
+    },
+    "https://api.github.com/advisories?cve_id=CVE-2026-109619&per_page=100": {
+      "file": "023.json",
+      "status": 200
+    },
+    "https://endoflife.date/api/v1/products/nodejs/": {
+      "file": "024.json",
+      "status": 200
+    },
+    "https://endoflife.date/api/v1/products/php/": {
+      "file": "025.json",
+      "status": 200
+    },
+    "https://endoflife.date/api/v1/products/python/": {
+      "file": "026.json",
+      "status": 200
+    },
+    "https://endoflife.date/api/v1/products/bun/": {
+      "file": "027.json",
+      "status": 200
+    },
+    "https://api.github.com/repos/kjdev/php-ext-brotli/pulls/105": {
+      "file": "028.json",
+      "status": 200
+    }
+  }
+}

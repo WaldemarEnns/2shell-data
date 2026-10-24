@@ -1,0 +1,144 @@
+{
+  "$schema": "./schema/watchlist.schema.json",
+  "_note": "Kuratierte Watchlist. Nur per PR ändern. Alles hier ist redaktionell und wird vom Datenlauf nie überschrieben.",
+  "ecosystems": ["npm", "PyPI", "Packagist", "Debian", "Ubuntu", "Alpine"],
+  "eolProducts": ["nodejs", "php", "python", "bun"],
+  "advisories": [
+    {
+      "id": "CVE-2026-111497",
+      "slug": "cve-2026-111497",
+      "landingUrl": null,
+      "nicknames": ["Node2Shell", "HTTP2Shell"],
+      "_todoNicknames": "Desi nennt zusätzlich Python2Shell und Broccoli2Shell (phase1.md); aufnehmen, sobald sie redaktionell freigegeben sind.",
+      "ghsaIds": ["GHSA-9v8h-qqgm-4m35"],
+      "vendorRatings": [
+        { "vendor": "Node.js", "rating": "High", "url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" }
+      ],
+      "manualAffected": [
+        {
+          "ecosystem": "library",
+          "package": "google/brotli",
+          "displayName": "Google Brotli (C-Bibliothek)",
+          "affectedRange": "1.0.3 – 1.2.0 (außer 1.0.10 und 1.1.1)",
+          "fixedVersions": ["1.0.10", "1.1.1", "1.2.1"],
+          "fixStatus": "fixed",
+          "role": "contains_bug",
+          "sourceUrl": "https://osv.dev/vulnerability/CVE-2026-111497"
+        },
+        {
+          "ecosystem": "runtime",
+          "package": "bun",
+          "displayName": "Bun",
+          "affectedRange": ">= 1.0.21, < 1.4.4",
+          "fixedVersions": ["1.4.4"],
+          "fixStatus": "fixed",
+          "role": "contains_bug",
+          "note": "Mit bun build --compile erstellte Programme neu bauen.",
+          "sourceUrl": "https://github.com/oven-sh/bun/security/advisories/GHSA-663w-cv8g-jj2p"
+        },
+        {
+          "ecosystem": "PECL",
+          "package": "brotli",
+          "displayName": "PHP-Erweiterung brotli (kjdev/php-ext-brotli)",
+          "affectedRange": "Release 0.21.0 und master (gebündeltes Brotli 1.2.0)",
+          "fixedVersions": [],
+          "fixStatus": "pending",
+          "fixRef": {
+            "url": "https://github.com/kjdev/php-ext-brotli/pull/105",
+            "label": "PR #105 · Update brotli submodule to v1.2.1"
+          },
+          "role": "contains_bug",
+          "note": "Betrifft brotli_uncompress() mit fremden Daten. Mit --with-libbrotli gebaut gilt der Stand der System-Bibliothek.",
+          "verifiedBy": "Desi",
+          "verifiedAt": "2026-10-24T10:05:00Z",
+          "sourceUrl": "https://github.com/kjdev/php-ext-brotli/pull/105"
+        }
+      ],
+      "fixStatusOverrides": [],
+      "runtimes": [
+        { "product": "Node.js", "eolProduct": "nodejs", "cycle": "26", "fixedIn": "26.12.1", "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" },
+        { "product": "Node.js", "eolProduct": "nodejs", "cycle": "24", "fixedIn": "24.22.1", "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" },
+        { "product": "Node.js", "eolProduct": "nodejs", "cycle": "22", "fixedIn": "22.23.4", "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" },
+        { "product": "Node.js", "eolProduct": "nodejs", "cycle": "25", "fixedIn": null, "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases", "_note": "Node.js: End-of-Life versions are always affected." },
+        { "product": "Node.js", "eolProduct": "nodejs", "cycle": "23", "fixedIn": null, "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" },
+        { "product": "Node.js", "eolProduct": "nodejs", "cycle": "20", "fixedIn": null, "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" },
+        { "product": "Bun", "eolProduct": "bun", "cycle": "1", "fixedIn": "1.4.4", "sourceUrl": "https://github.com/oven-sh/bun/security/advisories/GHSA-663w-cv8g-jj2p" }
+      ],
+      "exploitation": [],
+      "_todoExploitation": "Belegte Einträge (PoC, Laborbeweis) erst nach redaktioneller Freigabe eintragen. Desis Beispielwerte nicht übernehmen.",
+      "timeline": [
+        { "date": "2026-10-21", "event": "Node.js veröffentlicht 22.23.4, 24.22.1 und 26.12.1.", "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" },
+        { "date": "2026-10-22", "event": "Bun veröffentlicht 1.4.4 mit Brotli 1.2.1.", "sourceUrl": "https://bun.com/blog/bun-v1.4.4" }
+      ],
+      "credits": [
+        { "name": "OpenAI Codex Security (Khai Tran, Sylvie Mayer)", "role": "reporter", "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" },
+        { "name": "mcollina, aduh95", "role": "fix", "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" }
+      ],
+      "references": [
+        { "url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases", "type": "vendor", "label": "Node.js · 21.10.2026 · Security Releases", "date": "2026-10-21" },
+        { "url": "https://github.com/oven-sh/bun/security/advisories/GHSA-663w-cv8g-jj2p", "type": "vendor", "label": "Bun · GHSA-663w-cv8g-jj2p", "date": "2026-10-23" },
+        { "url": "https://bun.com/blog/bun-v1.4.4", "type": "release", "label": "Bun · 22.10.2026 · Bun v1.4.4", "date": "2026-10-22" },
+        { "url": "https://github.com/kjdev/php-ext-brotli/pull/105", "type": "fix", "label": "kjdev/php-ext-brotli · PR #105", "date": "2026-10-22" }
+      ],
+      "editorial": { "markdownPath": "content/cve-2026-111497.de.md", "approvedBy": null, "approvedAt": null }
+    },
+    {
+      "id": "CVE-2026-109618",
+      "slug": "cve-2026-109618",
+      "landingUrl": "https://php-check.waldemarenns.de/",
+      "nicknames": ["PHP2Shell"],
+      "title": "PHP: uninitialized request memory after out-of-memory longjmp (RCE)",
+      "ghsaIds": [],
+      "vendorRatings": [],
+      "manualAffected": [],
+      "fixStatusOverrides": [],
+      "runtimes": [
+        { "product": "PHP", "eolProduct": "php", "cycle": "8.5", "fixedIn": "8.5.12", "sourceUrl": "https://www.php.net/archive/2026.php#2026-10-21-5" },
+        { "product": "PHP", "eolProduct": "php", "cycle": "8.4", "fixedIn": "8.4.27", "sourceUrl": "https://www.php.net/archive/2026.php#2026-10-21-5" },
+        { "product": "PHP", "eolProduct": "php", "cycle": "8.3", "fixedIn": "8.3.36", "sourceUrl": "https://www.php.net/archive/2026.php#2026-10-21-5" },
+        { "product": "PHP", "eolProduct": "php", "cycle": "8.2", "fixedIn": "8.2.35", "sourceUrl": "https://www.php.net/archive/2026.php#2026-10-21-5" }
+      ],
+      "exploitation": [],
+      "timeline": [
+        { "date": "2026-10-21", "event": "PHP veröffentlicht 8.5.12, 8.4.27, 8.3.36 und 8.2.35.", "sourceUrl": "https://www.php.net/archive/2026.php#2026-10-21-5" }
+      ],
+      "credits": [],
+      "references": [
+        { "url": "https://www.php.net/archive/2026.php#2026-10-21-5", "type": "vendor", "label": "php.net · 21.10.2026 · Security advisory: Critical remote code execution vulnerabilities, update now", "date": "2026-10-21" },
+        { "url": "https://thephp.foundation/blog/2026/10/21/todays-php-security-release-and-how-were-strengthening-php-security/", "type": "vendor", "label": "PHP Foundation · 21.10.2026 · Today’s PHP Security Release", "date": "2026-10-21" },
+        { "url": "https://www.cisa.gov/news-events/alerts/2026/10/21/critical-vulnerabilities-php-require-immediate-patching", "type": "advisory", "label": "CISA · 21.10.2026 · Critical Vulnerabilities in PHP Require Immediate Patching", "date": "2026-10-21" },
+        { "url": "https://www.bleepingcomputer.com/news/security/php-ships-emergency-patches-for-critical-php2shell-flaws/", "type": "news", "label": "Bleeping Computer · 21.10.2026 · PHP ships emergency patches for critical PHP2Shell flaws", "date": "2026-10-21" }
+      ],
+      "editorial": { "markdownPath": null, "approvedBy": null, "approvedAt": null }
+    },
+    {
+      "id": "CVE-2026-109619",
+      "slug": "cve-2026-109619",
+      "landingUrl": "https://php-check.waldemarenns.de/",
+      "nicknames": ["PHP2Shell"],
+      "title": "PHP: stale global state pointing into freed request memory (RCE)",
+      "ghsaIds": [],
+      "vendorRatings": [],
+      "manualAffected": [],
+      "fixStatusOverrides": [],
+      "runtimes": [
+        { "product": "PHP", "eolProduct": "php", "cycle": "8.5", "fixedIn": "8.5.12", "sourceUrl": "https://www.php.net/archive/2026.php#2026-10-21-5" },
+        { "product": "PHP", "eolProduct": "php", "cycle": "8.4", "fixedIn": "8.4.27", "sourceUrl": "https://www.php.net/archive/2026.php#2026-10-21-5" },
+        { "product": "PHP", "eolProduct": "php", "cycle": "8.3", "fixedIn": "8.3.36", "sourceUrl": "https://www.php.net/archive/2026.php#2026-10-21-5" },
+        { "product": "PHP", "eolProduct": "php", "cycle": "8.2", "fixedIn": "8.2.35", "sourceUrl": "https://www.php.net/archive/2026.php#2026-10-21-5" }
+      ],
+      "exploitation": [],
+      "timeline": [
+        { "date": "2026-10-21", "event": "PHP veröffentlicht 8.5.12, 8.4.27, 8.3.36 und 8.2.35.", "sourceUrl": "https://www.php.net/archive/2026.php#2026-10-21-5" }
+      ],
+      "credits": [],
+      "references": [
+        { "url": "https://www.php.net/archive/2026.php#2026-10-21-5", "type": "vendor", "label": "php.net · 21.10.2026 · Security advisory: Critical remote code execution vulnerabilities, update now", "date": "2026-10-21" },
+        { "url": "https://thephp.foundation/blog/2026/10/21/todays-php-security-release-and-how-were-strengthening-php-security/", "type": "vendor", "label": "PHP Foundation · 21.10.2026 · Today’s PHP Security Release", "date": "2026-10-21" },
+        { "url": "https://www.cisa.gov/news-events/alerts/2026/10/21/critical-vulnerabilities-php-require-immediate-patching", "type": "advisory", "label": "CISA · 21.10.2026 · Critical Vulnerabilities in PHP Require Immediate Patching", "date": "2026-10-21" },
+        { "url": "https://www.bleepingcomputer.com/news/security/php-ships-emergency-patches-for-critical-php2shell-flaws/", "type": "news", "label": "Bleeping Computer · 21.10.2026 · PHP ships emergency patches for critical PHP2Shell flaws", "date": "2026-10-21" }
+      ],
+      "editorial": { "markdownPath": null, "approvedBy": null, "approvedAt": null }
+    }
+  ]
+}
