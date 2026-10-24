@@ -80,3 +80,9 @@ test('summary markdown has the key values and a "Text prüfen" checklist for edi
   assert.match(md, /\| CVE-2026-111497 \| 9\.2 CRITICAL \(v4\.0\) \| nicht gelistet \|/);
   assert.doesNotMatch(summaryMarkdown(classify(base, later()), later()), /Text prüfen/);
 });
+
+test('fixStatus change to or from via_runtime -> editorial', () => {
+  const a = later();
+  a.advisories[0].affected.find((x) => x.package === 'body-parser').fixStatus = 'none';
+  assert.equal(levelOf(a), 'editorial');
+});

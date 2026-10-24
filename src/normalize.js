@@ -84,13 +84,20 @@ export function referenceLabel(url) {
   const host = u.hostname.replace(/^www\./, '');
   const p = u.pathname;
   let m;
+  if (host === 'github.com' && (m = p.match(/^\/([^/]+\/[^/]+)\/security\/advisories\/(GHSA(?:-[a-z0-9]{4}){3})/i))) return `${m[1]} · Advisory ${m[2]}`;
   if ((m = p.match(/(GHSA(?:-[a-z0-9]{4}){3})/i))) return `GitHub Advisory ${m[1]}`;
+  if (host === 'openwall.com' && (m = p.match(/^\/lists\/([^/]+)\/(\d{4})\/(\d{1,2})\/(\d{1,2})\/(\d+)/))) return `${m[1]} · ${m[4].padStart(2, '0')}.${m[3].padStart(2, '0')}.${m[2]} · Nachricht ${m[5]}`;
+  if (host === 'lists.debian.org' && (m = p.match(/^\/([^/]+)\/(\d{4})\/(\d{2})\/(msg\d+)/))) return `Debian ${m[1]} · ${m[3]}/${m[2]} · ${m[4]}`;
+  if (host === 'github.com' && (m = p.match(/^\/CVEProject\/cvelistV5\/.*\/(CVE-\d{4}-\d+)\.json$/))) return `CVE List V5 · ${m[1]}`;
+  if (host === 'pypi.org' && (m = p.match(/^\/project\/([^/]+)(?:\/([^/]+))?/))) return `PyPI · ${m[1]}${m[2] ? ` ${m[2]}` : ''}`;
+  if (host === 'osv.dev' && (m = p.match(/^\/vulnerability\/([^/]+)/))) return `OSV · ${m[1]}`;
   if (host === 'nvd.nist.gov' && (m = p.match(/(CVE-\d{4}-\d+)/))) return `NVD · ${m[1]}`;
   if (host === 'cve.org' && (m = u.search.match(/(CVE-\d{4}-\d+)/))) return `CVE.org · ${m[1]}`;
   if ((m = p.match(/^\/([^/]+\/[^/]+)\/commit\/([0-9a-f]{7})/))) return `${m[1]} · Commit ${m[2]}`;
   if ((m = p.match(/^\/([^/]+\/[^/]+)\/pull\/(\d+)/))) return `${m[1]} · PR #${m[2]}`;
   if ((m = p.match(/^\/([^/]+\/[^/]+)\/releases\/tag\/([^/]+)/))) return `${m[1]} · Release ${decodeURIComponent(m[2])}`;
   if ((m = p.match(/\/vulns\/([^/]+)\/([A-Z]+-\d{4}-\d+)/))) return `PyPA Advisory · ${m[2]} (${m[1]})`;
+  if (host === 'github.com' && (m = p.match(/^\/([^/]+\/[^/]+)\/?$/))) return `GitHub · ${m[1]}`;
   const tail = p.split('/').filter(Boolean).slice(-1)[0];
   return tail ? `${host} · ${decodeURIComponent(tail).slice(0, 80)}` : host;
 }
@@ -123,3 +130,9 @@ export function cvssSourceName(source) {
 const OSV_CREDIT_ROLES = { FINDER: 'reporter', REPORTER: 'reporter', REMEDIATION_DEVELOPER: 'fix', REMEDIATION_REVIEWER: 'fix', ANALYST: 'analysis' };
 const GHSA_CREDIT_ROLES = { finder: 'reporter', reporter: 'reporter', remediation_developer: 'fix', remediation_reviewer: 'fix', analyst: 'analysis' };
 export const creditRole = (type, kind) => (kind === 'osv' ? OSV_CREDIT_ROLES : GHSA_CREDIT_ROLES)[kind === 'osv' ? String(type).toUpperCase() : String(type).toLowerCase()] ?? null;
+
+/** Date that is part of the URL itself (mailing-list archives). Null if the URL carries no date. */
+export function referenceDate(url) {
+  const m = String(url).match(/openwall\.com\/lists\/[^/]+\/(\d{4})\/(\d{1,2})\/(\d{1,2})\//);
+  return m ? `${m[1]}-${m[2].padStart(2, '0')}-${m[3].padStart(2, '0')}` : null;
+}

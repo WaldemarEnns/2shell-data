@@ -60,3 +60,16 @@ test('watchlist: pending/none in manualAffected needs verifiedBy, verifiedAt and
   delete pecl.verifiedBy;
   assert.equal(validateWatchlist(wl).ok, false);
 });
+
+test('watchlist: via_runtime needs role exposure_path plus fixRef/verifiedBy/verifiedAt', () => {
+  const pick = (wl) => wl.advisories[0].manualAffected.find((a) => a.package === 'body-parser');
+  const ok = clone(watchlist);
+  assert.equal(pick(ok).fixStatus, 'via_runtime');
+  assert.deepEqual(validateWatchlist(ok).errors, []);
+  const noRole = clone(watchlist); pick(noRole).role = 'contains_bug';
+  assert.equal(validateWatchlist(noRole).ok, false);
+  const noRef = clone(watchlist); delete pick(noRef).fixRef;
+  assert.equal(validateWatchlist(noRef).ok, false);
+  const badTested = clone(watchlist); delete pick(badTested).testedBy.sourceUrl;
+  assert.equal(validateWatchlist(badTested).ok, false);
+});
