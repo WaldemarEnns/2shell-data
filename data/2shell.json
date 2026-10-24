@@ -1,7 +1,7 @@
 {
   "$schema": "../schema/2shell.schema.json",
   "schemaVersion": "1",
-  "stand": "2026-10-24T10:24:51Z",
+  "stand": "2026-10-24T20:01:27Z",
   "refreshIntervalHours": 6,
   "meta": {
     "bannerStaleAfterHours": 24,
@@ -19,50 +19,50 @@
   "sources": {
     "osv": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:24:51Z",
-      "lastAttemptAt": "2026-10-24T10:24:51Z",
+      "fetchedAt": "2026-10-24T20:01:27Z",
+      "lastAttemptAt": "2026-10-24T20:01:27Z",
       "lastError": null,
       "staleAfterHours": 12
     },
     "nvd": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:24:51Z",
-      "lastAttemptAt": "2026-10-24T10:24:51Z",
+      "fetchedAt": "2026-10-24T20:01:27Z",
+      "lastAttemptAt": "2026-10-24T20:01:27Z",
       "lastError": null,
       "staleAfterHours": 12
     },
     "ghsa": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:24:51Z",
-      "lastAttemptAt": "2026-10-24T10:24:51Z",
+      "fetchedAt": "2026-10-24T20:01:27Z",
+      "lastAttemptAt": "2026-10-24T20:01:27Z",
       "lastError": null,
       "staleAfterHours": 12
     },
     "cisaKev": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:24:51Z",
-      "lastAttemptAt": "2026-10-24T10:24:51Z",
+      "fetchedAt": "2026-10-24T20:01:27Z",
+      "lastAttemptAt": "2026-10-24T20:01:27Z",
       "lastError": null,
       "staleAfterHours": 12
     },
     "firstEpss": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:24:51Z",
-      "lastAttemptAt": "2026-10-24T10:24:51Z",
+      "fetchedAt": "2026-10-24T20:01:27Z",
+      "lastAttemptAt": "2026-10-24T20:01:27Z",
       "lastError": null,
       "staleAfterHours": 48
     },
     "endoflife": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:24:51Z",
-      "lastAttemptAt": "2026-10-24T10:24:51Z",
+      "fetchedAt": "2026-10-24T20:01:27Z",
+      "lastAttemptAt": "2026-10-24T20:01:27Z",
       "lastError": null,
       "staleAfterHours": 168
     },
     "vendor": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:24:51Z",
-      "lastAttemptAt": "2026-10-24T10:24:51Z",
+      "fetchedAt": "2026-10-24T20:01:27Z",
+      "lastAttemptAt": "2026-10-24T20:01:27Z",
       "lastError": null,
       "staleAfterHours": 12
     }
@@ -473,12 +473,14 @@
         ],
         "nicknames": [
           "Node2Shell",
-          "HTTP2Shell"
+          "Python2Shell",
+          "HTTP2Shell",
+          "Broccoli2Shell"
         ]
       },
       "title": "Out-of-Bounds Write in Google Brotli Decoder",
       "published": "2026-10-22T14:17:37Z",
-      "modified": "2026-10-24T04:18:17Z",
+      "modified": "2026-10-24T18:16:47Z",
       "cvss": {
         "version": "4.0",
         "score": 9.2,
@@ -501,9 +503,9 @@
         "catalogVersion": "2026.10.23"
       },
       "epss": {
-        "score": 0.0048,
-        "percentile": 0.40511,
-        "date": "2026-10-23"
+        "score": 0.0071,
+        "percentile": 0.53063,
+        "date": "2026-10-24"
       },
       "exploitation": [],
       "affected": [
@@ -574,7 +576,7 @@
             "url": "https://github.com/kjdev/php-ext-brotli/pull/105",
             "label": "PR #105 · Update brotli submodule to v1.2.1",
             "state": "open",
-            "checkedAt": "2026-10-24T10:24:51Z"
+            "checkedAt": "2026-10-24T20:01:27Z"
           },
           "role": "contains_bug",
           "note": "Betrifft brotli_uncompress() mit fremden Daten. Mit --with-libbrotli gebaut gilt der Stand der System-Bibliothek.",
@@ -912,6 +914,15 @@
           "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases"
         },
         {
+          "product": "Node.js",
+          "cycle": "18",
+          "fixedIn": null,
+          "eol": "2025-04-30",
+          "latest": "18.20.8",
+          "status": "kein Fix (EOL)",
+          "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases"
+        },
+        {
           "product": "Bun",
           "cycle": "1",
           "fixedIn": "1.4.4",
@@ -994,6 +1005,13 @@
           "url": "http://www.openwall.com/lists/oss-security/2026/10/23/25",
           "type": "analysis",
           "label": "openwall.com · 25",
+          "date": null,
+          "source": "nvd"
+        },
+        {
+          "url": "http://www.openwall.com/lists/oss-security/2026/10/24/6",
+          "type": "analysis",
+          "label": "openwall.com · 6",
           "date": null,
           "source": "nvd"
         },
@@ -1153,36 +1171,36 @@
       "sources": {
         "osv": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:01:27Z",
+          "lastAttemptAt": "2026-10-24T20:01:27Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "nvd": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:01:27Z",
+          "lastAttemptAt": "2026-10-24T20:01:27Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "ghsa": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:01:27Z",
+          "lastAttemptAt": "2026-10-24T20:01:27Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "cisaKev": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:01:27Z",
+          "lastAttemptAt": "2026-10-24T20:01:27Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "firstEpss": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:01:27Z",
+          "lastAttemptAt": "2026-10-24T20:01:27Z",
           "lastError": null,
           "staleAfterHours": 48
         }
@@ -1231,9 +1249,9 @@
         "catalogVersion": "2026.10.23"
       },
       "epss": {
-        "score": 0.1162,
-        "percentile": 0.96047,
-        "date": "2026-10-23"
+        "score": 0.11841,
+        "percentile": 0.96097,
+        "date": "2026-10-24"
       },
       "exploitation": [],
       "affected": [
@@ -1521,36 +1539,36 @@
       "sources": {
         "osv": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:01:27Z",
+          "lastAttemptAt": "2026-10-24T20:01:27Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "nvd": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:01:27Z",
+          "lastAttemptAt": "2026-10-24T20:01:27Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "ghsa": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:01:27Z",
+          "lastAttemptAt": "2026-10-24T20:01:27Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "cisaKev": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:01:27Z",
+          "lastAttemptAt": "2026-10-24T20:01:27Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "firstEpss": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:01:27Z",
+          "lastAttemptAt": "2026-10-24T20:01:27Z",
           "lastError": null,
           "staleAfterHours": 48
         }
@@ -1599,9 +1617,9 @@
         "catalogVersion": "2026.10.23"
       },
       "epss": {
-        "score": 0.05991,
-        "percentile": 0.933,
-        "date": "2026-10-23"
+        "score": 0.06217,
+        "percentile": 0.93524,
+        "date": "2026-10-24"
       },
       "exploitation": [],
       "affected": [
@@ -1952,36 +1970,36 @@
       "sources": {
         "osv": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:01:27Z",
+          "lastAttemptAt": "2026-10-24T20:01:27Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "nvd": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:01:27Z",
+          "lastAttemptAt": "2026-10-24T20:01:27Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "ghsa": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:01:27Z",
+          "lastAttemptAt": "2026-10-24T20:01:27Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "cisaKev": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:01:27Z",
+          "lastAttemptAt": "2026-10-24T20:01:27Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "firstEpss": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:01:27Z",
+          "lastAttemptAt": "2026-10-24T20:01:27Z",
           "lastError": null,
           "staleAfterHours": 48
         }
