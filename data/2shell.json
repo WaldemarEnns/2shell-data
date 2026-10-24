@@ -1,7 +1,7 @@
 {
   "$schema": "../schema/2shell.schema.json",
   "schemaVersion": "1",
-  "stand": "2026-10-24T10:24:51Z",
+  "stand": "2026-10-24T20:26:30Z",
   "refreshIntervalHours": 6,
   "meta": {
     "bannerStaleAfterHours": 24,
@@ -14,55 +14,56 @@
       "firstEpss": 48,
       "endoflife": 168
     },
+    "displayRangeNote": "Die Tabelle fasst Versionsbereiche zusammen und nennt im Zweifel eine Version zu viel. Maßgeblich sind die exakten Bereiche.",
     "generator": "2shell-data"
   },
   "sources": {
     "osv": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:24:51Z",
-      "lastAttemptAt": "2026-10-24T10:24:51Z",
+      "fetchedAt": "2026-10-24T20:26:30Z",
+      "lastAttemptAt": "2026-10-24T20:26:30Z",
       "lastError": null,
       "staleAfterHours": 12
     },
     "nvd": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:24:51Z",
-      "lastAttemptAt": "2026-10-24T10:24:51Z",
+      "fetchedAt": "2026-10-24T20:26:30Z",
+      "lastAttemptAt": "2026-10-24T20:26:30Z",
       "lastError": null,
       "staleAfterHours": 12
     },
     "ghsa": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:24:51Z",
-      "lastAttemptAt": "2026-10-24T10:24:51Z",
+      "fetchedAt": "2026-10-24T20:26:30Z",
+      "lastAttemptAt": "2026-10-24T20:26:30Z",
       "lastError": null,
       "staleAfterHours": 12
     },
     "cisaKev": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:24:51Z",
-      "lastAttemptAt": "2026-10-24T10:24:51Z",
+      "fetchedAt": "2026-10-24T20:26:30Z",
+      "lastAttemptAt": "2026-10-24T20:26:30Z",
       "lastError": null,
       "staleAfterHours": 12
     },
     "firstEpss": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:24:51Z",
-      "lastAttemptAt": "2026-10-24T10:24:51Z",
+      "fetchedAt": "2026-10-24T20:26:30Z",
+      "lastAttemptAt": "2026-10-24T20:26:30Z",
       "lastError": null,
       "staleAfterHours": 48
     },
     "endoflife": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:24:51Z",
-      "lastAttemptAt": "2026-10-24T10:24:51Z",
+      "fetchedAt": "2026-10-24T20:26:30Z",
+      "lastAttemptAt": "2026-10-24T20:26:30Z",
       "lastError": null,
       "staleAfterHours": 168
     },
     "vendor": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:24:51Z",
-      "lastAttemptAt": "2026-10-24T10:24:51Z",
+      "fetchedAt": "2026-10-24T20:26:30Z",
+      "lastAttemptAt": "2026-10-24T20:26:30Z",
       "lastError": null,
       "staleAfterHours": 12
     }
@@ -473,12 +474,15 @@
         ],
         "nicknames": [
           "Node2Shell",
-          "HTTP2Shell"
+          "Python2Shell",
+          "HTTP2Shell",
+          "Broccoli2Shell"
         ]
       },
       "title": "Out-of-Bounds Write in Google Brotli Decoder",
-      "published": "2026-10-22T14:17:37Z",
-      "modified": "2026-10-24T04:18:17Z",
+      "published": "2026-10-22T13:35:41Z",
+      "publishedSource": "osv",
+      "modified": "2026-10-24T18:16:47Z",
       "cvss": {
         "version": "4.0",
         "score": 9.2,
@@ -501,11 +505,30 @@
         "catalogVersion": "2026.10.23"
       },
       "epss": {
-        "score": 0.0048,
-        "percentile": 0.40511,
-        "date": "2026-10-23"
+        "score": 0.0071,
+        "percentile": 0.53063,
+        "date": "2026-10-24"
       },
-      "exploitation": [],
+      "exploitation": [
+        {
+          "date": "2026-10-22",
+          "kind": "poc_public",
+          "sourceUrl": "https://www.aikido.dev/blog/node2shell-nodejs-brotli-rce-cve-2026-111497",
+          "sourceLabel": "Aikido"
+        },
+        {
+          "date": "2026-10-22",
+          "kind": "rce_lab",
+          "sourceUrl": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/",
+          "sourceLabel": "Imperva"
+        },
+        {
+          "date": "2026-10-24",
+          "kind": "none_reported",
+          "sourceUrl": "https://strobes.co/blog/http2shell-brotli-rce-cve-2026-111497/",
+          "sourceLabel": "Strobes"
+        }
+      ],
       "affected": [
         {
           "release": null,
@@ -520,7 +543,9 @@
           "role": "contains_bug",
           "note": "Mit bun build --compile erstellte Programme neu bauen.",
           "source": "watchlist",
-          "sourceId": "https://github.com/oven-sh/bun/security/advisories/GHSA-663w-cv8g-jj2p"
+          "sourceId": "https://github.com/oven-sh/bun/security/advisories/GHSA-663w-cv8g-jj2p",
+          "displayRange": "1.0.21 bis 1.4.3",
+          "displayRangeSource": "watchlist"
         },
         {
           "release": null,
@@ -535,8 +560,38 @@
           ],
           "fixStatus": "fixed",
           "role": "contains_bug",
+          "note": "Distributionen liefern den Fix teils als Backport mit alter Versionsnummer.",
           "source": "watchlist",
-          "sourceId": "https://osv.dev/vulnerability/CVE-2026-111497"
+          "sourceId": "https://osv.dev/vulnerability/CVE-2026-111497",
+          "displayRange": "1.0.3 bis 1.2.0",
+          "displayNote": "1.0.10 und 1.1.1 nicht betroffen",
+          "displayRangeSource": "watchlist"
+        },
+        {
+          "release": null,
+          "ecosystem": "npm",
+          "package": "body-parser",
+          "displayName": "Express 5 / body-parser 2.x",
+          "affectedRange": "Express 5.0.0 – 5.3.0, body-parser 2.0.0 – 2.3.0",
+          "fixedVersions": [],
+          "fixStatus": "via_runtime",
+          "fixRef": {
+            "url": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases",
+            "label": "Node.js · 21.10.2026 · Security Releases (22.23.4, 24.22.1, 26.12.1)"
+          },
+          "role": "exposure_path",
+          "testedBy": {
+            "name": "Imperva",
+            "sourceUrl": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/",
+            "date": "2026-10-22",
+            "scope": "tested_only"
+          },
+          "note": "Versionsbereiche nur wie von Imperva getestet; Zwischenversionen nicht einzeln geprüft.",
+          "source": "watchlist",
+          "sourceId": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/",
+          "displayRange": "Express 5.0.0 bis 5.3.0, body-parser 2.0.0 bis 2.3.0",
+          "displayNote": "Den Fehler enthält der Brotli-Decoder in Node.js, nicht Express. Das Node-Update schließt ihn.",
+          "displayRangeSource": "watchlist"
         },
         {
           "ecosystem": "PyPI",
@@ -548,7 +603,11 @@
           ],
           "fixStatus": "fixed",
           "source": "ghsa",
-          "sourceId": "GHSA-9v8h-qqgm-4m35"
+          "sourceId": "GHSA-9v8h-qqgm-4m35",
+          "displayName": "Python Brotli",
+          "role": "contains_bug",
+          "displayRange": "1.0.3 bis 1.2.0",
+          "displayRangeSource": "watchlist"
         },
         {
           "ecosystem": "PyPI",
@@ -560,7 +619,11 @@
           ],
           "fixStatus": "fixed",
           "source": "ghsa",
-          "sourceId": "GHSA-9v8h-qqgm-4m35"
+          "sourceId": "GHSA-9v8h-qqgm-4m35",
+          "displayName": "Python brotlicffi",
+          "role": "contains_bug",
+          "displayRange": "1.0.3 bis 1.2.0.x",
+          "displayRangeSource": "watchlist"
         },
         {
           "release": null,
@@ -574,12 +637,14 @@
             "url": "https://github.com/kjdev/php-ext-brotli/pull/105",
             "label": "PR #105 · Update brotli submodule to v1.2.1",
             "state": "open",
-            "checkedAt": "2026-10-24T10:24:51Z"
+            "checkedAt": "2026-10-24T20:26:30Z"
           },
           "role": "contains_bug",
           "note": "Betrifft brotli_uncompress() mit fremden Daten. Mit --with-libbrotli gebaut gilt der Stand der System-Bibliothek.",
           "source": "watchlist",
-          "sourceId": "https://github.com/kjdev/php-ext-brotli/pull/105"
+          "sourceId": "https://github.com/kjdev/php-ext-brotli/pull/105",
+          "displayRange": "0.21.0 und master",
+          "displayRangeSource": "watchlist"
         },
         {
           "ecosystem": "Debian",
@@ -592,7 +657,9 @@
           "fixStatus": "fixed",
           "urgency": "not yet assigned",
           "source": "osv",
-          "sourceId": "DEBIAN-CVE-2026-111497"
+          "sourceId": "DEBIAN-CVE-2026-111497",
+          "displayRange": "vor 1.0.9-2+deb12u1",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Debian",
@@ -603,7 +670,9 @@
           "fixStatus": "unknown",
           "urgency": "unimportant",
           "source": "osv",
-          "sourceId": "DEBIAN-CVE-2026-111497"
+          "sourceId": "DEBIAN-CVE-2026-111497",
+          "displayRange": "alle Versionen",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Debian",
@@ -616,7 +685,9 @@
           "fixStatus": "fixed",
           "urgency": "not yet assigned",
           "source": "osv",
-          "sourceId": "DEBIAN-CVE-2026-111497"
+          "sourceId": "DEBIAN-CVE-2026-111497",
+          "displayRange": "vor 1.1.0-2+deb13u1",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Debian",
@@ -627,7 +698,9 @@
           "fixStatus": "unknown",
           "urgency": "unimportant",
           "source": "osv",
-          "sourceId": "DEBIAN-CVE-2026-111497"
+          "sourceId": "DEBIAN-CVE-2026-111497",
+          "displayRange": "alle Versionen",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Debian",
@@ -638,7 +711,9 @@
           "fixStatus": "unknown",
           "urgency": "not yet assigned",
           "source": "osv",
-          "sourceId": "DEBIAN-CVE-2026-111497"
+          "sourceId": "DEBIAN-CVE-2026-111497",
+          "displayRange": "alle Versionen",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Debian",
@@ -649,7 +724,9 @@
           "fixStatus": "unknown",
           "urgency": "unimportant",
           "source": "osv",
-          "sourceId": "DEBIAN-CVE-2026-111497"
+          "sourceId": "DEBIAN-CVE-2026-111497",
+          "displayRange": "alle Versionen",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -660,7 +737,9 @@
           "fixStatus": "unknown",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-111497"
+          "sourceId": "UBUNTU-CVE-2026-111497",
+          "displayRange": "alle Versionen",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -671,7 +750,9 @@
           "fixStatus": "unknown",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-111497"
+          "sourceId": "UBUNTU-CVE-2026-111497",
+          "displayRange": "alle Versionen",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -682,7 +763,9 @@
           "fixStatus": "unknown",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-111497"
+          "sourceId": "UBUNTU-CVE-2026-111497",
+          "displayRange": "alle Versionen",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -693,7 +776,9 @@
           "fixStatus": "unknown",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-111497"
+          "sourceId": "UBUNTU-CVE-2026-111497",
+          "displayRange": "alle Versionen",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -704,7 +789,9 @@
           "fixStatus": "unknown",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-111497"
+          "sourceId": "UBUNTU-CVE-2026-111497",
+          "displayRange": "alle Versionen",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -715,7 +802,9 @@
           "fixStatus": "unknown",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-111497"
+          "sourceId": "UBUNTU-CVE-2026-111497",
+          "displayRange": "alle Versionen",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -726,7 +815,9 @@
           "fixStatus": "unknown",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-111497"
+          "sourceId": "UBUNTU-CVE-2026-111497",
+          "displayRange": "alle Versionen",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -737,7 +828,9 @@
           "fixStatus": "unknown",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-111497"
+          "sourceId": "UBUNTU-CVE-2026-111497",
+          "displayRange": "alle Versionen",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -748,7 +841,9 @@
           "fixStatus": "unknown",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-111497"
+          "sourceId": "UBUNTU-CVE-2026-111497",
+          "displayRange": "alle Versionen",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -759,7 +854,9 @@
           "fixStatus": "unknown",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-111497"
+          "sourceId": "UBUNTU-CVE-2026-111497",
+          "displayRange": "alle Versionen",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -770,7 +867,9 @@
           "fixStatus": "unknown",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-111497"
+          "sourceId": "UBUNTU-CVE-2026-111497",
+          "displayRange": "alle Versionen",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -781,7 +880,9 @@
           "fixStatus": "unknown",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-111497"
+          "sourceId": "UBUNTU-CVE-2026-111497",
+          "displayRange": "alle Versionen",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -792,7 +893,9 @@
           "fixStatus": "unknown",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-111497"
+          "sourceId": "UBUNTU-CVE-2026-111497",
+          "displayRange": "alle Versionen",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -803,7 +906,9 @@
           "fixStatus": "unknown",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-111497"
+          "sourceId": "UBUNTU-CVE-2026-111497",
+          "displayRange": "alle Versionen",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -814,7 +919,9 @@
           "fixStatus": "unknown",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-111497"
+          "sourceId": "UBUNTU-CVE-2026-111497",
+          "displayRange": "alle Versionen",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Alpine",
@@ -827,7 +934,9 @@
           "fixStatus": "fixed",
           "urgency": null,
           "source": "osv",
-          "sourceId": "ALPINE-CVE-2026-111497"
+          "sourceId": "ALPINE-CVE-2026-111497",
+          "displayRange": "vor 1.1.1-r0",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Alpine",
@@ -840,7 +949,9 @@
           "fixStatus": "fixed",
           "urgency": null,
           "source": "osv",
-          "sourceId": "ALPINE-CVE-2026-111497"
+          "sourceId": "ALPINE-CVE-2026-111497",
+          "displayRange": "vor 1.2.1-r0",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Alpine",
@@ -853,7 +964,9 @@
           "fixStatus": "fixed",
           "urgency": null,
           "source": "osv",
-          "sourceId": "ALPINE-CVE-2026-111497"
+          "sourceId": "ALPINE-CVE-2026-111497",
+          "displayRange": "vor 1.2.1-r0",
+          "displayRangeSource": "auto"
         }
       ],
       "runtimes": [
@@ -912,6 +1025,15 @@
           "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases"
         },
         {
+          "product": "Node.js",
+          "cycle": "18",
+          "fixedIn": null,
+          "eol": "2025-04-30",
+          "latest": "18.20.8",
+          "status": "kein Fix (EOL)",
+          "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases"
+        },
+        {
           "product": "Bun",
           "cycle": "1",
           "fixedIn": "1.4.4",
@@ -923,15 +1045,63 @@
       ],
       "timeline": [
         {
+          "date": "2026-02-27T13:10:54Z",
+          "event": "Der Fix (Commit 0ed4268) landet im Brotli-Quellcode, noch ohne Hinweis auf eine Sicherheitslücke.",
+          "sourceUrl": "https://github.com/google/brotli/commit/0ed4268a4401abcb4472096340477cf4af7d1a2b",
+          "source": "watchlist"
+        },
+        {
           "date": "2026-10-21",
+          "event": "Vercel schaltet WAF-Regeln gegen eingehende Angriffe.",
+          "sourceUrl": "https://vercel.com/kb/bulletin/node-js-security-advisory",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-21T10:38:20Z",
           "event": "Node.js veröffentlicht 22.23.4, 24.22.1 und 26.12.1.",
-          "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases",
+          "sourceUrl": "https://github.com/nodejs/node/releases/tag/v24.22.1",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-21T19:26:58Z",
+          "event": "Google veröffentlicht Brotli 1.0.10, 1.1.1 und 1.2.1.",
+          "sourceUrl": "https://github.com/google/brotli/releases",
           "source": "watchlist"
         },
         {
           "date": "2026-10-22",
           "event": "Bun veröffentlicht 1.4.4 mit Brotli 1.2.1.",
           "sourceUrl": "https://bun.com/blog/bun-v1.4.4",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-22",
+          "event": "Ein öffentlicher Proof of Concept erscheint.",
+          "sourceUrl": "https://www.aikido.dev/blog/node2shell-nodejs-brotli-rce-cve-2026-111497",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-22T08:00:11Z",
+          "event": "Für die PHP-Erweiterung brotli geht PR #105 auf, der Brotli auf 1.2.1 hebt.",
+          "sourceUrl": "https://github.com/kjdev/php-ext-brotli/pull/105",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-22T12:22:01Z",
+          "event": "Imperva meldet Codeausführung im Labor auf Node.js 24.22.0.",
+          "sourceUrl": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-22T13:35:41Z",
+          "event": "CVE-Eintrag bei OSV veröffentlicht.",
+          "sourceUrl": "https://osv.dev/vulnerability/CVE-2026-111497",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-22T13:57:11Z",
+          "event": "Brotli 1.2.1 erscheint auf PyPI.",
+          "sourceUrl": "https://pypi.org/project/Brotli/1.2.1/",
           "source": "watchlist"
         },
         {
@@ -945,6 +1115,18 @@
           "event": "GitHub-Advisory GHSA-9v8h-qqgm-4m35 veröffentlicht.",
           "sourceUrl": "https://github.com/advisories/GHSA-9v8h-qqgm-4m35",
           "source": "ghsa"
+        },
+        {
+          "date": "2026-10-22T16:19:00Z",
+          "event": "brotlicffi 1.2.1.0 erscheint auf PyPI.",
+          "sourceUrl": "https://pypi.org/project/brotlicffi/1.2.1.0/",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-23",
+          "event": "Aikido nennt die Lücke HTTP2Shell, weil sie auch Python und andere HTTP-Software trifft.",
+          "sourceUrl": "https://www.aikido.dev/blog/python-packages-vulnerable-node2shell-brotli-cve-2026-111497",
+          "source": "watchlist"
         }
       ],
       "credits": [
@@ -955,9 +1137,34 @@
           "source": "watchlist"
         },
         {
-          "name": "mcollina, aduh95",
+          "name": "Matteo Collina",
+          "role": "reporter",
+          "sourceUrl": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/",
+          "note": "Abweichende Angabe von Imperva („Its advisory credits Matteo Collina with reporting it“). Node.js selbst nennt OpenAI Codex Security als Melder.",
+          "source": "watchlist"
+        },
+        {
+          "name": "Matteo Collina, Antoine du Hamel",
           "role": "fix",
           "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases",
+          "source": "watchlist"
+        },
+        {
+          "name": "Imperva Red Team",
+          "role": "exploit_research",
+          "sourceUrl": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/",
+          "source": "watchlist"
+        },
+        {
+          "name": "OpenSourceMalware",
+          "role": "analysis",
+          "sourceUrl": "https://opensourcemalware.com/blog/node2shell-affects-python",
+          "source": "watchlist"
+        },
+        {
+          "name": "Aikido",
+          "role": "analysis",
+          "sourceUrl": "https://www.aikido.dev/blog/python-packages-vulnerable-node2shell-brotli-cve-2026-111497",
           "source": "watchlist"
         }
       ],
@@ -991,10 +1198,136 @@
           "source": "watchlist"
         },
         {
+          "date": "2026-10-22",
+          "url": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/",
+          "type": "analysis",
+          "label": "Imperva · 22.10.2026 · Node2Shell: From Brotli Data to Remote Code Execution",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-22",
+          "url": "https://www.aikido.dev/blog/node2shell-nodejs-brotli-rce-cve-2026-111497",
+          "type": "analysis",
+          "label": "Aikido · 22.10.2026 · Node2Shell: Node.js Brotli vulnerability allows remote code execution",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-23",
+          "url": "https://www.aikido.dev/blog/python-packages-vulnerable-node2shell-brotli-cve-2026-111497",
+          "type": "analysis",
+          "label": "Aikido · 23.10.2026 · Node2Shell evolves to HTTP2Shell",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-23",
+          "url": "https://opensourcemalware.com/blog/node2shell-affects-python",
+          "type": "analysis",
+          "label": "OpenSourceMalware · 23.10.2026 · Python Packages Vulnerable to Node2Shell",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-24",
+          "url": "https://strobes.co/blog/http2shell-brotli-rce-cve-2026-111497/",
+          "type": "analysis",
+          "label": "Strobes · 24.10.2026 · HTTP2Shell (CVE-2026-111497): The Brotli RCE Hitting Node.js, Python and More",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-21",
+          "url": "https://vercel.com/kb/bulletin/node-js-security-advisory",
+          "type": "advisory",
+          "label": "Vercel · 21.10.2026 (aktualisiert 24.10.2026) · Node.js security advisory: Brotli decoder RCE (CVE-2026-111497)",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-24",
+          "url": "https://broccoli2shell.com/",
+          "type": "tracker",
+          "label": "broccoli2shell.com · Stand 24.10.2026 · gebündelte Brotli-Kopien",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-21",
+          "url": "https://github.com/google/brotli/releases/tag/v1.2.1",
+          "type": "release",
+          "label": "google/brotli · Release v1.2.1",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-21",
+          "url": "https://github.com/google/brotli/releases/tag/v1.1.1",
+          "type": "release",
+          "label": "google/brotli · Release v1.1.1",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-21",
+          "url": "https://github.com/google/brotli/releases/tag/v1.0.10",
+          "type": "release",
+          "label": "google/brotli · Release v1.0.10",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-02-27",
+          "url": "https://github.com/google/brotli/commit/0ed4268a4401abcb4472096340477cf4af7d1a2b",
+          "type": "fix",
+          "label": "google/brotli · Commit 0ed4268 · Detect and report invalid stream earlier.",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-21",
+          "url": "https://github.com/google/brotli/commit/b418fa81c48262a86a95332b0bc6d62c30aa78b6",
+          "type": "fix",
+          "label": "google/brotli · Commit b418fa8 · Detect and report invalid stream earlier.",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-21",
+          "url": "https://github.com/google/brotli/commit/da9806362874b9bd4b552a3af360b5d6347beb12",
+          "type": "fix",
+          "label": "google/brotli · Commit da98063 · Detect and report invalid stream earlier.",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-21",
+          "url": "https://github.com/google/brotli/commit/50a9b70a4d5e1443fc40927952276b68fffa83a0",
+          "type": "fix",
+          "label": "google/brotli · Commit 50a9b70 · Detect and report invalid stream earlier.",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-22",
+          "url": "https://pypi.org/project/Brotli/1.2.1/",
+          "type": "release",
+          "label": "PyPI · Brotli 1.2.1",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-22",
+          "url": "https://pypi.org/project/brotlicffi/1.2.1.0/",
+          "type": "release",
+          "label": "PyPI · brotlicffi 1.2.1.0",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-23",
+          "url": "https://lists.debian.org/debian-lts-announce/2026/10/msg00049.html",
+          "type": "tracker",
+          "label": "Debian LTS · DLA 4855-1 · brotli security update",
+          "source": "watchlist"
+        },
+        {
           "url": "http://www.openwall.com/lists/oss-security/2026/10/23/25",
           "type": "analysis",
-          "label": "openwall.com · 25",
-          "date": null,
+          "label": "oss-security · 23.10.2026 · Nachricht 25",
+          "date": "2026-10-23",
+          "source": "nvd"
+        },
+        {
+          "url": "http://www.openwall.com/lists/oss-security/2026/10/24/6",
+          "type": "analysis",
+          "label": "oss-security · 24.10.2026 · Nachricht 6",
+          "date": "2026-10-24",
           "source": "nvd"
         },
         {
@@ -1005,66 +1338,10 @@
           "source": "nvd"
         },
         {
-          "url": "https://lists.debian.org/debian-lts-announce/2026/10/msg00049.html",
-          "type": "tracker",
-          "label": "lists.debian.org · msg00049.html",
-          "date": null,
-          "source": "nvd"
-        },
-        {
           "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-111497",
           "type": "cve",
           "label": "NVD · CVE-2026-111497",
-          "date": null,
-          "source": "ghsa"
-        },
-        {
-          "url": "https://github.com/google/brotli/commit/0ed4268a4401abcb4472096340477cf4af7d1a2b",
-          "type": "fix",
-          "label": "google/brotli · Commit 0ed4268",
-          "date": null,
-          "source": "ghsa"
-        },
-        {
-          "url": "https://github.com/google/brotli/commit/50a9b70a4d5e1443fc40927952276b68fffa83a0",
-          "type": "fix",
-          "label": "google/brotli · Commit 50a9b70",
-          "date": null,
-          "source": "ghsa"
-        },
-        {
-          "url": "https://github.com/google/brotli/commit/b418fa81c48262a86a95332b0bc6d62c30aa78b6",
-          "type": "fix",
-          "label": "google/brotli · Commit b418fa8",
-          "date": null,
-          "source": "ghsa"
-        },
-        {
-          "url": "https://github.com/google/brotli/commit/da9806362874b9bd4b552a3af360b5d6347beb12",
-          "type": "fix",
-          "label": "google/brotli · Commit da98063",
-          "date": null,
-          "source": "ghsa"
-        },
-        {
-          "url": "https://github.com/google/brotli/releases/tag/v1.0.10",
-          "type": "release",
-          "label": "google/brotli · Release v1.0.10",
-          "date": null,
-          "source": "ghsa"
-        },
-        {
-          "url": "https://github.com/google/brotli/releases/tag/v1.1.1",
-          "type": "release",
-          "label": "google/brotli · Release v1.1.1",
-          "date": null,
-          "source": "ghsa"
-        },
-        {
-          "url": "https://github.com/google/brotli/releases/tag/v1.2.1",
-          "type": "release",
-          "label": "google/brotli · Release v1.2.1",
-          "date": null,
+          "date": "2026-10-22",
           "source": "ghsa"
         },
         {
@@ -1082,23 +1359,16 @@
           "source": "ghsa"
         },
         {
-          "url": "https://opensourcemalware.com/blog/node2shell-affects-python",
-          "type": "analysis",
-          "label": "opensourcemalware.com · node2shell-affects-python",
-          "date": null,
-          "source": "ghsa"
-        },
-        {
           "url": "https://pypi.org/project/Brotli",
           "type": "release",
-          "label": "pypi.org · Brotli",
+          "label": "PyPI · Brotli",
           "date": null,
           "source": "ghsa"
         },
         {
           "url": "https://pypi.org/project/brotlicffi",
           "type": "release",
-          "label": "pypi.org · brotlicffi",
+          "label": "PyPI · brotlicffi",
           "date": null,
           "source": "ghsa"
         },
@@ -1106,20 +1376,20 @@
           "url": "https://www.cve.org/CVERecord?id=CVE-2026-111497",
           "type": "cve",
           "label": "CVE.org · CVE-2026-111497",
-          "date": null,
+          "date": "2026-10-22",
           "source": "ghsa"
         },
         {
           "url": "https://github.com/CVEProject/cvelistV5/tree/main/cves/2026/111xxx/CVE-2026-111497.json",
           "type": "cve",
-          "label": "github.com · CVE-2026-111497.json",
-          "date": null,
+          "label": "CVE List V5 · CVE-2026-111497",
+          "date": "2026-10-22",
           "source": "osv"
         },
         {
           "url": "https://github.com/google/brotli",
           "type": "tracker",
-          "label": "github.com · brotli",
+          "label": "GitHub · google/brotli",
           "date": null,
           "source": "osv"
         },
@@ -1153,38 +1423,52 @@
       "sources": {
         "osv": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:26:30Z",
+          "lastAttemptAt": "2026-10-24T20:26:30Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "nvd": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:26:30Z",
+          "lastAttemptAt": "2026-10-24T20:26:30Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "ghsa": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:26:30Z",
+          "lastAttemptAt": "2026-10-24T20:26:30Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "cisaKev": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:26:30Z",
+          "lastAttemptAt": "2026-10-24T20:26:30Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "firstEpss": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:26:30Z",
+          "lastAttemptAt": "2026-10-24T20:26:30Z",
           "lastError": null,
           "staleAfterHours": 48
+        },
+        "endoflife": {
+          "status": "ok",
+          "fetchedAt": "2026-10-24T20:26:30Z",
+          "lastAttemptAt": "2026-10-24T20:26:30Z",
+          "lastError": null,
+          "staleAfterHours": 168
+        },
+        "vendor": {
+          "status": "ok",
+          "fetchedAt": "2026-10-24T20:26:30Z",
+          "lastAttemptAt": "2026-10-24T20:26:30Z",
+          "lastError": null,
+          "staleAfterHours": 12
         }
       }
     },
@@ -1206,6 +1490,7 @@
       },
       "title": "PHP: uninitialized request memory after out-of-memory longjmp (RCE)",
       "published": "2026-10-21T14:17:09Z",
+      "publishedSource": "nvd",
       "modified": "2026-10-23T16:26:54Z",
       "cvss": {
         "version": "4.0",
@@ -1231,9 +1516,9 @@
         "catalogVersion": "2026.10.23"
       },
       "epss": {
-        "score": 0.1162,
-        "percentile": 0.96047,
-        "date": "2026-10-23"
+        "score": 0.11841,
+        "percentile": 0.96097,
+        "date": "2026-10-24"
       },
       "exploitation": [],
       "affected": [
@@ -1248,7 +1533,9 @@
           "fixStatus": "fixed",
           "urgency": "not yet assigned",
           "source": "osv",
-          "sourceId": "DEBIAN-CVE-2026-109618"
+          "sourceId": "DEBIAN-CVE-2026-109618",
+          "displayRange": "vor 8.2.35-1~deb12u1",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Debian",
@@ -1261,7 +1548,9 @@
           "fixStatus": "fixed",
           "urgency": "not yet assigned",
           "source": "osv",
-          "sourceId": "DEBIAN-CVE-2026-109618"
+          "sourceId": "DEBIAN-CVE-2026-109618",
+          "displayRange": "vor 8.4.27-1~deb13u1",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Debian",
@@ -1274,7 +1563,9 @@
           "fixStatus": "fixed",
           "urgency": "not yet assigned",
           "source": "osv",
-          "sourceId": "DEBIAN-CVE-2026-109618"
+          "sourceId": "DEBIAN-CVE-2026-109618",
+          "displayRange": "vor 8.4.27-1",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -1287,7 +1578,9 @@
           "fixStatus": "fixed",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-109618"
+          "sourceId": "UBUNTU-CVE-2026-109618",
+          "displayRange": "vor 8.1.2-1ubuntu2.28",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -1300,7 +1593,9 @@
           "fixStatus": "fixed",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-109618"
+          "sourceId": "UBUNTU-CVE-2026-109618",
+          "displayRange": "vor 8.3.6-0ubuntu0.24.04.13",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -1313,7 +1608,9 @@
           "fixStatus": "fixed",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-109618"
+          "sourceId": "UBUNTU-CVE-2026-109618",
+          "displayRange": "vor 8.5.4-0ubuntu1.5",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -1326,7 +1623,9 @@
           "fixStatus": "fixed",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-109618"
+          "sourceId": "UBUNTU-CVE-2026-109618",
+          "displayRange": "vor 8.5.9-0ubuntu2.1",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -1339,7 +1638,9 @@
           "fixStatus": "fixed",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-109618"
+          "sourceId": "UBUNTU-CVE-2026-109618",
+          "displayRange": "vor 5.5.9+dfsg-1ubuntu4.29+esm18",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -1352,7 +1653,9 @@
           "fixStatus": "fixed",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-109618"
+          "sourceId": "UBUNTU-CVE-2026-109618",
+          "displayRange": "vor 7.0.33-0ubuntu0.16.04.16+esm22",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -1365,7 +1668,9 @@
           "fixStatus": "fixed",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-109618"
+          "sourceId": "UBUNTU-CVE-2026-109618",
+          "displayRange": "vor 7.2.24-0ubuntu0.18.04.17+esm14",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -1378,7 +1683,9 @@
           "fixStatus": "fixed",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-109618"
+          "sourceId": "UBUNTU-CVE-2026-109618",
+          "displayRange": "vor 7.4.3-4ubuntu2.29+esm5",
+          "displayRangeSource": "auto"
         }
       ],
       "runtimes": [
@@ -1464,38 +1771,38 @@
           "source": "watchlist"
         },
         {
+          "date": "2026-10-21",
+          "url": "https://www.wiz.io/blog/php2shell-php-rce",
+          "type": "analysis",
+          "label": "Wiz · 21.10.2026 · PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-23",
+          "url": "https://cert-portal.siemens.com/productcert/html/ssa-566512.html",
+          "type": "advisory",
+          "label": "Siemens ProductCERT · 23.10.2026 · SSA-566512: PHP2Shell Vulnerabilities in PAN-OS on RUGGEDCOM APE1808",
+          "source": "watchlist"
+        },
+        {
           "url": "https://github.com/php/php-src/security/advisories/GHSA-w8hw-w9fx-j79w",
           "type": "advisory",
-          "label": "GitHub Advisory GHSA-w8hw-w9fx-j79w",
+          "label": "php/php-src · Advisory GHSA-w8hw-w9fx-j79w",
           "date": null,
           "source": "nvd"
         },
         {
           "url": "http://www.openwall.com/lists/oss-security/2026/10/21/6",
           "type": "analysis",
-          "label": "openwall.com · 6",
-          "date": null,
+          "label": "oss-security · 21.10.2026 · Nachricht 6",
+          "date": "2026-10-21",
           "source": "nvd"
         },
         {
           "url": "http://www.openwall.com/lists/oss-security/2026/10/23/5",
           "type": "analysis",
-          "label": "openwall.com · 5",
-          "date": null,
-          "source": "nvd"
-        },
-        {
-          "url": "https://cert-portal.siemens.com/productcert/html/ssa-566512.html",
-          "type": "analysis",
-          "label": "cert-portal.siemens.com · ssa-566512.html",
-          "date": null,
-          "source": "nvd"
-        },
-        {
-          "url": "https://www.wiz.io/blog/php2shell-php-rce",
-          "type": "analysis",
-          "label": "wiz.io · php2shell-php-rce",
-          "date": null,
+          "label": "oss-security · 23.10.2026 · Nachricht 5",
+          "date": "2026-10-23",
           "source": "nvd"
         },
         {
@@ -1521,38 +1828,45 @@
       "sources": {
         "osv": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:26:30Z",
+          "lastAttemptAt": "2026-10-24T20:26:30Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "nvd": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:26:30Z",
+          "lastAttemptAt": "2026-10-24T20:26:30Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "ghsa": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:26:30Z",
+          "lastAttemptAt": "2026-10-24T20:26:30Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "cisaKev": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:26:30Z",
+          "lastAttemptAt": "2026-10-24T20:26:30Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "firstEpss": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:26:30Z",
+          "lastAttemptAt": "2026-10-24T20:26:30Z",
           "lastError": null,
           "staleAfterHours": 48
+        },
+        "endoflife": {
+          "status": "ok",
+          "fetchedAt": "2026-10-24T20:26:30Z",
+          "lastAttemptAt": "2026-10-24T20:26:30Z",
+          "lastError": null,
+          "staleAfterHours": 168
         }
       }
     },
@@ -1574,6 +1888,7 @@
       },
       "title": "PHP: stale global state pointing into freed request memory (RCE)",
       "published": "2026-10-21T14:17:09Z",
+      "publishedSource": "nvd",
       "modified": "2026-10-23T16:06:48Z",
       "cvss": {
         "version": "4.0",
@@ -1599,9 +1914,9 @@
         "catalogVersion": "2026.10.23"
       },
       "epss": {
-        "score": 0.05991,
-        "percentile": 0.933,
-        "date": "2026-10-23"
+        "score": 0.06217,
+        "percentile": 0.93524,
+        "date": "2026-10-24"
       },
       "exploitation": [],
       "affected": [
@@ -1616,7 +1931,9 @@
           "fixStatus": "fixed",
           "urgency": "not yet assigned",
           "source": "osv",
-          "sourceId": "DEBIAN-CVE-2026-109619"
+          "sourceId": "DEBIAN-CVE-2026-109619",
+          "displayRange": "vor 8.2.35-1~deb12u1",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Debian",
@@ -1629,7 +1946,9 @@
           "fixStatus": "fixed",
           "urgency": "not yet assigned",
           "source": "osv",
-          "sourceId": "DEBIAN-CVE-2026-109619"
+          "sourceId": "DEBIAN-CVE-2026-109619",
+          "displayRange": "vor 8.4.27-1~deb13u1",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Debian",
@@ -1642,7 +1961,9 @@
           "fixStatus": "fixed",
           "urgency": "not yet assigned",
           "source": "osv",
-          "sourceId": "DEBIAN-CVE-2026-109619"
+          "sourceId": "DEBIAN-CVE-2026-109619",
+          "displayRange": "vor 8.4.27-1",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -1655,7 +1976,9 @@
           "fixStatus": "fixed",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-109619"
+          "sourceId": "UBUNTU-CVE-2026-109619",
+          "displayRange": "vor 8.1.2-1ubuntu2.28",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -1668,7 +1991,9 @@
           "fixStatus": "fixed",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-109619"
+          "sourceId": "UBUNTU-CVE-2026-109619",
+          "displayRange": "vor 8.3.6-0ubuntu0.24.04.13",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -1681,7 +2006,9 @@
           "fixStatus": "fixed",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-109619"
+          "sourceId": "UBUNTU-CVE-2026-109619",
+          "displayRange": "vor 8.5.4-0ubuntu1.5",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -1694,7 +2021,9 @@
           "fixStatus": "fixed",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-109619"
+          "sourceId": "UBUNTU-CVE-2026-109619",
+          "displayRange": "vor 8.5.9-0ubuntu2.1",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -1707,7 +2036,9 @@
           "fixStatus": "fixed",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-109619"
+          "sourceId": "UBUNTU-CVE-2026-109619",
+          "displayRange": "vor 5.5.9+dfsg-1ubuntu4.29+esm18",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -1720,7 +2051,9 @@
           "fixStatus": "fixed",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-109619"
+          "sourceId": "UBUNTU-CVE-2026-109619",
+          "displayRange": "vor 7.0.33-0ubuntu0.16.04.16+esm22",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -1733,7 +2066,9 @@
           "fixStatus": "fixed",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-109619"
+          "sourceId": "UBUNTU-CVE-2026-109619",
+          "displayRange": "vor 7.2.24-0ubuntu0.18.04.17+esm14",
+          "displayRangeSource": "auto"
         },
         {
           "ecosystem": "Ubuntu",
@@ -1746,7 +2081,9 @@
           "fixStatus": "fixed",
           "urgency": null,
           "source": "osv",
-          "sourceId": "UBUNTU-CVE-2026-109619"
+          "sourceId": "UBUNTU-CVE-2026-109619",
+          "displayRange": "vor 7.4.3-4ubuntu2.29+esm5",
+          "displayRangeSource": "auto"
         }
       ],
       "runtimes": [
@@ -1832,101 +2169,101 @@
           "source": "watchlist"
         },
         {
+          "date": "2026-10-21",
+          "url": "https://www.wiz.io/blog/php2shell-php-rce",
+          "type": "analysis",
+          "label": "Wiz · 21.10.2026 · PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet",
+          "source": "watchlist"
+        },
+        {
+          "date": "2026-10-23",
+          "url": "https://cert-portal.siemens.com/productcert/html/ssa-566512.html",
+          "type": "advisory",
+          "label": "Siemens ProductCERT · 23.10.2026 · SSA-566512: PHP2Shell Vulnerabilities in PAN-OS on RUGGEDCOM APE1808",
+          "source": "watchlist"
+        },
+        {
           "url": "https://github.com/php/php-src/security/advisories/GHSA-6wmf-4rv5-p3rp",
           "type": "advisory",
-          "label": "GitHub Advisory GHSA-6wmf-4rv5-p3rp",
+          "label": "php/php-src · Advisory GHSA-6wmf-4rv5-p3rp",
           "date": null,
           "source": "nvd"
         },
         {
           "url": "http://www.openwall.com/lists/oss-security/2026/10/21/16",
           "type": "analysis",
-          "label": "openwall.com · 16",
-          "date": null,
+          "label": "oss-security · 21.10.2026 · Nachricht 16",
+          "date": "2026-10-21",
           "source": "nvd"
         },
         {
           "url": "http://www.openwall.com/lists/oss-security/2026/10/21/17",
           "type": "analysis",
-          "label": "openwall.com · 17",
-          "date": null,
+          "label": "oss-security · 21.10.2026 · Nachricht 17",
+          "date": "2026-10-21",
           "source": "nvd"
         },
         {
           "url": "http://www.openwall.com/lists/oss-security/2026/10/21/23",
           "type": "analysis",
-          "label": "openwall.com · 23",
-          "date": null,
+          "label": "oss-security · 21.10.2026 · Nachricht 23",
+          "date": "2026-10-21",
           "source": "nvd"
         },
         {
           "url": "http://www.openwall.com/lists/oss-security/2026/10/21/7",
           "type": "analysis",
-          "label": "openwall.com · 7",
-          "date": null,
+          "label": "oss-security · 21.10.2026 · Nachricht 7",
+          "date": "2026-10-21",
           "source": "nvd"
         },
         {
           "url": "http://www.openwall.com/lists/oss-security/2026/10/22/14",
           "type": "analysis",
-          "label": "openwall.com · 14",
-          "date": null,
+          "label": "oss-security · 22.10.2026 · Nachricht 14",
+          "date": "2026-10-22",
           "source": "nvd"
         },
         {
           "url": "http://www.openwall.com/lists/oss-security/2026/10/22/15",
           "type": "analysis",
-          "label": "openwall.com · 15",
-          "date": null,
+          "label": "oss-security · 22.10.2026 · Nachricht 15",
+          "date": "2026-10-22",
           "source": "nvd"
         },
         {
           "url": "http://www.openwall.com/lists/oss-security/2026/10/22/16",
           "type": "analysis",
-          "label": "openwall.com · 16",
-          "date": null,
+          "label": "oss-security · 22.10.2026 · Nachricht 16",
+          "date": "2026-10-22",
           "source": "nvd"
         },
         {
           "url": "http://www.openwall.com/lists/oss-security/2026/10/22/19",
           "type": "analysis",
-          "label": "openwall.com · 19",
-          "date": null,
+          "label": "oss-security · 22.10.2026 · Nachricht 19",
+          "date": "2026-10-22",
           "source": "nvd"
         },
         {
           "url": "http://www.openwall.com/lists/oss-security/2026/10/22/2",
           "type": "analysis",
-          "label": "openwall.com · 2",
-          "date": null,
+          "label": "oss-security · 22.10.2026 · Nachricht 2",
+          "date": "2026-10-22",
           "source": "nvd"
         },
         {
           "url": "http://www.openwall.com/lists/oss-security/2026/10/22/20",
           "type": "analysis",
-          "label": "openwall.com · 20",
-          "date": null,
+          "label": "oss-security · 22.10.2026 · Nachricht 20",
+          "date": "2026-10-22",
           "source": "nvd"
         },
         {
           "url": "http://www.openwall.com/lists/oss-security/2026/10/23/4",
           "type": "analysis",
-          "label": "openwall.com · 4",
-          "date": null,
-          "source": "nvd"
-        },
-        {
-          "url": "https://cert-portal.siemens.com/productcert/html/ssa-566512.html",
-          "type": "analysis",
-          "label": "cert-portal.siemens.com · ssa-566512.html",
-          "date": null,
-          "source": "nvd"
-        },
-        {
-          "url": "https://www.wiz.io/blog/php2shell-php-rce",
-          "type": "analysis",
-          "label": "wiz.io · php2shell-php-rce",
-          "date": null,
+          "label": "oss-security · 23.10.2026 · Nachricht 4",
+          "date": "2026-10-23",
           "source": "nvd"
         },
         {
@@ -1952,38 +2289,45 @@
       "sources": {
         "osv": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:26:30Z",
+          "lastAttemptAt": "2026-10-24T20:26:30Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "nvd": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:26:30Z",
+          "lastAttemptAt": "2026-10-24T20:26:30Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "ghsa": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:26:30Z",
+          "lastAttemptAt": "2026-10-24T20:26:30Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "cisaKev": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:26:30Z",
+          "lastAttemptAt": "2026-10-24T20:26:30Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "firstEpss": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:24:51Z",
-          "lastAttemptAt": "2026-10-24T10:24:51Z",
+          "fetchedAt": "2026-10-24T20:26:30Z",
+          "lastAttemptAt": "2026-10-24T20:26:30Z",
           "lastError": null,
           "staleAfterHours": 48
+        },
+        "endoflife": {
+          "status": "ok",
+          "fetchedAt": "2026-10-24T20:26:30Z",
+          "lastAttemptAt": "2026-10-24T20:26:30Z",
+          "lastError": null,
+          "staleAfterHours": 168
         }
       }
     }
