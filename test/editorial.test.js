@@ -33,8 +33,34 @@ test('Express 5 / body-parser is an exposure path, not a bug carrier', () => {
   const bp = node.affected.find((a) => a.package === 'body-parser');
   assert.equal(bp.ecosystem, 'npm');
   assert.equal(bp.role, 'exposure_path');
-  assert.equal(bp.fixStatus, 'none');
+  assert.equal(bp.fixStatus, 'via_runtime');
+  assert.equal(bp.fixRef.url, 'https://nodejs.org/en/blog/vulnerability/october-2026-security-releases');
+  assert.deepEqual(bp.testedBy, { name: 'Imperva', sourceUrl: 'https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/', date: '2026-10-22', scope: 'tested_only' });
+  assert.match(bp.note, /nur wie von Imperva getestet/);
+  assert.doesNotMatch(bp.affectedRange, /getestet/);
   assert.equal(bp.source, 'watchlist');
+});
+
+test('reporter: Node.js attribution stays, Imperva\'s differing one is a separate credit', () => {
+  const reporters = node.credits.filter((c) => c.role === 'reporter');
+  assert.deepEqual(reporters.map((c) => [c.name, new URL(c.sourceUrl).hostname]), [
+    ['OpenAI Codex Security (Khai Tran, Sylvie Mayer)', 'nodejs.org'],
+    ['Matteo Collina', 'www.imperva.com'],
+  ]);
+  assert.match(reporters[1].note, /Abweichende Angabe von Imperva/);
+});
+
+test('wiz.io and Siemens references carry fetched titles and dates', () => {
+  for (const id of ['CVE-2026-109618', 'CVE-2026-109619']) {
+    const refs = data.advisories.find((a) => a.id === id).references;
+    const wiz = refs.find((r) => r.url === 'https://www.wiz.io/blog/php2shell-php-rce');
+    const sie = refs.find((r) => r.url === 'https://cert-portal.siemens.com/productcert/html/ssa-566512.html');
+    assert.equal(wiz.label, 'Wiz · 21.10.2026 · PHP2Shell: AI uncovers critical RCE vulnerabilities affecting 70% of the Internet');
+    assert.equal(wiz.date, '2026-10-21');
+    assert.match(sie.label, /^Siemens ProductCERT · 23\.10\.2026 · SSA-566512/);
+    assert.equal(sie.date, '2026-10-23');
+    assert.equal(refs.filter((r) => /wiz\.io|siemens/.test(r.url)).length, 2, 'no duplicate from NVD');
+  }
 });
 
 test('PyPI rows get display names; library row gets the backport note', () => {

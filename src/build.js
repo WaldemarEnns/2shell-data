@@ -84,7 +84,7 @@ function dedupe(list, keyFn) {
   });
 }
 
-/** Applies watchlist fixStatus overrides. pending/none can only come from here. */
+/** Applies watchlist fixStatus overrides. pending/none can only come from here (via_runtime only from manualAffected). */
 export function applyOverrides(affected, overrides = []) {
   return affected.map((a) => {
     const o = overrides.find((x) => x.ecosystem === a.ecosystem && x.package.toLowerCase() === a.package.toLowerCase() && (x.release == null || x.release === a.release));

@@ -48,9 +48,12 @@ vorheriger Stand┘        │                                  │
 Ein Datenlauf veröffentlicht nie selbst und überschreibt nie Texte.
 
 - **Nur Daten** (`data-only`): EPSS, `stand`, neue Fix-Versionen, Referenzen, Quellenstatus → Commit auf Branch `data/refresh`, PR „data: refresh“ wird angelegt oder aktualisiert.
-- **Redaktionell** (`editorial`): neue CVE in der Watchlist, KEV wird „gelistet“, CVSS-Stufe ändert sich, neues betroffenes Ökosystem oder neue Runtime-Linie, Statuswechsel einer Runtime, `fixStatus`-Wechsel von/zu `pending`/`none` oder weg von `fixed`, Statuswechsel eines Fix-Belegs (z. B. PR gemergt) → **Entwurfs-PR** auf `data/editorial` mit Label `editorial` und Checkliste „Text prüfen“.
+- **Redaktionell** (`editorial`): neue CVE in der Watchlist, KEV wird „gelistet“, CVSS-Stufe ändert sich, neues betroffenes Ökosystem oder neue Runtime-Linie, Statuswechsel einer Runtime, `fixStatus`-Wechsel von/zu `pending`/`none`/`via_runtime` oder weg von `fixed`, Statuswechsel eines Fix-Belegs (z. B. PR gemergt) → **Entwurfs-PR** auf `data/editorial` mit Label `editorial` und Checkliste „Text prüfen“.
 - Die Action pusht nie auf `main`. Redaktionelle PRs werden immer von Hand gemergt. Reine Daten-PRs (`data/refresh`) können per Auto-Merge (Squash) einlaufen, sobald der Pflicht-Check `test` grün ist, aber nur wenn die Repo-Variable `AUTO_MERGE_DATA` auf `true` steht (siehe Einrichtung).
 - `fixStatus` `pending` und `none` kommen **nur** aus der Watchlist (`manualAffected` oder `fixStatusOverrides`, jeweils mit `fixRef`, `verifiedBy`, `verifiedAt`). Automatisch gibt es nur `fixed` (Quelle nennt eine Fix-Version) oder `unknown` (Quelle nennt keine).
+- `via_runtime` gibt es nur in `manualAffected` und nur mit `role: exposure_path`: Das Paket hat keinen eigenen Fix, behoben wird über das Runtime-Update, auf das `fixRef` zeigt (z. B. Express 5 / body-parser → Node.js-Security-Release).
+- `testedBy` (`name`, `sourceUrl`, `date`, `scope: tested_only`) markiert einen `affectedRange`, der nur aus Tests Dritter stammt. Die Seite soll dann „nur getestete Versionen“ anzeigen.
+- `credits[].note` hält abweichende Zuschreibungen fest; jede Zuschreibung bleibt ein eigener Eintrag mit eigener `sourceUrl`.
 
 ## Dateien
 
