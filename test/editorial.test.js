@@ -109,3 +109,19 @@ test('no hand override touches Debian 13 brotli; OSV value is used', () => {
   assert.equal(deb13.source, 'osv');
   assert.equal(deb13.override, undefined);
 });
+
+test('Vercel: timeline = first publication (21.10.), reference shows the update (24.10.)', () => {
+  const url = 'https://vercel.com/kb/bulletin/node-js-security-advisory';
+  assert.equal(node.timeline.find((t) => t.sourceUrl === url).date, '2026-10-21');
+  const ref = node.references.find((r) => r.url === url);
+  assert.equal(ref.date, '2026-10-21');
+  assert.match(ref.label, /^Vercel · 21\.10\.2026 \(aktualisiert 24\.10\.2026\)/);
+});
+
+test('timeline has the OSV publication that published comes from', () => {
+  const osv = node.timeline.find((t) => t.sourceUrl === 'https://osv.dev/vulnerability/CVE-2026-111497');
+  assert.equal(osv.date, node.published);
+  assert.equal(osv.event, 'CVE-Eintrag bei OSV veröffentlicht.');
+  const i = node.timeline.indexOf(osv);
+  assert.ok(node.timeline.findIndex((t) => t.source === 'nvd') > i, 'OSV entry comes before the NVD entry');
+});

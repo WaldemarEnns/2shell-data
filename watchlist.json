@@ -103,6 +103,7 @@
         { "date": "2026-10-22", "event": "Ein öffentlicher Proof of Concept erscheint.", "sourceUrl": "https://www.aikido.dev/blog/node2shell-nodejs-brotli-rce-cve-2026-111497" },
         { "date": "2026-10-22T08:00:11Z", "event": "Für die PHP-Erweiterung brotli geht PR #105 auf, der Brotli auf 1.2.1 hebt.", "sourceUrl": "https://github.com/kjdev/php-ext-brotli/pull/105" },
         { "date": "2026-10-22T12:22:01Z", "event": "Imperva meldet Codeausführung im Labor auf Node.js 24.22.0.", "sourceUrl": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/" },
+        { "date": "2026-10-22T13:35:41Z", "event": "CVE-Eintrag bei OSV veröffentlicht.", "sourceUrl": "https://osv.dev/vulnerability/CVE-2026-111497" },
         { "date": "2026-10-22T13:57:11Z", "event": "Brotli 1.2.1 erscheint auf PyPI.", "sourceUrl": "https://pypi.org/project/Brotli/1.2.1/" },
         { "date": "2026-10-22T16:19:00Z", "event": "brotlicffi 1.2.1.0 erscheint auf PyPI.", "sourceUrl": "https://pypi.org/project/brotlicffi/1.2.1.0/" },
         { "date": "2026-10-23", "event": "Aikido nennt die Lücke HTTP2Shell, weil sie auch Python und andere HTTP-Software trifft.", "sourceUrl": "https://www.aikido.dev/blog/python-packages-vulnerable-node2shell-brotli-cve-2026-111497" }
@@ -126,7 +127,7 @@
         { "url": "https://www.aikido.dev/blog/python-packages-vulnerable-node2shell-brotli-cve-2026-111497", "type": "analysis", "label": "Aikido · 23.10.2026 · Node2Shell evolves to HTTP2Shell", "date": "2026-10-23" },
         { "url": "https://opensourcemalware.com/blog/node2shell-affects-python", "type": "analysis", "label": "OpenSourceMalware · 23.10.2026 · Python Packages Vulnerable to Node2Shell", "date": "2026-10-23" },
         { "url": "https://strobes.co/blog/http2shell-brotli-rce-cve-2026-111497/", "type": "analysis", "label": "Strobes · 24.10.2026 · HTTP2Shell (CVE-2026-111497): The Brotli RCE Hitting Node.js, Python and More", "date": "2026-10-24" },
-        { "url": "https://vercel.com/kb/bulletin/node-js-security-advisory", "type": "advisory", "label": "Vercel · 24.10.2026 · Node.js security advisory: Brotli decoder RCE (CVE-2026-111497)", "date": "2026-10-24" },
+        { "url": "https://vercel.com/kb/bulletin/node-js-security-advisory", "type": "advisory", "label": "Vercel · 21.10.2026 (aktualisiert 24.10.2026) · Node.js security advisory: Brotli decoder RCE (CVE-2026-111497)", "date": "2026-10-21" },
         { "url": "https://broccoli2shell.com/", "type": "tracker", "label": "broccoli2shell.com · Stand 24.10.2026 · gebündelte Brotli-Kopien", "date": "2026-10-24" },
         { "url": "https://github.com/google/brotli/releases/tag/v1.2.1", "type": "release", "label": "google/brotli · Release v1.2.1", "date": "2026-10-21" },
         { "url": "https://github.com/google/brotli/releases/tag/v1.1.1", "type": "release", "label": "google/brotli · Release v1.1.1", "date": "2026-10-21" },
