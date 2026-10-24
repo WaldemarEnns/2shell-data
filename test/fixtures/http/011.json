@@ -1,0 +1,84 @@
+{
+  "ghsa_id": "GHSA-9v8h-qqgm-4m35",
+  "cve_id": null,
+  "url": "https://api.github.com/advisories/GHSA-9v8h-qqgm-4m35",
+  "html_url": "https://github.com/advisories/GHSA-9v8h-qqgm-4m35",
+  "summary": "Brotli: Out-of-bounds write in the Brotli decoder (\"Node2Shell\") also affects the PyPI Brotli package",
+  "description": "A buffer overflow vulnerability in the Brotli decoder (c/dec/decode.c) in Google Brotli versions 1.0.3 through 1.2.0 on all platforms allows a remote unauthenticated attacker to corrupt adjacent decoder state memory, disclose sensitive memory contents, cause a denial of service, or potentially execute arbitrary code using a crafted Brotli-compressed stream.\n\nUsers need to update any Brotli libraries or binaries between 1.0.3 through 1.2.0 to the latest available version: 1.0.10 or 1.1.1 or 1.2.1.",
+  "type": "reviewed",
+  "severity": "critical",
+  "repository_advisory_url": null,
+  "source_code_location": "https://github.com/google/brotli",
+  "identifiers": [
+    {
+      "value": "GHSA-9v8h-qqgm-4m35",
+      "type": "GHSA"
+    }
+  ],
+  "references": [
+    "https://nvd.nist.gov/vuln/detail/CVE-2026-111497",
+    "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases#nodejs-brotli-decoder-out-of-bounds-write-permits-remote-code-execution-cve-2026-111497---high",
+    "https://github.com/google/brotli/commit/0ed4268a4401abcb4472096340477cf4af7d1a2b",
+    "https://github.com/google/brotli/commit/50a9b70a4d5e1443fc40927952276b68fffa83a0",
+    "https://github.com/google/brotli/commit/b418fa81c48262a86a95332b0bc6d62c30aa78b6",
+    "https://github.com/google/brotli/commit/da9806362874b9bd4b552a3af360b5d6347beb12",
+    "https://github.com/google/brotli/releases/tag/v1.0.10",
+    "https://github.com/google/brotli/releases/tag/v1.1.1",
+    "https://github.com/google/brotli/releases/tag/v1.2.1",
+    "https://github.com/pypa/advisory-database/tree/main/vulns/brotli/PYSEC-2026-4322.yaml",
+    "https://github.com/pypa/advisory-database/tree/main/vulns/brotlicffi/PYSEC-2026-4323.yaml",
+    "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases",
+    "https://opensourcemalware.com/blog/node2shell-affects-python",
+    "https://pypi.org/project/Brotli",
+    "https://pypi.org/project/brotlicffi",
+    "https://www.cve.org/CVERecord?id=CVE-2026-111497",
+    "https://github.com/advisories/GHSA-9v8h-qqgm-4m35"
+  ],
+  "published_at": "2026-10-22T15:32:49Z",
+  "updated_at": "2026-10-23T19:08:11Z",
+  "github_reviewed_at": "2026-10-23T19:08:08Z",
+  "nvd_published_at": "2026-10-22T14:17:37Z",
+  "withdrawn_at": null,
+  "vulnerabilities": [
+    {
+      "package": {
+        "ecosystem": "pip",
+        "name": "brotli"
+      },
+      "vulnerable_version_range": ">= 1.0.3, < 1.2.1",
+      "first_patched_version": "1.2.1",
+      "vulnerable_functions": []
+    },
+    {
+      "package": {
+        "ecosystem": "pip",
+        "name": "brotlicffi"
+      },
+      "vulnerable_version_range": ">= 1.0.3, < 1.2.1.0",
+      "first_patched_version": "1.2.1.0",
+      "vulnerable_functions": []
+    }
+  ],
+  "cvss_severities": {
+    "cvss_v3": {
+      "vector_string": null,
+      "score": 0
+    },
+    "cvss_v4": {
+      "vector_string": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+      "score": 9.2
+    }
+  },
+  "cwes": [
+    {
+      "cwe_id": "CWE-252",
+      "name": "Unchecked Return Value"
+    }
+  ],
+  "credits": [],
+  "comments": 0,
+  "cvss": {
+    "vector_string": null,
+    "score": null
+  }
+}

@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/WaldemarEnns/2shell-data/schema/2shell.schema.json",
+  "title": "2shell-Advisories (Pipeline-Ausgabe, kompatibel zu Desis Entwurf v1)",
+  "description": "Ausgabe von 2shell-data. Struktur nach Desis data-schema.json v1 (24.10.2026). Annotationen: x-visible = auf der Seite sichtbar (true) oder intern (false); x-source = Datenquelle. Keine berechnete Ampel. Abweichungen zu Desis Entwurf: fixStatus kennt zusätzlich 'unknown'; kev.status (listed/not_listed/unknown); meta mit Schwellen; affected[].release/urgency/sourceId; cvss.additional; advisory.sources; eolCycles.",
+  "type": "object",
+  "required": ["schemaVersion", "stand", "refreshIntervalHours", "sources", "advisories"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "type": "string", "const": "1", "x-visible": false },
+    "stand": { "type": "string", "format": "date-time", "description": "Letzter erfolgreicher Pipeline-Lauf (UTC).", "x-visible": true, "x-source": "pipeline" },
+    "refreshIntervalHours": { "type": "integer", "const": 6, "x-visible": false },
+    "meta": {
+      "type": "object",
+      "description": "Schwellen für die UI. Die Seite vergleicht stand/fetchedAt mit der Build- bzw. Anzeigezeit.",
+      "required": ["bannerStaleAfterHours", "staleAfterHours"],
+      "properties": {
+        "bannerStaleAfterHours": { "type": "integer", "minimum": 1 },
+        "staleAfterHours": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 1 } },
+        "generator": { "type": "string" }
+      },
+      "x-visible": false
+    },
+    "sources": {
+      "type": "object",
+      "description": "Status pro Quelle über alle Advisories. Schlüssel: osv, nvd, ghsa, cisaKev, firstEpss, endoflife, vendor.",
+      "additionalProperties": { "$ref": "#/$defs/sourceStatus" }
+    },
+    "eolCycles": {
+      "type": "object",
+      "description": "Release-Linien laut endoflife.date (nodejs, php, python, bun).",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["cycle", "isEol"],
+          "properties": {
+            "cycle": { "type": "string" },
+            "eol": { "type": ["string", "boolean", "null"] },
+            "isEol": { "type": "boolean" },
+            "latest": { "type": ["string", "null"] }
+          }
+        }
+      },
+      "x-visible": false, "x-source": "endoflife"
+    },
+    "advisories": { "type": "array", "items": { "$ref": "#/$defs/advisory" }, "minItems": 1, "maxItems": 5 }
+  },
+  "$defs": {
+    "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "dateOrDateTime": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}(T\\d{2}:\\d{2}(:\\d{2}(\\.\\d+)?)?Z)?$" },
+    "sourceStatus": {
+      "type": "object",
+      "required": ["status", "fetchedAt"],
+      "properties": {
+        "status": { "enum": ["ok", "veraltet", "fehlt"], "description": "ok: letzter erfolgreicher Abruf innerhalb staleAfterHours; veraltet: älter; fehlt: noch nie erfolgreich.", "x-visible": true },
+        "fetchedAt": { "type": ["string", "null"], "format": "date-time", "description": "Letzter ERFOLGREICHER Abruf (UTC).", "x-visible": true },
+        "lastAttemptAt": { "type": "string", "format": "date-time", "x-visible": false },
+        "lastError": { "type": ["string", "null"], "x-visible": false },
+        "staleAfterHours": { "type": "integer", "x-visible": false }
+      }
+    },
+    "affected": {
+      "type": "object",
+      "required": ["ecosystem", "package", "affectedRange", "fixedVersions", "fixStatus"],
+      "properties": {
+        "ecosystem": { "enum": ["runtime", "library", "npm", "PyPI", "Packagist", "PECL", "RubyGems", "NuGet", "Debian", "Ubuntu", "Alpine", "RHEL", "other"], "x-visible": true },
+        "release": { "type": ["string", "null"], "description": "Distributions-Release, z. B. '12', '24.04:LTS', 'v3.21'.", "x-visible": true },
+        "package": { "type": "string", "x-visible": true },
+        "displayName": { "type": "string", "x-visible": true },
+        "affectedRange": { "type": "string", "x-visible": true },
+        "fixedVersions": { "type": "array", "items": { "type": "string" }, "x-visible": true },
+        "fixStatus": { "enum": ["fixed", "pending", "none", "unknown"], "description": "fixed: Fix-Release gelistet; pending/none: NUR aus der Watchlist; unknown: Quelle nennt keinen Fix (automatisch, keine Aussage).", "x-visible": true },
+        "fixRef": {
+          "type": ["object", "null"],
+          "properties": {
+            "url": { "type": "string", "format": "uri" },
+            "label": { "type": "string" },
+            "state": { "enum": ["open", "merged", "released", "closed"] },
+            "checkedAt": { "type": "string", "format": "date-time" }
+          },
+          "x-visible": true
+        },
+        "role": { "enum": ["contains_bug", "exposure_path"], "x-visible": true },
+        "note": { "type": ["string", "null"], "x-visible": true },
+        "urgency": { "type": ["string", "null"], "description": "Distro-Einstufung, falls die Quelle sie liefert (z. B. Debian 'unimportant').", "x-visible": false },
+        "source": { "type": "string", "x-visible": false },
+        "sourceId": { "type": ["string", "null"], "x-visible": false }
+      }
+    },
+    "cvssMetric": {
+      "type": "object",
+      "required": ["version", "score", "severity"],
+      "properties": {
+        "version": { "enum": ["3.1", "4.0"] },
+        "score": { "type": "number", "minimum": 0, "maximum": 10 },
+        "severity": { "enum": ["NONE", "LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+        "vector": { "type": ["string", "null"] },
+        "source": { "type": "string" }
+      }
+    },
+    "advisory": {
+      "type": "object",
+      "required": ["id", "aliases", "title", "published", "modified", "cvss", "kev", "epss", "affected", "references"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^CVE-\\d{4}-\\d{4,}$", "x-visible": true },
+        "slug": { "type": "string", "x-visible": false, "x-source": "editorial" },
+        "landingUrl": { "type": ["string", "null"], "format": "uri", "x-visible": true, "x-source": "editorial" },
+        "aliases": {
+          "type": "object",
+          "required": ["ids", "nicknames"],
+          "properties": {
+            "ids": { "type": "array", "items": { "type": "string" }, "x-visible": "nur GHSA sichtbar", "x-source": "osv/ghsa" },
+            "nicknames": { "type": "array", "items": { "type": "string" }, "x-visible": true, "x-source": "editorial" }
+          }
+        },
+        "title": { "type": "string", "x-visible": false, "x-source": "watchlist > osv > nvd" },
+        "published": { "type": ["string", "null"], "format": "date-time", "x-visible": true, "x-source": "nvd > osv" },
+        "modified": { "type": ["string", "null"], "format": "date-time", "x-visible": false, "x-source": "nvd > osv" },
+        "cvss": {
+          "type": ["object", "null"],
+          "properties": {
+            "version": { "enum": ["3.1", "4.0"], "x-visible": true },
+            "score": { "type": "number", "minimum": 0, "maximum": 10, "x-visible": true },
+            "severity": { "enum": ["NONE", "LOW", "MEDIUM", "HIGH", "CRITICAL"], "x-visible": true },
+            "vector": { "type": ["string", "null"], "x-visible": "klein, Mono" },
+            "source": { "type": "string", "x-visible": true },
+            "vendorRatings": {
+              "type": "array",
+              "items": { "type": "object", "properties": { "vendor": { "type": "string" }, "rating": { "type": "string" }, "url": { "type": "string", "format": "uri" } } },
+              "x-visible": true, "x-source": "watchlist"
+            },
+            "additional": { "type": "array", "items": { "$ref": "#/$defs/cvssMetric" }, "description": "Weitere Bewertungen (andere Version/Quelle).", "x-visible": false }
+          },
+          "x-source": "nvd (Fallback ghsa)"
+        },
+        "kev": {
+          "type": "object",
+          "required": ["exploited"],
+          "properties": {
+            "exploited": { "type": ["boolean", "null"], "description": "true gelistet, false nicht gelistet, null unbekannt.", "x-visible": true },
+            "status": { "enum": ["listed", "not_listed", "unknown"], "x-visible": true },
+            "dateAdded": { "anyOf": [{ "$ref": "#/$defs/date" }, { "type": "null" }], "x-visible": true },
+            "catalogVersion": { "type": ["string", "null"], "x-visible": false }
+          },
+          "x-source": "cisaKev"
+        },
+        "epss": {
+          "type": ["object", "null"],
+          "required": ["score", "percentile", "date"],
+          "properties": {
+            "score": { "type": "number", "minimum": 0, "maximum": 1 },
+            "percentile": { "type": "number", "minimum": 0, "maximum": 1 },
+            "date": { "$ref": "#/$defs/date" }
+          },
+          "x-visible": true, "x-source": "firstEpss"
+        },
+        "exploitation": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["date", "kind", "sourceUrl"],
+            "properties": {
+              "date": { "$ref": "#/$defs/date" },
+              "kind": { "enum": ["poc_public", "rce_lab", "in_the_wild", "none_reported"] },
+              "note": { "type": "string" },
+              "sourceUrl": { "type": "string", "format": "uri" },
+              "sourceLabel": { "type": "string" }
+            }
+          },
+          "x-visible": true, "x-source": "watchlist"
+        },
+        "affected": { "type": "array", "items": { "$ref": "#/$defs/affected" }, "x-source": "osv/ghsa + watchlist" },
+        "runtimes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["product", "cycle", "status"],
+            "properties": {
+              "product": { "type": "string" },
+              "cycle": { "type": "string" },
+              "fixedIn": { "type": ["string", "null"] },
+              "eol": { "type": ["string", "boolean", "null"], "x-source": "endoflife" },
+              "latest": { "type": ["string", "null"], "x-visible": false, "x-source": "endoflife" },
+              "status": { "enum": ["gepatcht", "kein Fix (EOL)", "offen"] },
+              "sourceUrl": { "type": "string", "format": "uri", "x-visible": false }
+            }
+          },
+          "x-visible": true, "x-source": "watchlist + endoflife"
+        },
+        "timeline": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["date", "event", "sourceUrl"],
+            "properties": {
+              "date": { "$ref": "#/$defs/dateOrDateTime" },
+              "event": { "type": "string" },
+              "sourceUrl": { "type": "string", "format": "uri" },
+              "source": { "type": "string", "x-visible": false }
+            }
+          },
+          "x-visible": true
+        },
+        "credits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "role"],
+            "properties": {
+              "name": { "type": "string" },
+              "role": { "enum": ["reporter", "fix", "exploit_research", "analysis"] },
+              "sourceUrl": { "type": "string", "format": "uri" },
+              "source": { "type": "string", "x-visible": false }
+            }
+          },
+          "x-visible": true
+        },
+        "references": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["url", "type", "label"],
+            "properties": {
+              "url": { "type": "string", "format": "uri" },
+              "type": { "enum": ["advisory", "vendor", "cve", "fix", "release", "analysis", "news", "tracker"] },
+              "label": { "type": "string" },
+              "date": { "anyOf": [{ "$ref": "#/$defs/date" }, { "type": "null" }] },
+              "source": { "type": "string", "x-visible": false }
+            }
+          },
+          "x-visible": true
+        },
+        "editorial": {
+          "type": "object",
+          "properties": {
+            "markdownPath": { "type": ["string", "null"] },
+            "approvedBy": { "type": ["string", "null"] },
+            "approvedAt": { "type": ["string", "null"], "format": "date-time" }
+          },
+          "x-visible": false
+        },
+        "sources": {
+          "type": "object",
+          "description": "Quellenstatus für dieses Advisory (intern).",
+          "additionalProperties": { "$ref": "#/$defs/sourceStatus" },
+          "x-visible": false
+        }
+      }
+    }
+  }
+}

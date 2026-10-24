@@ -1,0 +1,198 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/WaldemarEnns/2shell-data/schema/watchlist.schema.json",
+  "title": "2shell-Watchlist",
+  "type": "object",
+  "required": [
+    "ecosystems",
+    "eolProducts",
+    "advisories"
+  ],
+  "properties": {
+    "ecosystems": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "eolProducts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "advisories": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "slug",
+          "nicknames",
+          "runtimes",
+          "manualAffected",
+          "fixStatusOverrides",
+          "references"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^CVE-\\d{4}-\\d{4,}$"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "ghsaIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^GHSA(-[23456789cfghjmpqrvwx]{4}){3}$"
+            }
+          },
+          "manualAffected": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "allOf": [
+                {
+                  "$ref": "2shell.schema.json#/$defs/affected"
+                }
+              ],
+              "required": [
+                "sourceUrl"
+              ],
+              "properties": {
+                "sourceUrl": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "if": {
+                "properties": {
+                  "fixStatus": {
+                    "enum": [
+                      "pending",
+                      "none"
+                    ]
+                  }
+                },
+                "required": [
+                  "fixStatus"
+                ]
+              },
+              "then": {
+                "required": [
+                  "verifiedBy",
+                  "verifiedAt",
+                  "fixRef"
+                ]
+              }
+            }
+          },
+          "fixStatusOverrides": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "ecosystem",
+                "package",
+                "fixStatus",
+                "fixRef",
+                "verifiedBy",
+                "verifiedAt"
+              ],
+              "properties": {
+                "ecosystem": {
+                  "type": "string"
+                },
+                "release": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "package": {
+                  "type": "string"
+                },
+                "fixStatus": {
+                  "enum": [
+                    "fixed",
+                    "pending",
+                    "none"
+                  ]
+                },
+                "fixRef": {
+                  "type": "object",
+                  "required": [
+                    "url"
+                  ],
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "label": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "note": {
+                  "type": "string"
+                },
+                "verifiedBy": {
+                  "type": "string"
+                },
+                "verifiedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          },
+          "runtimes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "product",
+                "cycle",
+                "fixedIn",
+                "sourceUrl"
+              ],
+              "properties": {
+                "product": {
+                  "type": "string"
+                },
+                "eolProduct": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "cycle": {
+                  "type": "string"
+                },
+                "fixedIn": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "sourceUrl": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

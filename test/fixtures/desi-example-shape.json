@@ -1,0 +1,256 @@
+{
+  "_comment": "Struktur aus Desis data-schema.json v1 (examples[0]); alle BEISPIEL-Werte durch Platzhalter ersetzt. Nur für den Kompatibilitätstest, keine Daten.",
+  "schemaVersion": "1",
+  "stand": "2026-10-24T10:05:00Z",
+  "refreshIntervalHours": 6,
+  "sources": {
+    "osv": {
+      "status": "ok",
+      "fetchedAt": "2026-10-24T10:01:00Z",
+      "staleAfterHours": 12
+    },
+    "ghsa": {
+      "status": "ok",
+      "fetchedAt": "2026-10-24T10:04:00Z",
+      "staleAfterHours": 12
+    },
+    "cisaKev": {
+      "status": "ok",
+      "fetchedAt": "2026-10-24T10:04:00Z",
+      "staleAfterHours": 12
+    },
+    "firstEpss": {
+      "status": "ok",
+      "fetchedAt": "2026-10-24T10:04:00Z",
+      "staleAfterHours": 48
+    },
+    "endoflife": {
+      "status": "ok",
+      "fetchedAt": "2026-10-24T10:04:00Z",
+      "staleAfterHours": 168
+    }
+  },
+  "advisories": [
+    {
+      "id": "CVE-2026-111497",
+      "slug": "PLATZHALTER",
+      "landingUrl": null,
+      "aliases": {
+        "ids": [
+          "GHSA-9v8h-qqgm-4m35",
+          "PYSEC-2026-4322",
+          "PYSEC-2026-4323"
+        ],
+        "nicknames": [
+          "Node2Shell",
+          "Python2Shell",
+          "HTTP2Shell",
+          "Broccoli2Shell"
+        ]
+      },
+      "title": "PLATZHALTER",
+      "published": "2026-10-22T13:35:41Z",
+      "modified": "2026-10-24T02:49:51Z",
+      "cvss": {
+        "version": "4.0",
+        "score": 0.5,
+        "severity": "CRITICAL",
+        "vector": "PLATZHALTER",
+        "source": "PLATZHALTER",
+        "vendorRatings": [
+          {
+            "vendor": "PLATZHALTER",
+            "rating": "PLATZHALTER",
+            "url": "https://example.org/platzhalter"
+          }
+        ]
+      },
+      "kev": {
+        "exploited": false,
+        "dateAdded": null,
+        "catalogVersion": "PLATZHALTER"
+      },
+      "epss": {
+        "score": 0.5,
+        "percentile": 0.5,
+        "date": "2026-10-23"
+      },
+      "exploitation": [
+        {
+          "date": "2026-10-22",
+          "kind": "poc_public",
+          "note": "PLATZHALTER",
+          "sourceUrl": "https://example.org/platzhalter",
+          "sourceLabel": "PLATZHALTER"
+        },
+        {
+          "date": "2026-10-22",
+          "kind": "rce_lab",
+          "note": "PLATZHALTER",
+          "sourceUrl": "https://example.org/platzhalter",
+          "sourceLabel": "PLATZHALTER"
+        }
+      ],
+      "affected": [
+        {
+          "ecosystem": "library",
+          "package": "PLATZHALTER",
+          "displayName": "PLATZHALTER",
+          "affectedRange": "PLATZHALTER",
+          "fixedVersions": [
+            "1.0.10",
+            "1.1.1",
+            "1.2.1"
+          ],
+          "fixStatus": "fixed",
+          "role": "contains_bug",
+          "source": "PLATZHALTER"
+        },
+        {
+          "ecosystem": "runtime",
+          "package": "PLATZHALTER",
+          "displayName": "PLATZHALTER",
+          "affectedRange": "PLATZHALTER",
+          "fixedVersions": [
+            "1.4.4"
+          ],
+          "fixStatus": "fixed",
+          "role": "contains_bug",
+          "source": "PLATZHALTER"
+        },
+        {
+          "ecosystem": "PyPI",
+          "package": "PLATZHALTER",
+          "displayName": "PLATZHALTER",
+          "affectedRange": "PLATZHALTER",
+          "fixedVersions": [
+            "1.2.1"
+          ],
+          "fixStatus": "fixed",
+          "role": "contains_bug",
+          "source": "PLATZHALTER"
+        },
+        {
+          "ecosystem": "PyPI",
+          "package": "PLATZHALTER",
+          "displayName": "PLATZHALTER",
+          "affectedRange": "PLATZHALTER",
+          "fixedVersions": [
+            "1.2.1.0"
+          ],
+          "fixStatus": "fixed",
+          "role": "contains_bug",
+          "source": "PLATZHALTER"
+        },
+        {
+          "ecosystem": "PECL",
+          "package": "PLATZHALTER",
+          "displayName": "PLATZHALTER",
+          "affectedRange": "PLATZHALTER",
+          "fixedVersions": [],
+          "fixStatus": "pending",
+          "fixRef": {
+            "url": "https://example.org/platzhalter",
+            "label": "PLATZHALTER",
+            "state": "open",
+            "checkedAt": "2026-10-24T10:04:00Z"
+          },
+          "role": "contains_bug",
+          "note": "PLATZHALTER",
+          "source": "PLATZHALTER"
+        },
+        {
+          "ecosystem": "npm",
+          "package": "PLATZHALTER",
+          "displayName": "PLATZHALTER",
+          "affectedRange": "PLATZHALTER",
+          "fixedVersions": [],
+          "fixStatus": "none",
+          "role": "exposure_path",
+          "note": "PLATZHALTER",
+          "source": "PLATZHALTER"
+        }
+      ],
+      "runtimes": [
+        {
+          "product": "PLATZHALTER",
+          "cycle": "PLATZHALTER",
+          "fixedIn": "PLATZHALTER",
+          "eol": "PLATZHALTER",
+          "status": "gepatcht"
+        },
+        {
+          "product": "PLATZHALTER",
+          "cycle": "PLATZHALTER",
+          "fixedIn": "PLATZHALTER",
+          "eol": "PLATZHALTER",
+          "status": "gepatcht"
+        },
+        {
+          "product": "PLATZHALTER",
+          "cycle": "PLATZHALTER",
+          "fixedIn": "PLATZHALTER",
+          "eol": "PLATZHALTER",
+          "status": "gepatcht"
+        },
+        {
+          "product": "PLATZHALTER",
+          "cycle": "PLATZHALTER",
+          "fixedIn": null,
+          "eol": "PLATZHALTER",
+          "status": "kein Fix (EOL)"
+        },
+        {
+          "product": "PLATZHALTER",
+          "cycle": "PLATZHALTER",
+          "fixedIn": null,
+          "eol": "PLATZHALTER",
+          "status": "kein Fix (EOL)"
+        }
+      ],
+      "timeline": [
+        {
+          "date": "2026-10-21T10:38:00Z",
+          "event": "PLATZHALTER",
+          "sourceUrl": "https://example.org/platzhalter"
+        },
+        {
+          "date": "2026-10-22T13:35:41Z",
+          "event": "PLATZHALTER",
+          "sourceUrl": "https://example.org/platzhalter"
+        }
+      ],
+      "credits": [
+        {
+          "name": "PLATZHALTER",
+          "role": "reporter",
+          "sourceUrl": "https://example.org/platzhalter"
+        },
+        {
+          "name": "PLATZHALTER",
+          "role": "fix",
+          "sourceUrl": "https://example.org/platzhalter"
+        }
+      ],
+      "references": [
+        {
+          "url": "https://example.org/platzhalter",
+          "type": "vendor",
+          "label": "PLATZHALTER",
+          "date": "2026-10-21"
+        },
+        {
+          "url": "https://example.org/platzhalter",
+          "type": "advisory",
+          "label": "PLATZHALTER",
+          "date": "2026-10-22"
+        }
+      ],
+      "editorial": {
+        "markdownPath": "PLATZHALTER",
+        "approvedBy": null,
+        "approvedAt": null
+      }
+    }
+  ]
+}
