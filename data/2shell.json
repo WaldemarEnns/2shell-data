@@ -1,7 +1,7 @@
 {
   "$schema": "../schema/2shell.schema.json",
   "schemaVersion": "1",
-  "stand": "2026-10-24T10:20:56Z",
+  "stand": "2026-10-24T10:24:51Z",
   "refreshIntervalHours": 6,
   "meta": {
     "bannerStaleAfterHours": 24,
@@ -19,50 +19,50 @@
   "sources": {
     "osv": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:20:56Z",
-      "lastAttemptAt": "2026-10-24T10:20:56Z",
+      "fetchedAt": "2026-10-24T10:24:51Z",
+      "lastAttemptAt": "2026-10-24T10:24:51Z",
       "lastError": null,
       "staleAfterHours": 12
     },
     "nvd": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:20:56Z",
-      "lastAttemptAt": "2026-10-24T10:20:56Z",
+      "fetchedAt": "2026-10-24T10:24:51Z",
+      "lastAttemptAt": "2026-10-24T10:24:51Z",
       "lastError": null,
       "staleAfterHours": 12
     },
     "ghsa": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:20:56Z",
-      "lastAttemptAt": "2026-10-24T10:20:56Z",
+      "fetchedAt": "2026-10-24T10:24:51Z",
+      "lastAttemptAt": "2026-10-24T10:24:51Z",
       "lastError": null,
       "staleAfterHours": 12
     },
     "cisaKev": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:20:56Z",
-      "lastAttemptAt": "2026-10-24T10:20:56Z",
+      "fetchedAt": "2026-10-24T10:24:51Z",
+      "lastAttemptAt": "2026-10-24T10:24:51Z",
       "lastError": null,
       "staleAfterHours": 12
     },
     "firstEpss": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:20:56Z",
-      "lastAttemptAt": "2026-10-24T10:20:56Z",
+      "fetchedAt": "2026-10-24T10:24:51Z",
+      "lastAttemptAt": "2026-10-24T10:24:51Z",
       "lastError": null,
       "staleAfterHours": 48
     },
     "endoflife": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:20:56Z",
-      "lastAttemptAt": "2026-10-24T10:20:56Z",
+      "fetchedAt": "2026-10-24T10:24:51Z",
+      "lastAttemptAt": "2026-10-24T10:24:51Z",
       "lastError": null,
       "staleAfterHours": 168
     },
     "vendor": {
       "status": "ok",
-      "fetchedAt": "2026-10-24T10:20:56Z",
-      "lastAttemptAt": "2026-10-24T10:20:56Z",
+      "fetchedAt": "2026-10-24T10:24:51Z",
+      "lastAttemptAt": "2026-10-24T10:24:51Z",
       "lastError": null,
       "staleAfterHours": 12
     }
@@ -574,7 +574,7 @@
             "url": "https://github.com/kjdev/php-ext-brotli/pull/105",
             "label": "PR #105 · Update brotli submodule to v1.2.1",
             "state": "open",
-            "checkedAt": "2026-10-24T10:20:56Z"
+            "checkedAt": "2026-10-24T10:24:51Z"
           },
           "role": "contains_bug",
           "note": "Betrifft brotli_uncompress() mit fremden Daten. Mit --with-libbrotli gebaut gilt der Stand der System-Bibliothek.",
@@ -1153,36 +1153,36 @@
       "sources": {
         "osv": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:20:56Z",
-          "lastAttemptAt": "2026-10-24T10:20:56Z",
+          "fetchedAt": "2026-10-24T10:24:51Z",
+          "lastAttemptAt": "2026-10-24T10:24:51Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "nvd": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:20:56Z",
-          "lastAttemptAt": "2026-10-24T10:20:56Z",
+          "fetchedAt": "2026-10-24T10:24:51Z",
+          "lastAttemptAt": "2026-10-24T10:24:51Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "ghsa": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:20:56Z",
-          "lastAttemptAt": "2026-10-24T10:20:56Z",
+          "fetchedAt": "2026-10-24T10:24:51Z",
+          "lastAttemptAt": "2026-10-24T10:24:51Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "cisaKev": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:20:56Z",
-          "lastAttemptAt": "2026-10-24T10:20:56Z",
+          "fetchedAt": "2026-10-24T10:24:51Z",
+          "lastAttemptAt": "2026-10-24T10:24:51Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "firstEpss": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:20:56Z",
-          "lastAttemptAt": "2026-10-24T10:20:56Z",
+          "fetchedAt": "2026-10-24T10:24:51Z",
+          "lastAttemptAt": "2026-10-24T10:24:51Z",
           "lastError": null,
           "staleAfterHours": 48
         }
@@ -1521,36 +1521,36 @@
       "sources": {
         "osv": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:20:56Z",
-          "lastAttemptAt": "2026-10-24T10:20:56Z",
+          "fetchedAt": "2026-10-24T10:24:51Z",
+          "lastAttemptAt": "2026-10-24T10:24:51Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "nvd": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:20:56Z",
-          "lastAttemptAt": "2026-10-24T10:20:56Z",
+          "fetchedAt": "2026-10-24T10:24:51Z",
+          "lastAttemptAt": "2026-10-24T10:24:51Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "ghsa": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:20:56Z",
-          "lastAttemptAt": "2026-10-24T10:20:56Z",
+          "fetchedAt": "2026-10-24T10:24:51Z",
+          "lastAttemptAt": "2026-10-24T10:24:51Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "cisaKev": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:20:56Z",
-          "lastAttemptAt": "2026-10-24T10:20:56Z",
+          "fetchedAt": "2026-10-24T10:24:51Z",
+          "lastAttemptAt": "2026-10-24T10:24:51Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "firstEpss": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:20:56Z",
-          "lastAttemptAt": "2026-10-24T10:20:56Z",
+          "fetchedAt": "2026-10-24T10:24:51Z",
+          "lastAttemptAt": "2026-10-24T10:24:51Z",
           "lastError": null,
           "staleAfterHours": 48
         }
@@ -1952,36 +1952,36 @@
       "sources": {
         "osv": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:20:56Z",
-          "lastAttemptAt": "2026-10-24T10:20:56Z",
+          "fetchedAt": "2026-10-24T10:24:51Z",
+          "lastAttemptAt": "2026-10-24T10:24:51Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "nvd": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:20:56Z",
-          "lastAttemptAt": "2026-10-24T10:20:56Z",
+          "fetchedAt": "2026-10-24T10:24:51Z",
+          "lastAttemptAt": "2026-10-24T10:24:51Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "ghsa": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:20:56Z",
-          "lastAttemptAt": "2026-10-24T10:20:56Z",
+          "fetchedAt": "2026-10-24T10:24:51Z",
+          "lastAttemptAt": "2026-10-24T10:24:51Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "cisaKev": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:20:56Z",
-          "lastAttemptAt": "2026-10-24T10:20:56Z",
+          "fetchedAt": "2026-10-24T10:24:51Z",
+          "lastAttemptAt": "2026-10-24T10:24:51Z",
           "lastError": null,
           "staleAfterHours": 12
         },
         "firstEpss": {
           "status": "ok",
-          "fetchedAt": "2026-10-24T10:20:56Z",
-          "lastAttemptAt": "2026-10-24T10:20:56Z",
+          "fetchedAt": "2026-10-24T10:24:51Z",
+          "lastAttemptAt": "2026-10-24T10:24:51Z",
           "lastError": null,
           "staleAfterHours": 48
         }
