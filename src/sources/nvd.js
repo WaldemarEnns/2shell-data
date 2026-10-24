@@ -1,5 +1,5 @@
 // NVD API 2.0: CVSS, dates, references. Optional NVD_API_KEY (header "apiKey").
-import { isoSeconds, referenceType, referenceLabel, cvssSourceName } from '../normalize.js';
+import { isoSeconds, referenceType, referenceLabel, referenceDate, cvssSourceName } from '../normalize.js';
 
 const API = 'https://services.nvd.nist.gov/rest/json/cves/2.0?cveId=';
 // Public limit: 5 requests / 30 s without key, 50 / 30 s with key.
@@ -32,7 +32,7 @@ export function normalizeNvd(cve, json) {
   metrics.sort((a, b) => (b.version === '4.0') - (a.version === '4.0') || b.primary - a.primary);
   const strip = ({ primary, ...rest }) => rest;
   const cvss = metrics.length ? { ...strip(metrics[0]), additional: metrics.slice(1).map(strip) } : null;
-  const references = (item.references ?? []).map((ref) => ({ url: ref.url, type: referenceType(ref.url), label: referenceLabel(ref.url), date: null, source: 'nvd' }));
+  const references = (item.references ?? []).map((ref) => ({ url: ref.url, type: referenceType(ref.url), label: referenceLabel(ref.url), date: referenceDate(ref.url), source: 'nvd' }));
   const published = isoSeconds(item.published);
   return {
     hasRecord: true,

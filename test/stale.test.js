@@ -74,3 +74,10 @@ test('if every source fails, the run is not a successful run', async () => {
   const results = await fetchAll(watchlist, { fetchJson: replayFetch({ fail: ['http'] }), env: {}, sleep: noSleep });
   assert.throws(() => buildData({ watchlist, previous: null, results, now: T0 }), AllSourcesFailedError);
 });
+
+test('published from OSV survives an OSV outage', async () => {
+  const { data: first } = await run(null, T0);
+  const { data } = await run(first, plus(1), [SOURCE_URLS.osv]);
+  assert.equal(data.advisories[0].published, first.advisories[0].published);
+  assert.equal(data.advisories[0].publishedSource, 'osv');
+});

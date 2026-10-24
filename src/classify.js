@@ -49,7 +49,8 @@ export function classify(prev, next) {
       const old = pAff.get(k);
       if (!old) { add('data-only', n.id, `Neuer Eintrag: ${label(a)} (${a.affectedRange})`); continue; }
       if (old.fixStatus !== a.fixStatus) {
-        const editorial = ['pending', 'none'].includes(old.fixStatus) || ['pending', 'none'].includes(a.fixStatus) || old.fixStatus === 'fixed';
+        const manual = ['pending', 'none', 'via_runtime'];
+        const editorial = manual.includes(old.fixStatus) || manual.includes(a.fixStatus) || old.fixStatus === 'fixed';
         add(editorial ? 'editorial' : 'data-only', n.id, `fixStatus ${label(a)}: ${old.fixStatus} → ${a.fixStatus}`);
       }
       const added = a.fixedVersions.filter((v) => !old.fixedVersions.includes(v));

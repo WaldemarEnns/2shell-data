@@ -1,5 +1,5 @@
 // GitHub Advisory Database (global advisories, REST). Unauthenticated or with GITHUB_TOKEN.
-import { isoSeconds, isoDate, referenceType, referenceLabel, severityFromScore, creditRole } from '../normalize.js';
+import { isoSeconds, isoDate, referenceType, referenceLabel, referenceDate, severityFromScore, creditRole } from '../normalize.js';
 
 const API = 'https://api.github.com/advisories';
 const ECO = { pip: 'PyPI', npm: 'npm', composer: 'Packagist', rubygems: 'RubyGems', nuget: 'NuGet' };
@@ -45,7 +45,7 @@ export function normalizeGhsa(cve, advisories, ecosystems) {
         source: 'ghsa', sourceId: a.ghsa_id,
       });
     }
-    for (const url of a.references ?? []) references.push({ url, type: referenceType(url), label: referenceLabel(url), date: null, source: 'ghsa' });
+    for (const url of a.references ?? []) references.push({ url, type: referenceType(url), label: referenceLabel(url), date: referenceDate(url), source: 'ghsa' });
     references.push({ url: a.html_url, type: 'advisory', label: `GitHub Advisory ${a.ghsa_id}`, date: isoDate(a.published_at), source: 'ghsa' });
     for (const c of a.credits ?? []) {
       const role = creditRole(c.type, 'ghsa');

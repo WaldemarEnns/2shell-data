@@ -1,5 +1,5 @@
 // OSV.dev: CVE record, its aliases (PYSEC, GHSA, ...) and distro records (Debian, Ubuntu, Alpine).
-import { describeRanges, splitEcosystem, isoSeconds, referenceType, referenceLabel, creditRole } from '../normalize.js';
+import { describeRanges, splitEcosystem, isoSeconds, referenceType, referenceLabel, referenceDate, creditRole } from '../normalize.js';
 
 const API = 'https://api.osv.dev/v1/vulns/';
 const DISTRO_PREFIXES = ['DEBIAN', 'UBUNTU', 'ALPINE'];
@@ -62,7 +62,7 @@ export function normalizeOsv(cve, records, ids, ecosystems) {
   // References only from the CVE record and language advisories; distro records add little beyond trackers.
   for (const rec of records.filter((r) => !/^(DEBIAN|UBUNTU|ALPINE)-/.test(r.id))) {
     for (const ref of rec.references ?? []) {
-      references.push({ url: ref.url, type: referenceType(ref.url, ref.type), label: referenceLabel(ref.url), date: null, source: 'osv' });
+      references.push({ url: ref.url, type: referenceType(ref.url, ref.type), label: referenceLabel(ref.url), date: referenceDate(ref.url), source: 'osv' });
     }
   }
   for (const rec of records.filter((r) => /^(DEBIAN|UBUNTU|ALPINE)-/.test(r.id))) {

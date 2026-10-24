@@ -35,9 +35,9 @@ export function previousFragment(name, prev) {
   const own = (list) => (list ?? []).filter((x) => x.source === name);
   switch (name) {
     case 'osv':
-      return { ids: (prev?.aliases?.ids ?? []).filter((id) => !id.startsWith('GHSA-')), title: prev?.title ?? null, published: null, modified: null, affected: own(prev?.affected), references: own(prev?.references), credits: own(prev?.credits) };
+      return { ids: (prev?.aliases?.ids ?? []).filter((id) => !id.startsWith('GHSA-')), title: prev?.title ?? null, published: prev?.publishedSource === 'osv' ? prev.published : null, modified: null, affected: own(prev?.affected), references: own(prev?.references), credits: own(prev?.credits) };
     case 'nvd':
-      return prev ? { cvss: prev.cvss ? withoutVendorRatings(prev.cvss) : null, published: prev.published ?? null, modified: prev.modified ?? null, references: own(prev.references), timeline: own(prev.timeline) } : { cvss: null, published: null, modified: null, references: [], timeline: [] };
+      return prev ? { cvss: prev.cvss ? withoutVendorRatings(prev.cvss) : null, published: prev.publishedSource === 'osv' ? null : prev.published ?? null, modified: prev.modified ?? null, references: own(prev.references), timeline: own(prev.timeline) } : { cvss: null, published: null, modified: null, references: [], timeline: [] };
     case 'ghsa':
       return { ids: (prev?.aliases?.ids ?? []).filter((id) => id.startsWith('GHSA-')), affected: own(prev?.affected), references: own(prev?.references), credits: own(prev?.credits), timeline: own(prev?.timeline), cvss: null };
     case 'cisaKev':
@@ -84,13 +84,31 @@ function dedupe(list, keyFn) {
   });
 }
 
-/** Applies watchlist fixStatus overrides. pending/none can only come from here. */
+/** Applies watchlist fixStatus overrides. pending/none can only come from here (via_runtime only from manualAffected). */
 export function applyOverrides(affected, overrides = []) {
   return affected.map((a) => {
     const o = overrides.find((x) => x.ecosystem === a.ecosystem && x.package.toLowerCase() === a.package.toLowerCase() && (x.release == null || x.release === a.release));
     if (!o) return a;
     return { ...a, fixStatus: o.fixStatus, fixRef: { url: o.fixRef.url, ...(o.fixRef.label ? { label: o.fixRef.label } : {}) }, ...(o.note ? { note: o.note } : {}), override: true };
   });
+}
+
+/** Display annotations from the watchlist (displayName, role, note). Never changes fixStatus. */
+export function applyAnnotations(affected, annotations = []) {
+  return affected.map((a) => {
+    const n = annotations.find((x) => x.ecosystem === a.ecosystem && x.package.toLowerCase() === a.package.toLowerCase() && (x.release == null || x.release === a.release));
+    if (!n) return a;
+    const { displayName, role, note } = n;
+    return { ...a, ...(displayName ? { displayName } : {}), ...(role ? { role } : {}), ...(note ? { note } : {}) };
+  });
+}
+
+/** Earliest publication timestamp across sources, with the source it came from. */
+export function earliestPublished(candidates) {
+  const valid = candidates.filter((c) => c.value);
+  if (!valid.length) return { value: null, source: null };
+  valid.sort((a, b) => Date.parse(a.value) - Date.parse(b.value));
+  return { value: valid[0].value, source: valid[0].source };
 }
 
 function manualAffected(cve) {
@@ -149,16 +167,30 @@ export function buildData({ watchlist, previous, results, now }) {
       perSourceStatuses[name].push(sources[name]);
     }
     const { osv, nvd, ghsa, cisaKev, firstEpss } = frag;
+    const eolProducts = [...new Set((cve.runtimes ?? []).map((r) => r.eolProduct).filter(Boolean))];
+    const eolHere = eolProducts.filter((p) => results.endoflife[p]).map((p) => sourceStatus('endoflife', { ok: results.endoflife[p].ok, error: results.endoflife[p].error, prevFetchedAt: prev?.sources?.endoflife?.fetchedAt ?? prevSources.endoflife?.fetchedAt, now }));
+    const eolAggHere = aggregateStatus('endoflife', eolHere, now);
+    if (eolAggHere) sources.endoflife = eolAggHere;
+    const refUrls = [...new Set([...(cve.manualAffected ?? []), ...(cve.fixStatusOverrides ?? [])].map((x) => x.fixRef?.url).filter((u) => u && results.vendor[u]))];
+    const vendorHere = refUrls.map((u) => sourceStatus('vendor', { ok: results.vendor[u].ok, error: results.vendor[u].error, prevFetchedAt: prev?.sources?.vendor?.fetchedAt ?? prevSources.vendor?.fetchedAt, now }));
+    const vendorAggHere = aggregateStatus('vendor', vendorHere, now);
+    if (vendorAggHere) sources.vendor = vendorAggHere;
 
     let affected = mergeAffected([manualAffected(cve), ghsa.affected, osv.affected]);
     affected = applyOverrides(affected, cve.fixStatusOverrides);
+    affected = applyAnnotations(affected, cve.annotations);
     affected = attachFixRefState(affected, results.vendor, prev?.affected, now);
 
     const cvssBase = nvd.cvss ?? ghsa.cvss ?? null;
     const cvss = cvssBase ? { ...cvssBase, vendorRatings: cve.vendorRatings ?? [] } : null;
 
     const editorialRefs = (cve.references ?? []).map((r) => ({ date: null, ...r, source: 'watchlist' }));
-    const references = dedupe([...editorialRefs, ...nvd.references, ...ghsa.references, ...osv.references], (r) => refKey(r.url));
+    const published = earliestPublished([{ value: osv.published, source: 'osv' }, { value: nvd.published, source: 'nvd' }]);
+    if (!published.value && prev?.published) Object.assign(published, { value: prev.published, source: prev.publishedSource ?? null });
+    const cveDate = published.value ? published.value.slice(0, 10) : null;
+    const references = dedupe([...editorialRefs, ...nvd.references, ...ghsa.references, ...osv.references], (r) => refKey(r.url))
+      // CVE records (NVD, CVE.org, cvelistV5) carry the CVE's publication date.
+      .map((r) => (r.date == null && r.type === 'cve' && cveDate && r.url.includes(cve.id) ? { ...r, date: cveDate } : r));
 
     const timeline = dedupe([
       ...(cve.timeline ?? []).map((t) => ({ ...t, source: 'watchlist' })),
@@ -179,7 +211,8 @@ export function buildData({ watchlist, previous, results, now }) {
       landingUrl: cve.landingUrl ?? null,
       aliases: { ids, nicknames: cve.nicknames ?? [] },
       title: cve.title ?? osv.title ?? prev?.title ?? cve.id,
-      published: nvd.published ?? osv.published ?? prev?.published ?? null,
+      published: published.value,
+      publishedSource: published.source,
       modified: nvd.modified ?? osv.modified ?? prev?.modified ?? null,
       cvss,
       kev: cisaKev.kev,
