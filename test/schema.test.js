@@ -57,6 +57,7 @@ test('watchlist: pending/none in manualAffected needs verifiedBy, verifiedAt and
   assert.deepEqual(validateWatchlist(watchlist).errors, []);
   const wl = clone(watchlist);
   const pecl = wl.advisories[0].manualAffected.find((a) => a.ecosystem === 'PECL');
+  pecl.fixStatus = 'pending'; pecl.fixedVersions = [];
   delete pecl.verifiedBy;
   assert.equal(validateWatchlist(wl).ok, false);
 });

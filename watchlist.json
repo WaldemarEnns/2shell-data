@@ -16,7 +16,7 @@
         { "ecosystem": "library", "package": "google/brotli", "forAffectedRange": "1.0.3 – 1.2.0 (außer 1.0.10 und 1.1.1)", "displayRange": "1.0.3 bis 1.2.0", "displayNote": "1.0.10 und 1.1.1 nicht betroffen", "sourceUrl": "https://github.com/google/brotli/tags" },
         { "ecosystem": "PyPI", "package": "brotli", "forAffectedRange": ">= 1.0.3, < 1.2.1", "displayRange": "1.0.3 bis 1.2.0", "sourceUrl": "https://pypi.org/project/Brotli/#history" },
         { "ecosystem": "PyPI", "package": "brotlicffi", "forAffectedRange": ">= 1.0.3, < 1.2.1.0", "displayRange": "1.0.3 bis 1.2.0.x", "sourceUrl": "https://pypi.org/project/brotlicffi/#history" },
-        { "ecosystem": "PECL", "package": "brotli", "forAffectedRange": "Release 0.21.0 und master (gebündeltes Brotli 1.2.0)", "displayRange": "0.21.0 und master", "sourceUrl": "https://github.com/kjdev/php-ext-brotli/pull/105" },
+        { "ecosystem": "PECL", "package": "brotli", "forAffectedRange": "0.5.1 – 0.21.0 (gebündeltes Brotli 1.0.4 – 1.2.0)", "displayRange": "0.21.0 und älter", "sourceUrl": "https://github.com/kjdev/php-ext-brotli/compare/0.21.0...0.21.1" },
         { "ecosystem": "npm", "package": "body-parser", "forAffectedRange": "Express 5.0.0 – 5.3.0, body-parser 2.0.0 – 2.3.0", "displayRange": "Express 5.0.0 bis 5.3.0, body-parser 2.0.0 bis 2.3.0", "displayNote": "Den Fehler enthält der Brotli-Decoder in Node.js, nicht Express. Das Node-Update schließt ihn.", "sourceUrl": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/" }
       ],
       "vendorRatings": [
@@ -49,18 +49,27 @@
           "ecosystem": "PECL",
           "package": "brotli",
           "displayName": "PHP-Erweiterung brotli (kjdev/php-ext-brotli)",
-          "affectedRange": "Release 0.21.0 und master (gebündeltes Brotli 1.2.0)",
-          "fixedVersions": [],
-          "fixStatus": "pending",
+          "affectedRange": "0.5.1 – 0.21.0 (gebündeltes Brotli 1.0.4 – 1.2.0)",
+          "_noteAffectedRange": "Gebündeltes Brotli je Release laut Submodul-Stand: 0.5.0 = 1.0.1 (nicht betroffen), 0.5.1–0.5.2 = 1.0.4, 0.6.0–0.11.0 = 1.0.7, 0.11.1–0.14.0 = 1.0.9, 0.14.2–0.18.2 = 1.1.0, 0.18.3–0.21.0 = 1.2.0, 0.21.1 = 1.2.1. Geprüft von Clay am 26.10.2026.",
+          "fixedVersions": ["0.21.1"],
+          "fixStatus": "fixed",
           "fixRef": {
             "url": "https://github.com/kjdev/php-ext-brotli/pull/105",
             "label": "PR #105 · Update brotli submodule to v1.2.1"
           },
+          "fixAvailability": {
+            "state": "upstream_only",
+            "registry": "PECL",
+            "package": "brotli",
+            "url": "https://github.com/kjdev/php-ext-brotli/releases/tag/0.21.1",
+            "label": "Release 0.21.1 auf GitHub",
+            "note": "Auf GitHub veröffentlicht, auf PECL noch nicht verfügbar. Bis dahin aus dem Quellcode bauen oder mit --with-libbrotli gegen eine gepatchte System-Bibliothek."
+          },
           "role": "contains_bug",
           "note": "Betrifft brotli_uncompress() mit fremden Daten. Mit --with-libbrotli gebaut gilt der Stand der System-Bibliothek.",
-          "verifiedBy": "Desi",
-          "verifiedAt": "2026-10-24T10:05:00Z",
-          "sourceUrl": "https://github.com/kjdev/php-ext-brotli/pull/105"
+          "verifiedBy": "Clay",
+          "verifiedAt": "2026-10-26T10:15:00Z",
+          "sourceUrl": "https://github.com/kjdev/php-ext-brotli/releases/tag/0.21.1"
         },
         {
           "ecosystem": "npm",
@@ -114,7 +123,8 @@
         { "date": "2026-10-22T13:35:41Z", "event": "CVE-Eintrag bei OSV veröffentlicht.", "sourceUrl": "https://osv.dev/vulnerability/CVE-2026-111497" },
         { "date": "2026-10-22T13:57:11Z", "event": "Brotli 1.2.1 erscheint auf PyPI.", "sourceUrl": "https://pypi.org/project/Brotli/1.2.1/" },
         { "date": "2026-10-22T16:19:00Z", "event": "brotlicffi 1.2.1.0 erscheint auf PyPI.", "sourceUrl": "https://pypi.org/project/brotlicffi/1.2.1.0/" },
-        { "date": "2026-10-23", "event": "Aikido nennt die Lücke HTTP2Shell, weil sie auch Python und andere HTTP-Software trifft.", "sourceUrl": "https://www.aikido.dev/blog/python-packages-vulnerable-node2shell-brotli-cve-2026-111497" }
+        { "date": "2026-10-23", "event": "Aikido nennt die Lücke HTTP2Shell, weil sie auch Python und andere HTTP-Software trifft.", "sourceUrl": "https://www.aikido.dev/blog/python-packages-vulnerable-node2shell-brotli-cve-2026-111497" },
+        { "date": "2026-10-24T23:49:20Z", "event": "Die PHP-Erweiterung brotli erscheint als 0.21.1 mit Brotli 1.2.1, vorerst nur auf GitHub.", "sourceUrl": "https://github.com/kjdev/php-ext-brotli/releases/tag/0.21.1" }
       ],
       "credits": [
         { "name": "OpenAI Codex Security (Khai Tran, Sylvie Mayer)", "role": "reporter", "sourceUrl": "https://nodejs.org/en/blog/vulnerability/october-2026-security-releases" },
@@ -130,6 +140,7 @@
         { "url": "https://github.com/oven-sh/bun/security/advisories/GHSA-663w-cv8g-jj2p", "type": "vendor", "label": "Bun · GHSA-663w-cv8g-jj2p", "date": "2026-10-23" },
         { "url": "https://bun.com/blog/bun-v1.4.4", "type": "release", "label": "Bun · 22.10.2026 · Bun v1.4.4", "date": "2026-10-22" },
         { "url": "https://github.com/kjdev/php-ext-brotli/pull/105", "type": "fix", "label": "kjdev/php-ext-brotli · PR #105", "date": "2026-10-22" },
+        { "url": "https://github.com/kjdev/php-ext-brotli/releases/tag/0.21.1", "type": "release", "label": "kjdev/php-ext-brotli · Release 0.21.1", "date": "2026-10-24" },
         { "url": "https://www.imperva.com/blog/node2shell-from-brotli-data-to-remote-code-execution/", "type": "analysis", "label": "Imperva · 22.10.2026 · Node2Shell: From Brotli Data to Remote Code Execution", "date": "2026-10-22" },
         { "url": "https://www.aikido.dev/blog/node2shell-nodejs-brotli-rce-cve-2026-111497", "type": "analysis", "label": "Aikido · 22.10.2026 · Node2Shell: Node.js Brotli vulnerability allows remote code execution", "date": "2026-10-22" },
         { "url": "https://www.aikido.dev/blog/python-packages-vulnerable-node2shell-brotli-cve-2026-111497", "type": "analysis", "label": "Aikido · 23.10.2026 · Node2Shell evolves to HTTP2Shell", "date": "2026-10-23" },

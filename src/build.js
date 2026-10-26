@@ -112,7 +112,13 @@ export function earliestPublished(candidates) {
 }
 
 function manualAffected(cve) {
-  return (cve.manualAffected ?? []).map(({ sourceUrl, verifiedBy, verifiedAt, ...rest }) => ({ release: null, ...rest, source: 'watchlist', sourceId: sourceUrl }));
+  // Keys starting with "_" are curator notes in the watchlist and never reach the output.
+  return (cve.manualAffected ?? []).map(({ sourceUrl, verifiedBy, verifiedAt, ...rest }) => ({
+    release: null,
+    ...Object.fromEntries(Object.entries(rest).filter(([k]) => !k.startsWith('_'))),
+    source: 'watchlist',
+    sourceId: sourceUrl,
+  }));
 }
 
 function attachFixRefState(affected, vendor, prevAffected, now) {
@@ -123,6 +129,33 @@ function attachFixRefState(affected, vendor, prevAffected, now) {
     if (v?.ok) return { ...a, fixRef: { ...a.fixRef, state: v.data, checkedAt: now } };
     if (prev?.state) return { ...a, fixRef: { ...a.fixRef, state: prev.state, checkedAt: prev.checkedAt } };
     return a;
+  });
+}
+
+/**
+ * fixAvailability (watchlist): a fix release exists upstream (e.g. GitHub) but not yet in the registry (PECL).
+ * Once the registry lists every fixedVersion, the state becomes "available" and the note is dropped.
+ * Without a registry answer the previous state is kept.
+ */
+export function applyAvailability(affected, vendor, prevAffected, now) {
+  return affected.map((a) => {
+    const fa = a.fixAvailability;
+    if (!fa || fa.registry !== 'PECL') return a;
+    const r = vendor[`pecl:${String(fa.package ?? a.package).toLowerCase()}`];
+    const prev = (prevAffected ?? []).find((p) => affectedKey(p) === affectedKey(a))?.fixAvailability;
+    if (r?.ok) {
+      const listed = a.fixedVersions.length > 0 && a.fixedVersions.every((v) => r.data.includes(v));
+      if (listed) {
+        const { note: _note, ...rest } = fa;
+        return { ...a, fixAvailability: { ...rest, state: 'available', checkedAt: now } };
+      }
+      return { ...a, fixAvailability: { ...fa, state: 'upstream_only', checkedAt: now } };
+    }
+    if (prev?.state === 'available') {
+      const { note: _note, ...rest } = fa;
+      return { ...a, fixAvailability: { ...rest, state: 'available', ...(prev.checkedAt ? { checkedAt: prev.checkedAt } : {}) } };
+    }
+    return { ...a, fixAvailability: { ...fa, ...(prev?.checkedAt ? { checkedAt: prev.checkedAt } : {}) } };
   });
 }
 
@@ -180,6 +213,7 @@ export function buildData({ watchlist, previous, results, now }) {
     affected = applyOverrides(affected, cve.fixStatusOverrides);
     affected = applyAnnotations(affected, cve.annotations);
     affected = attachFixRefState(affected, results.vendor, prev?.affected, now);
+    affected = applyAvailability(affected, results.vendor, prev?.affected, now);
     affected = applyDisplayRanges(affected, cve.displayRanges);
 
     const cvssBase = nvd.cvss ?? ghsa.cvss ?? null;

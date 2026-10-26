@@ -62,7 +62,7 @@ test('new CVE in the watchlist -> editorial', () => {
 test('fixStatus change involving pending/none, or fixRef state change -> editorial', () => {
   const a = later();
   const pecl = a.advisories[0].affected.find((x) => x.ecosystem === 'PECL');
-  pecl.fixStatus = 'fixed';
+  pecl.fixStatus = 'pending';
   assert.equal(levelOf(a), 'editorial');
   const b = later();
   b.advisories[0].affected.find((x) => x.ecosystem === 'PECL').fixRef.state = 'merged';

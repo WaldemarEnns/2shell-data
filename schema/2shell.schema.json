@@ -85,6 +85,23 @@
           },
           "x-visible": true
         },
+        "fixAvailability": {
+          "type": ["object", "null"],
+          "description": "Fix-Release gibt es upstream (z. B. GitHub), aber noch nicht in der Registry (PECL). Nur aus der Watchlist. upstream_only: Seite zeigt den Hinweis (note); available: Registry listet alle fixedVersions, note entfällt (automatisch per PECL-REST).",
+          "properties": {
+            "state": { "enum": ["upstream_only", "available"] },
+            "registry": { "enum": ["PECL"] },
+            "package": { "type": "string" },
+            "url": { "type": "string", "format": "uri" },
+            "label": { "type": "string" },
+            "note": { "type": "string" },
+            "checkedAt": { "type": "string", "format": "date-time" }
+          },
+          "required": ["state", "registry", "url"],
+          "additionalProperties": false,
+          "x-visible": true,
+          "x-source": "watchlist + pecl.php.net"
+        },
         "role": { "enum": ["contains_bug", "exposure_path"], "x-visible": true },
         "testedBy": {
           "type": ["object", "null"],
