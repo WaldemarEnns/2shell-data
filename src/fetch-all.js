@@ -1,12 +1,12 @@
 // Runs every fetcher and records success or failure per source. Never throws for a single failing source.
-import { fetchJson as defaultFetchJson } from './http.js';
+import { fetchJson as defaultFetchJson, fetchText as defaultFetchText } from './http.js';
 import { fetchOsv } from './sources/osv.js';
 import { fetchNvd, nvdDelayMs } from './sources/nvd.js';
 import { fetchGhsa } from './sources/ghsa.js';
 import { fetchKev, kevFor } from './sources/kev.js';
 import { fetchEpss } from './sources/epss.js';
 import { fetchEndoflife } from './sources/endoflife.js';
-import { fetchPullState } from './sources/vendor.js';
+import { fetchPullState, fetchPeclReleases } from './sources/vendor.js';
 
 const defaultSleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -21,8 +21,10 @@ async function attempt(fn) {
 /**
  * @returns {Promise<{perCve: Record<string, Record<string, {ok:boolean,data?:any,error?:string}>>, endoflife: Record<string, any>, vendor: Record<string, any>}>}
  */
-export async function fetchAll(watchlist, { fetchJson = defaultFetchJson, env = process.env, sleep = defaultSleep } = {}) {
-  const ctx = { fetchJson, env, ecosystems: watchlist.ecosystems };
+export async function fetchAll(watchlist, { fetchJson = defaultFetchJson, fetchText, env = process.env, sleep = defaultSleep } = {}) {
+  // Real text fetches only in real runs; with an injected fetchJson (tests) the registry check is skipped unless fetchText is injected too.
+  if (fetchText === undefined) fetchText = fetchJson === defaultFetchJson ? defaultFetchText : null;
+  const ctx = { fetchJson, fetchText, env, ecosystems: watchlist.ecosystems };
   const ids = watchlist.advisories.map((a) => a.id);
   const perCve = Object.fromEntries(ids.map((id) => [id, {}]));
 
@@ -55,6 +57,9 @@ export async function fetchAll(watchlist, { fetchJson = defaultFetchJson, env = 
     for (const item of [...(cve.manualAffected ?? []), ...(cve.fixStatusOverrides ?? [])]) {
       const url = item.fixRef?.url;
       if (url && /github\.com\/[^/]+\/[^/]+\/pull\/\d+/.test(url) && !vendor[url]) vendor[url] = await attempt(() => fetchPullState(url, ctx));
+      const fa = item.fixAvailability;
+      const key = fa?.registry === 'PECL' ? `pecl:${String(fa.package ?? item.package).toLowerCase()}` : null;
+      if (key && ctx.fetchText && !vendor[key]) vendor[key] = await attempt(() => fetchPeclReleases(fa.package ?? item.package, ctx));
     }
   }
   return { perCve, endoflife, vendor };

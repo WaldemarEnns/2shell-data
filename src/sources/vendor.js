@@ -1,4 +1,5 @@
-// "vendor": checks the state of GitHub pull requests used as fixRef in the watchlist (open / merged / closed).
+// "vendor": checks the state of GitHub pull requests used as fixRef in the watchlist (open / merged / closed)
+// and which releases a registry (PECL) offers, for fixAvailability in the watchlist.
 export async function fetchPullState(url, ctx) {
   const m = String(url).match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\/pull\/(\d+)/);
   if (!m) return null;
@@ -11,4 +12,17 @@ export async function fetchPullState(url, ctx) {
 export function normalizePullState(json) {
   if (!json || !json.state) throw new Error('GitHub pull: unexpected response format');
   return json.merged || json.merged_at ? 'merged' : json.state === 'closed' ? 'closed' : 'open';
+}
+
+/** All release versions PECL lists for a package (pecl.php.net REST, XML). */
+export async function fetchPeclReleases(pkg, ctx) {
+  if (!/^[A-Za-z0-9_]+$/.test(String(pkg))) throw new Error(`PECL: invalid package name ${pkg}`);
+  const r = await ctx.fetchText(`https://pecl.php.net/rest/r/${String(pkg).toLowerCase()}/allreleases.xml`);
+  return parsePeclReleases(r.text);
+}
+
+export function parsePeclReleases(xml) {
+  const versions = [...String(xml ?? '').matchAll(/<v>\s*([^<\s]+)\s*<\/v>/g)].map((m) => m[1]);
+  if (!versions.length) throw new Error('PECL: unexpected response format');
+  return versions;
 }

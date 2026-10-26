@@ -57,6 +57,7 @@ export function classify(prev, next) {
       else if ((old.displayRange ?? null) !== (a.displayRange ?? null) && old.displayRange !== undefined) add('data-only', n.id, `Anzeige-Bereich ${label(a)}: ${old.displayRange ?? '–'} → ${a.displayRange ?? '–'}`);
       const added = a.fixedVersions.filter((v) => !old.fixedVersions.includes(v));
       if (added.length) add('data-only', n.id, `Neue Fix-Version ${label(a)}: ${added.join(', ')}`);
+      if ((old.fixAvailability?.state ?? null) !== (a.fixAvailability?.state ?? null) && a.fixAvailability) add('editorial', n.id, `Verfügbarkeit ${label(a)}: ${old.fixAvailability?.state ?? 'keine Angabe'} → ${a.fixAvailability.state} (${a.fixAvailability.registry}); Hinweis und Zeitleiste prüfen`);
       if ((old.fixRef?.state ?? null) !== (a.fixRef?.state ?? null) && a.fixRef?.state) add('editorial', n.id, `Fix-Beleg ${label(a)}: ${old.fixRef?.state ?? 'unbekannt'} → ${a.fixRef.state} (${a.fixRef.url}); fixStatus in der Watchlist prüfen`);
     }
     for (const [k, a] of pAff) if (!nAff.has(k)) add('data-only', n.id, `Eintrag entfällt: ${label(a)}`);

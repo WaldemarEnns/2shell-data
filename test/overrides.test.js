@@ -15,13 +15,28 @@ test('automatic entries are only ever fixed or unknown', async () => {
   }
 });
 
-test('PHP brotli extension is pending with PR #105 from the watchlist', async () => {
-  const data = await build(watchlist);
+test('a pending manual entry carries its fixRef and the checked PR state', async () => {
+  const wl = clone(watchlist);
+  const m = wl.advisories[0].manualAffected.find((a) => a.ecosystem === 'PECL');
+  Object.assign(m, { fixStatus: 'pending', fixedVersions: [] }); delete m.fixAvailability;
+  const data = await build(wl);
   const pecl = data.advisories[0].affected.find((a) => a.ecosystem === 'PECL' && a.package === 'brotli');
   assert.equal(pecl.fixStatus, 'pending');
   assert.equal(pecl.fixRef.url, 'https://github.com/kjdev/php-ext-brotli/pull/105');
   assert.equal(pecl.fixRef.state, 'open');
   assert.equal(pecl.fixRef.checkedAt, NOW);
+  assert.equal(pecl.source, 'watchlist');
+});
+
+test('PHP brotli extension: fixed in 0.21.1, for now only on GitHub (watchlist)', async () => {
+  const data = await build(watchlist);
+  const pecl = data.advisories[0].affected.find((a) => a.ecosystem === 'PECL' && a.package === 'brotli');
+  assert.equal(pecl.fixStatus, 'fixed');
+  assert.deepEqual(pecl.fixedVersions, ['0.21.1']);
+  assert.equal(pecl.fixAvailability.state, 'upstream_only');
+  assert.equal(pecl.fixAvailability.url, 'https://github.com/kjdev/php-ext-brotli/releases/tag/0.21.1');
+  assert.match(pecl.fixAvailability.note, /auf PECL noch nicht verfügbar/);
+  assert.equal(pecl._noteAffectedRange, undefined, 'curator notes stay in the watchlist');
   assert.equal(pecl.source, 'watchlist');
 });
 

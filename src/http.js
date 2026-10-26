@@ -22,18 +22,27 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
  * @returns {Promise<{status:number, json:any}>}
  */
 export async function fetchJson(url, opts = {}) {
+  return fetchWith(url, opts, 'application/json', (res) => res.json(), 'json');
+}
+
+/** Like fetchJson, but returns { status, text } (e.g. PECL REST XML). */
+export async function fetchText(url, opts = {}) {
+  return fetchWith(url, opts, 'text/plain, application/xml, */*', (res) => res.text(), 'text');
+}
+
+async function fetchWith(url, opts, accept, read, field) {
   const { headers = {}, timeoutMs = 30000, retries = 2, allow404 = false } = opts;
   let lastErr;
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       const res = await fetch(url, {
-        headers: { 'user-agent': USER_AGENT, accept: 'application/json', ...headers },
+        headers: { 'user-agent': USER_AGENT, accept, ...headers },
         signal: AbortSignal.timeout(timeoutMs),
       });
       if (res.status === 404 && allow404) {
-        let json = null;
-        try { json = await res.json(); } catch { /* empty body */ }
-        return { status: 404, json };
+        let body = null;
+        try { body = await read(res); } catch { /* empty body */ }
+        return { status: 404, [field]: body };
       }
       if (res.status === 429 || res.status >= 500) throw new HttpError(url, res.status);
       if (!res.ok) {
@@ -41,7 +50,7 @@ export async function fetchJson(url, opts = {}) {
         err.fatal = true;
         throw err;
       }
-      return { status: res.status, json: await res.json() };
+      return { status: res.status, [field]: await read(res) };
     } catch (err) {
       lastErr = err;
       if (err.fatal || attempt === retries) break;

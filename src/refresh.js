@@ -4,10 +4,10 @@ import { buildData } from './build.js';
 import { validateData, validateWatchlist } from './validate.js';
 import { classify, summaryMarkdown } from './classify.js';
 
-export async function refresh({ watchlist, previous, fetchJson, env, sleep, now = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z') }) {
+export async function refresh({ watchlist, previous, fetchJson, fetchText, env, sleep, now = new Date().toISOString().replace(/\.\d{3}Z$/, 'Z') }) {
   const wl = validateWatchlist(watchlist);
   if (!wl.ok) throw new Error(`watchlist.json is invalid:\n${wl.errors.join('\n')}`);
-  const results = await fetchAll(watchlist, { fetchJson, env, sleep });
+  const results = await fetchAll(watchlist, { fetchJson, fetchText, env, sleep });
   const data = buildData({ watchlist, previous, results, now });
   const v = validateData(data);
   if (!v.ok) {

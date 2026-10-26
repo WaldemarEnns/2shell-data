@@ -59,10 +59,11 @@ for (const c of CASES) {
   });
 }
 
-test('PECL keeps the exact scope as display text (no safe simplification beyond it)', () => {
+test('PECL shows the curated range, the exact range stays in affectedRange', () => {
   const a = row(node, 'PECL', 'brotli');
-  assert.equal(a.displayRange, '0.21.0 und master');
-  assert.equal(a.affectedRange, 'Release 0.21.0 und master (gebündeltes Brotli 1.2.0)');
+  assert.equal(a.displayRange, '0.21.0 und älter');
+  assert.equal(a.affectedRange, '0.5.1 – 0.21.0 (gebündeltes Brotli 1.0.4 – 1.2.0)');
+  assert.equal(a.displayRangeSource, 'watchlist');
 });
 
 test('exceptions are only ever NOT-affected versions (displayNote convention)', () => {
